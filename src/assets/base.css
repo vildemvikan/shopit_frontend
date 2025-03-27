@@ -4,6 +4,9 @@
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
 
+  --vt-c-lavendel: #C6C7D2;
+  --vt-c-dark-lavendel: #888DA7;
+
   --vt-c-black: #181818;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
@@ -34,6 +37,25 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+}
+
+:root{
+  --color-lavendel-background: var(--vt-c-lavendel);
+
+  --color-black-button: var(--vt-c-black);
+  --color-white-button: var(--vt-c-black);
+  --color-purple-button: var(--vt-c-dark-lavendel);
+
+  --color-white-text: var(--vt-c-white);
+
+}
+
+:root{
+  --global-border-size: 1px;
+  --global-border-radius: 10px;
+  --global-box-shaddow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --global-button-height: 5vh;
+  --global-button-min-height: 20px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -83,4 +105,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1{
+  font-size: 35px;
 }

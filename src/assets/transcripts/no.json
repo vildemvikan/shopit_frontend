@@ -1,0 +1,39 @@
+{
+  "bookmarks": "Bokmerker",
+  "create-advertisement": "Ny annonse",
+  "messages": "Meldinger",
+  "notifications": "Varslinger",
+  "profile": "Min profil",
+
+  "label-type": "Type handel",
+  "label-images": "Bilder",
+  "label-title": "Annonsetittel",
+  "label-description": "Beskrivelse",
+  "label-category": "Kategori",
+  "label-sub-category": "Underkategori",
+  "label-tag": "Emneknagger",
+  "label-shipping": "Hvor selger du fra?",
+  "label-post-number": "Postnummer",
+  "label-price": "Pris",
+  "label-condition": "Tilstand",
+
+  "button-type-sell": "Selge",
+  "button-type-free": "Gi bort",
+  "button-images": "Legg til bilde",
+  "button-tag": "Legg til emneknagg",
+
+  "drop-down-category": "Velg kategori",
+  "drop-down-sub-category": "Velg underkategori",
+
+  "input-tag":"Emneknagg",
+  "input-title": "Tittel",
+
+  "option-vipps": "Tillat direkte salg med VIPPS",
+  "option-auction": "Tillat kjøpere å legge inn bud på prisen",
+
+  "condition-new": "Helt ny - uåpnet/ubrukt",
+  "condition-like-new": "Som ny - ikke synlig brukt",
+  "condition-good": "Pent brukt - i god stand",
+  "condition-acceptable": "Godt brukt - synlig brukt",
+  "condition-for-parts": "Må fikses - noen mangler/ødelagte deler"
+}

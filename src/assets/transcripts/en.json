@@ -1,0 +1,39 @@
+{
+  "bookmarks": "Bookmarks",
+  "create-advertisement": "New Advertisement",
+  "messages": "Messages",
+  "notifications": "Notifications",
+  "profile": "My Profile",
+
+  "label-type": "Advertisement type",
+  "label-images": "Images",
+  "label-title": "Title",
+  "label-description": "Description",
+  "label-category": "Category",
+  "label-sub-category": "Sub-Category",
+  "label-tag": "Tags",
+  "label-shipping": "Where do you ship from?",
+  "label-post-number": "Post Number",
+  "label-price": "Price",
+  "label-condition": "Condition",
+
+  "button-type-sell": "For Sale",
+  "button-type-free": "Give Away",
+  "button-images": "Add image",
+  "button-tag": "Add tag",
+
+  "drop-down-category": "Select category",
+  "drop-down-sub-category": "Select sub category",
+
+  "input-tag": "Tag",
+  "input-title": "Title",
+
+  "option-vipps": "Allow direct sale with VIPPS",
+  "option-auction": "Allow buyers to bid on the price",
+
+  "condition-new": "New - Unopened/Unused",
+  "condition-like-new": "Like new - Not visibly used",
+  "condition-good": "Good - In good condition",
+  "condition-acceptable": "Acceptable - Visibly used",
+  "condition-for-parts": "For parts - Broken or missing parts"
+}
