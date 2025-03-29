@@ -35,5 +35,37 @@
   "condition-like-new": "Som ny - ikke synlig brukt",
   "condition-good": "Pent brukt - i god stand",
   "condition-acceptable": "Godt brukt - synlig brukt",
-  "condition-for-parts": "Må fikses - noen mangler/ødelagte deler"
+  "condition-for-parts": "Må fikses - noen mangler/ødelagte deler",
+
+  "loginViewTitle": "Logg inn",
+  "loginTab": "Logg inn",
+  "signupTab": "Registrer bruker",
+
+  "email": "E-postadresse",
+  "password": "Passord",
+  "loginBtn": "Logg inn",
+  "forgotPassword": "Glemt passord?",
+  "loginFormHeader": "Logg inn på din konto",
+
+
+  "invalidCredentials": "E-postadresse eller passord er ikke korrekt",
+  "unexpectedError": "Noe gikk galt. Vennligst prøv igjen.",
+
+  "invalidEmail": "Vennligst oppgi en gyldig e-postadresse",
+  "emailRequired": "E-postadresse er påkrevd",
+  "passwordRequired": "Passord er påkrevd",
+
+  "header": "Fyll inn opplysningene nedenfor for å opprette en ny konto",
+
+  "firstName": "Fornavn",
+  "lastName": "Etternavn",
+
+  "confirmPassword": "Bekreft passord",
+  "registerBtn": "Registrer deg",
+
+  "firstNameRequired": "Vennligst oppgi fornavn",
+  "lastNameRequired": "Vennligst oppgi etternavn",
+  "tooShortPassword": "Passordet er for kort. Det må være minst 6 tegn",
+  "passwordConfirmRequired": "Vennligst bekreft passordet",
+  "matchPassword": "Passordene må være identiske"
 }

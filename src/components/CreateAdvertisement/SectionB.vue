@@ -72,12 +72,12 @@ const tag = ref<string>('')
 const tags = ref<string[]>([])
 function addTag(tag: string){
   tags.value.push(tag)
-  emit('update:tags', tags)
+  emit('update:tags', tags.value)
 }
 
 function removeTag(index: number){
   tags.value.splice(index, 1)
-  emit('update:tags', tags)
+  emit('update:tags', tags.value)
 }
 
 async function fetchCategories()

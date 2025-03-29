@@ -35,5 +35,37 @@
   "condition-like-new": "Like new - Not visibly used",
   "condition-good": "Good - In good condition",
   "condition-acceptable": "Acceptable - Visibly used",
-  "condition-for-parts": "For parts - Broken or missing parts"
+  "condition-for-parts": "For parts - Broken or missing parts",
+
+  "invalidCredentials": "The email address or password you entered is incorrect",
+  "unexpectedError": "An unexpected error occurred. Please try again later",
+  "loginViewTitle": "Sign in",
+  "loginTab": "Sign in",
+  "signupTab": "Create account",
+
+  "email": "Email address",
+  "password": "Password",
+  "loginBtn": "Sign in",
+  "forgotPassword": "Forgot your Password?",
+  "loginFormHeader": "Log in",
+
+  "invalidEmail": "Please enter a valid email address",
+  "passwordTooShort": "The password is too short. It must be at least 6 characters long",
+
+  "emailRequired": "Email is required",
+  "passwordRequired": "Password is required",
+
+  "header": "Please complete the form below to create a new account",
+
+  "firstName": "First name",
+  "lastName": "Last name",
+
+  "confirmPassword": "Confirm password",
+  "registerBtn": "Register account",
+
+  "firstNameRequired": "First name is required.",
+  "lastNameRequired": "Last name is required.",
+  "tooShortPassword": "Password must be at least 6 characters.",
+  "passwordConfirmRequired": "Please confirm your password",
+  "matchPassword": "Passwords must match."
 }
