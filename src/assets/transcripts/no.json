@@ -4,6 +4,7 @@
   "messages": "Meldinger",
   "notifications": "Varslinger",
   "profile": "Min profil",
+  "edit-advertisement": "Rediger annonse",
 
   "label-type": "Type handel",
   "label-images": "Bilder",
@@ -16,17 +17,25 @@
   "label-post-number": "Postnummer",
   "label-price": "Pris",
   "label-condition": "Tilstand",
+  "label-delete": "Slett",
 
   "button-type-sell": "Selge",
   "button-type-free": "Gi bort",
   "button-images": "Legg til bilde",
   "button-tag": "Legg til emneknagg",
+  "button-preview": "Forhåndsvisning",
+  "button-draft": "Lagre utkast",
+  "button-publish": "Publiser annonse",
+  "button-edit": "Lagre endringer",
+  "button-discard": "Forkast endringer",
 
   "drop-down-category": "Velg kategori",
   "drop-down-sub-category": "Velg underkategori",
 
   "input-tag":"Emneknagg",
   "input-title": "Tittel",
+  "input-description": "Beskrivelse",
+  "input-postal-number": "Postnummer",
 
   "option-vipps": "Tillat direkte salg med VIPPS",
   "option-auction": "Tillat kjøpere å legge inn bud på prisen",
@@ -35,5 +44,14 @@
   "condition-like-new": "Som ny - ikke synlig brukt",
   "condition-good": "Pent brukt - i god stand",
   "condition-acceptable": "Godt brukt - synlig brukt",
-  "condition-for-parts": "Må fikses - noen mangler/ødelagte deler"
+  "condition-for-parts": "Må fikses - noen mangler/ødelagte deler",
+
+  "title-error" : "Mangler tittel!",
+  "description-error": "Mangler beskrivelse!",
+  "condition-error": "Mangler tilstand!",
+  "category-error": "Mangler kategori!",
+  "sub-category-error":"Mangler underkategori!",
+  "images-error": "Last opp minst ett bilde!",
+  "price-error": "Prisen må være større enn null, om ikke velg en annen annonsetype!",
+  "postal-number-error": "Ugjyldig postnummer!"
 }
