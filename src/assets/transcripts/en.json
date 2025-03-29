@@ -4,6 +4,7 @@
   "messages": "Messages",
   "notifications": "Notifications",
   "profile": "My Profile",
+  "edit-advertisement": "Edit Advertisement",
 
   "label-type": "Advertisement type",
   "label-images": "Images",
@@ -13,20 +14,28 @@
   "label-sub-category": "Sub-Category",
   "label-tag": "Tags",
   "label-shipping": "Where do you ship from?",
-  "label-post-number": "Post Number",
+  "label-post-number": "Postal Code",
   "label-price": "Price",
   "label-condition": "Condition",
+  "label-delete": "Delete",
 
   "button-type-sell": "For Sale",
   "button-type-free": "Give Away",
   "button-images": "Add image",
   "button-tag": "Add tag",
+  "button-preview": "Preview",
+  "button-draft": "Save draft",
+  "button-publish": "Publish advertisement",
+  "button-edit": "Save changes",
+  "button-discard": "Discard changes",
 
   "drop-down-category": "Select category",
   "drop-down-sub-category": "Select sub category",
 
   "input-tag": "Tag",
   "input-title": "Title",
+  "input-description": "Description",
+  "input-postal-number": "Postal code",
 
   "option-vipps": "Allow direct sale with VIPPS",
   "option-auction": "Allow buyers to bid on the price",
@@ -35,5 +44,14 @@
   "condition-like-new": "Like new - Not visibly used",
   "condition-good": "Good - In good condition",
   "condition-acceptable": "Acceptable - Visibly used",
-  "condition-for-parts": "For parts - Broken or missing parts"
+  "condition-for-parts": "For parts - Broken or missing parts",
+
+  "title-error" : "Title is missing!",
+  "description-error": "Description is missing!",
+  "condition-error": "Condition is missing!",
+  "category-error": "Category is missing!",
+  "sub-category-error":"Sub-category is missing!",
+  "images-error": "Upload minimum one image!",
+  "price-error": "The price must be above zero (or else change the advertisement type)!",
+  "postal-number-error": "Invalid postal code!"
 }

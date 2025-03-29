@@ -18,7 +18,7 @@ const currentRoute = router.currentRoute
 const status = ref(false)
 
 function navigateTo(path: string) {
-  if (path) router.push(path)
+  if (path) router.push('/' + path)
   status.value = false
 }
 
@@ -123,7 +123,7 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
   /* Show hamburger on mobile */
   #menu {
     display: block;

@@ -1,14 +1,26 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n';
+import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 
 const { t } = useI18n();
+const advertisementStore = useAdvertisementStore()
+
+const props = defineProps<{
+  price: number
+  payment: PaymentMethod
+  priceError: boolean;
+}>()
+
+onMounted(() => {
+  price.value = props.price
+  payment.value = props.payment
+});
 
 const emit = defineEmits<{
   (e: 'update:price', value: number): void;
   (e: 'update:payment', value: PaymentMethod): void;
 }>()
-
 
 interface Option {
   text: string;
@@ -16,8 +28,8 @@ interface Option {
 }
 enum PaymentMethod {
   Direct = 'DIRECT',
-  Auction = 'AUCTION',
-  None = 'NONE'
+  Auction = 'BID',
+  None = 'CONTACT'
 }
 
 const price = ref<number>(0)
@@ -39,18 +51,19 @@ function togglePayment(option: PaymentMethod) {
 }
 
 function sanitizePriceInput(e: Event) {
+
   const input = e.target as HTMLInputElement;
   input.value = input.value.replace(/\D/g, '');
-  price.value = input.value;
+
+  if(input.value == ''){
+    emit('update:price', 0)
+  } else{
+    emit('update:price', Number(price.value))
+  }
 }
 
 watch(payment, (newPayment)=>{
   emit("update:payment", newPayment)
-})
-
-watch(price, (newPrice)=>{
-  if(newPrice == ''){newPrice = 0}
-  emit("update:price", newPrice)
 })
 
 </script>
@@ -60,12 +73,14 @@ watch(price, (newPrice)=>{
   <div class="price-input-container">
     <input type="number"
            class="price-input"
+           :class="{'error': priceError}"
            min="0"
            inputmode="numeric"
            @input="sanitizePriceInput"
            v-model="price">
     <label class="valuta-label">NOK</label>
   </div>
+  <small v-if="priceError" class="error-message">{{$t('price-error')}}</small>
 
   <div class="checkbox-group">
     <div v-for="option in options" :key="option.value" class="payment-method" @click="togglePayment(option.value)">
@@ -74,7 +89,7 @@ watch(price, (newPrice)=>{
         :value="option.value"
         :checked="checked(option.value)"
       >
-      {{ option.text }}
+      <label>{{ option.text }}</label>
     </div>
   </div>
 </template>
@@ -96,15 +111,6 @@ watch(price, (newPrice)=>{
   border-radius: calc(var(--global-border-radius)/2);
 }
 
-.currency-label {
-  position: absolute;
-  right: 0.5em;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  font-weight: bold;
-}
-
 .checkbox-group {
   display: flex;
   flex-direction: column;
@@ -112,9 +118,19 @@ watch(price, (newPrice)=>{
 }
 
 .payment-method{
-  background-color: white;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+
+  gap: 10px;
+
+  background-color: var(--color-light-lavendel-background);
   padding: 5px 10px 5px 10px;
   border-radius: calc(var(--global-border-radius)/2);
   box-shadow: var(--global-box-shaddow);
+}
+
+.payment-method:hover{
+  background-color: var(--color-lavendel-background);
 }
 </style>
