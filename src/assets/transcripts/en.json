@@ -4,6 +4,7 @@
   "messages": "Messages",
   "notifications": "Notifications",
   "profile": "My Profile",
+  "edit-advertisement": "Edit Advertisement",
 
   "label-type": "Advertisement type",
   "label-images": "Images",
@@ -13,20 +14,28 @@
   "label-sub-category": "Sub-Category",
   "label-tag": "Tags",
   "label-shipping": "Where do you ship from?",
-  "label-post-number": "Post Number",
+  "label-post-number": "Postal Code",
   "label-price": "Price",
   "label-condition": "Condition",
+  "label-delete": "Delete",
 
   "button-type-sell": "For Sale",
   "button-type-free": "Give Away",
   "button-images": "Add image",
   "button-tag": "Add tag",
+  "button-preview": "Preview",
+  "button-draft": "Save draft",
+  "button-publish": "Publish advertisement",
+  "button-edit": "Save changes",
+  "button-discard": "Discard changes",
 
   "drop-down-category": "Select category",
   "drop-down-sub-category": "Select sub category",
 
   "input-tag": "Tag",
   "input-title": "Title",
+  "input-description": "Description",
+  "input-postal-number": "Postal code",
 
   "option-vipps": "Allow direct sale with VIPPS",
   "option-auction": "Allow buyers to bid on the price",
@@ -35,6 +44,49 @@
   "condition-like-new": "Like new - Not visibly used",
   "condition-good": "Good - In good condition",
   "condition-acceptable": "Acceptable - Visibly used",
+  "condition-for-parts": "For parts - Broken or missing parts",
+
+  "title-error" : "Title is missing!",
+  "description-error": "Description is missing!",
+  "condition-error": "Condition is missing!",
+  "category-error": "Category is missing!",
+  "sub-category-error":"Sub-category is missing!",
+  "images-error": "Upload minimum one image!",
+  "price-error": "The price must be above zero (or else change the advertisement type)!",
+  "postal-number-error": "Invalid postal code!"
+  "condition-for-parts": "For parts - Broken or missing parts",
+
+  "invalidCredentials": "The email address or password you entered is incorrect",
+  "unexpectedError": "An unexpected error occurred. Please try again later",
+  "loginViewTitle": "Sign in",
+  "loginTab": "Sign in",
+  "signupTab": "Create account",
+
+  "email": "Email address",
+  "password": "Password",
+  "loginBtn": "Sign in",
+  "forgotPassword": "Forgot your Password?",
+  "loginFormHeader": "Log in",
+
+  "invalidEmail": "Please enter a valid email address",
+  "passwordTooShort": "The password is too short. It must be at least 6 characters long",
+
+  "emailRequired": "Email is required",
+  "passwordRequired": "Password is required",
+
+  "header": "Please complete the form below to create a new account",
+
+  "firstName": "First name",
+  "lastName": "Last name",
+
+  "confirmPassword": "Confirm password",
+  "registerBtn": "Register account",
+
+  "firstNameRequired": "First name is required.",
+  "lastNameRequired": "Last name is required.",
+  "tooShortPassword": "Password must be at least 6 characters.",
+  "passwordConfirmRequired": "Please confirm your password",
+  "matchPassword": "Passwords must match."
   "condition-for-parts": "For parts - Broken or missing parts",
 
   "chat-message-placeholder": "Message..."
