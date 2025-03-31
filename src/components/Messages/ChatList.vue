@@ -32,7 +32,7 @@ function sendSelectedChat() {
 </script>
 
 <template>
-  <h2>{{ $t('messages') }}</h2>
+  <div class="placeholder">hello</div>
 
   <!--todo: display the top message at start. display a box if there are no chats -->
   <div class="message-cards">
@@ -40,4 +40,11 @@ function sendSelectedChat() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.placeholder {
+  width: 50vh;
+  height:50vh;
+  max-width: 50%;
+  background-color: white;
+}
+</style>

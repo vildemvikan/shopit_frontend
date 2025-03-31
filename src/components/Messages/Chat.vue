@@ -7,19 +7,27 @@ import type { UserInfo } from '@/interfaces/interfaces.ts'
 
 const { bus } = useEventsBus();
 
-let chatMessageInfo: ChatMessage[] = reactive([]);
+let chatMessageInfo: Ref<ChatMessage[]>= ref([]);
+let currentUser: Ref<string> = ref('')
 let profileInfo = ref();
 
 watch(()=> bus.value.get('selectChat'), async (val) => {
   const userInfo = val[0];
+  currentUser = userInfo.senderMail
   await displayMessages(userInfo)
   await fetchProfileInfo(userInfo)
 });
 
 async function displayMessages(userInfo: UserInfo) {
-  chatMessageInfo = await fetchChatMessages(userInfo.senderMail, userInfo.recipientMail, userInfo.itemId);
-  console.log(chatMessageInfo)
+  chatMessageInfo.value = await fetchChatMessages(userInfo.senderMail, userInfo.recipientMail, userInfo.itemId);
+  console.log("chatmessageinfo value: ", chatMessageInfo.value)
+  for (let i = 0; i < chatMessageInfo.value.length; i++)  {
+    //chatMessageInfo.value[i].content = "hello"
+    console.log(chatMessageInfo.value[i])
+  }
 }
+
+
 
 async function fetchProfileInfo(info) {
 }
@@ -28,12 +36,15 @@ async function fetchProfileInfo(info) {
 
 <template>
   <div class="profile-info">
-    {{chatMessageInfo}}
+    Current user: {{ currentUser }}
   </div>
 
   <div class="message-box">
-    <div>
-
+    <div
+      v-for="info in chatMessageInfo"
+      :key="info.id"
+      :class="['message', info.senderId === currentUser ? 'sender' : 'receiver']">
+      <p>{{info.content}}</p>
     </div>
   </div>
 
@@ -47,6 +58,36 @@ async function fetchProfileInfo(info) {
 </template>
 
 <style scoped>
+.message-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.message {
+  margin: 1px;
+  border-radius: 10px;
+  max-width: 80%;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 7em;
+}
+
+.message p {
+  word-wrap: break-word;
+}
+
+.sender {
+  align-self: flex-end;
+  background: dodgerblue;
+}
+
+.receiver {
+  align-self: start;
+  background: grey;
+}
+
 .input {
   width: 100%;
 }
@@ -62,9 +103,9 @@ async function fetchProfileInfo(info) {
 }
 
 .message-wrapper {
-  width: 50%;
+  width: 100%;
   border: 1px solid #e4e7ec;
-  border-radius: 20px;
+  border-radius: var(--global-border-radius);
   background-color: #f9fafb;
   padding: 0.5em; /* the container will keep the padding untouched */
   max-height: 7em; /* added padding to the height of the .message-text */

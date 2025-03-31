@@ -9,11 +9,28 @@ const selectedChat = ref('');
 </script>
 
 <template>
-  <message-list></message-list>
-  <chat></chat>
+  <h2>{{ $t('messages') }}</h2>
+
+ <div class="container">
+   <div class="sub-containers">
+     <message-list></message-list>
+   </div>
+   <div class="sub-container">
+     <chat></chat>
+   </div>
+ </div>
 
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sub-container {
+  width: 50%
+}
 
 </style>
