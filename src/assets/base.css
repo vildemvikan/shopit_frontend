@@ -29,6 +29,11 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+
+  --vt-hokieStone-6t:  #C8C9CA;
+  --vt-c-black-hover: #141414;
+
 }
 
 /* semantic color variables for this project */
@@ -51,7 +56,6 @@
   --color-light-lavendel-background: var(--vt-c-light-lavendel);
 
   --color-black-button: var(--vt-c-black);
-  --color-white-button: var(--vt-c-black);
   --color-purple-button: var(--vt-c-dark-lavendel);
   --color-lavendel-button: var(--vt-c-lavendel);
   --color-dark-lavendel-button: var(--vt-c-dark-dark-lavendel);
@@ -61,6 +65,35 @@
 
   --color-white-text: var(--vt-c-white);
   --color-error-text: var(--vt-c-red)
+
+
+
+  --color-black-button-hover: var(--vt-c-black-hover);
+  --color-white-button: var(--vt-c-white);
+
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+
+  /* Font Sizes */
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.5rem;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  /* Button Sizes */
+  --btn-padding-y: 0.75rem;
+  --btn-padding-x: 1rem;
+
+  --font-size-h1: 2rem;
+  --font-size-h2: 1.5rem;
+  --font-size-h3: 1.25rem;
+  --heading-weight: 600;
+  --heading-line-height: 1.3;
 
 }
 

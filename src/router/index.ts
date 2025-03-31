@@ -5,6 +5,7 @@ import NotificationsView from '@/views/NotificationsView.vue'
 import BookmarksView from '@/views/BookmarksView.vue'
 import CreateAdvertisementView from '@/views/CreateAdvertisementView.vue'
 import FrontView from '@/views/FrontView.vue'
+import AuthenticationView from '@/views/AuthenticationView.vue'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 import EditAdvertisement from '@/views/EditAdvertisement.vue'
 
@@ -46,6 +47,11 @@ const router = createRouter({
       name:'edit-advertisement',
       component: EditAdvertisement,
       props: true
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: AuthenticationView
     }
   ],
 })
