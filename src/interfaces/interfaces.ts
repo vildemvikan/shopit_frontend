@@ -5,7 +5,9 @@ export interface ChatMessage {
   senderId: string,
   recipientId: string,
   itemId: number,
-  chatId: string
+  chatId: string,
+  content: string,
+  timestamp: Date
 }
 
 export interface Image{
