@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n';
 import type { Option } from '@/interfaces/interfaces.ts'
+import { PaymentMethod } from '@/enums/enums.ts'
 
 const { t } = useI18n();
 
@@ -9,13 +10,6 @@ const emit = defineEmits<{
   (e: 'update:price', value: number): void;
   (e: 'update:payment', value: PaymentMethod): void;
 }>()
-
-
-enum PaymentMethod {
-  Direct = 'DIRECT',
-  Auction = 'AUCTION',
-  None = 'NONE'
-}
 
 const price = ref<number>(0)
 const payment = ref<PaymentMethod>(PaymentMethod.None)

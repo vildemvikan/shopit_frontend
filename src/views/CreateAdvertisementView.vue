@@ -5,21 +5,9 @@ import SectionB from '@/components/CreateAdvertisement/SectionB.vue'
 import SectionD from '@/components/CreateAdvertisement/SectionD.vue'
 import SectionC from '@/components/CreateAdvertisement/SectionC.vue'
 import type { Image } from '@/interfaces/interfaces.ts'
+import { Condition, PaymentMethod } from '@/enums/enums.ts'
 
 
-export enum PaymentMethod {
-  Direct = 'DIRECT',
-  Auction = 'AUCTION',
-  None = 'NONE'
-}
-
-enum Condition {
-  New = 'NEW',
-  LikeNew = 'LIKE_NEW',
-  Good = 'GOOD',
-  Acceptable = 'ACCEPTABLE',
-  ForParts = 'FOR_PARTS'
-}
 
 const title = ref<string>('');
 const description = ref<string>('');
