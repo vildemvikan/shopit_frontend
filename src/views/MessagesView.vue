@@ -5,11 +5,12 @@ import Chat from '@/components/Messages/Chat.vue'
 import { ref } from 'vue'
 
 const selectedChat = ref('');
+
 </script>
 
 <template>
-  <message-list @select="selectedChat = $event"></message-list>
-  <chat :selected-chat="selectedChat"></chat>
+  <message-list></message-list>
+  <chat></chat>
 
 </template>
 

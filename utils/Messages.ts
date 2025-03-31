@@ -1,32 +1,27 @@
-const baseUrl = "http://localhost:8080";
+import axios from 'axios'
+
+const baseUrl: string = 'http://localhost:8080';
+
 
 export async function fetchChatList(senderId: string, itemId: number): Promise<any> {
-  const url = `${this.baseUrl}/chats/${itemId}/${senderId}`;
+  const url = `${baseUrl}/chats/${itemId}/${senderId}`;
   try {
-    const response = await fetch(url)
-    if (!response.ok) {
-      console.log(response)
-      return null
-    }
-    return await response.json()
+    const response = await axios.get(url)
+    return response.data
   } catch (error) {
     console.error(error)
-    return null
+    return new Error("Could not retrieve chat list")
   }
 }
 
-export async function fetchChatLog(senderId: string, recipientId, itemId: number): Promise<any> {
-  const url = `${this.baseUrl}/messages/${itemId}/${senderId}/${recipientId}`;
+export async function fetchChatMessages(senderId: string, recipientId: string, itemId: number): Promise<ChatMessage[] | []> {
+  const url = `${baseUrl}/messages/${itemId}/${senderId}/${recipientId}`;
 
   try {
-    const response = await fetch(url)
-    if (!response.ok) {
-      console.log(response)
-      return null
-    }
-    return await response.json()
+    const response = await axios.get(url)
+    return await response.data
   } catch (error) {
-    console.error(error)
-    return null
+    console.error("Error", error)
+    return [];
   }
 }
