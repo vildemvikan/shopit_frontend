@@ -35,5 +35,7 @@
   "condition-like-new": "Som ny - ikke synlig brukt",
   "condition-good": "Pent brukt - i god stand",
   "condition-acceptable": "Godt brukt - synlig brukt",
-  "condition-for-parts": "Må fikses - noen mangler/ødelagte deler"
+  "condition-for-parts": "Må fikses - noen mangler/ødelagte deler",
+
+  "chat-message-placeholder": "Melding..."
 }

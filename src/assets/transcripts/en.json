@@ -35,5 +35,7 @@
   "condition-like-new": "Like new - Not visibly used",
   "condition-good": "Good - In good condition",
   "condition-acceptable": "Acceptable - Visibly used",
-  "condition-for-parts": "For parts - Broken or missing parts"
+  "condition-for-parts": "For parts - Broken or missing parts",
+
+  "chat-message-placeholder": "Message..."
 }
