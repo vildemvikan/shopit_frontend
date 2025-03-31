@@ -1,11 +1,7 @@
 <script setup lang="ts">
 
 import { ref, watch } from 'vue'
-
-interface Image{
-  src: string,
-  description: string
-}
+import type { Image } from '@/interfaces/interfaces.ts'
 
 const emit = defineEmits<{
   (e: 'update:forSale', value: boolean): void;

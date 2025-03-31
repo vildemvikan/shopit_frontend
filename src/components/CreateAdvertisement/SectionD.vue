@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { fetchPostalCodeInfo } from '/utils/CreateAdvertisement.ts'
+import { PostalCodeInfo } from '@/interfaces/interfaces.ts'
 
 const emit = defineEmits<{
   (e: 'update:postalNumber', value: number|null): void;
 }>()
 
-interface postalCodeInfo{
-  result: string,
-  valid: boolean,
-  postalCodeType: string
-}
 
 const postNumber = ref<string|null>(null)
 const city = ref<string|null>('')

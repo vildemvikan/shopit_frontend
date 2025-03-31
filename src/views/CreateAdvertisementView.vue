@@ -4,9 +4,10 @@ import SectionA from '@/components/CreateAdvertisement/SectionA.vue'
 import SectionB from '@/components/CreateAdvertisement/SectionB.vue'
 import SectionD from '@/components/CreateAdvertisement/SectionD.vue'
 import SectionC from '@/components/CreateAdvertisement/SectionC.vue'
+import type { Image } from '@/interfaces/interfaces.ts'
 
 
-enum PaymentMethod {
+export enum PaymentMethod {
   Direct = 'DIRECT',
   Auction = 'AUCTION',
   None = 'NONE'
@@ -26,11 +27,6 @@ const condition = ref<Condition|null>(null)
 const category = ref<string>('');
 const subCategory = ref<string>('');
 const tags = ref<string[] | null>(null);
-
-interface Image{
-  src: string,
-  description: string
-}
 
 const images = ref<Image[] | null>(null);
 
