@@ -4,13 +4,22 @@
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
 
+  --vt-c-grey: #EDEDED;
+  --vt-c-dark-gray: #D9D9D9A3;
+  --vt-c-light-lavendel: #dedee8;
   --vt-c-lavendel: #C6C7D2;
   --vt-c-dark-lavendel: #888DA7;
+  --vt-c-dark-dark-lavendel: #313056FF;
 
   --vt-c-black: #181818;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
+
   --vt-c-indigo: #2c3e50;
+
+  --vt-c-red: #b70000;
+  --vt-c-orange: #313056;
+
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
   --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
@@ -38,72 +47,56 @@
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
+
   --section-gap: 160px;
 }
 
 :root{
   --color-lavendel-background: var(--vt-c-lavendel);
+  --color-light-lavendel-background: var(--vt-c-light-lavendel);
+
   --color-black-button: var(--vt-c-black);
   --color-purple-button: var(--vt-c-dark-lavendel);
+  --color-lavendel-button: var(--vt-c-lavendel);
+  --color-dark-lavendel-button: var(--vt-c-dark-dark-lavendel);
+  --color-grey-button: var(--vt-c-grey);
+
+  --color-error-border: var(--vt-c-red);
+
   --color-white-text: var(--vt-c-white);
+  --color-error-text: var(--vt-c-red)
 
 
 
   --color-black-button-hover: var(--vt-c-black-hover);
   --color-white-button: var(--vt-c-white);
-  /* Spacing */
-  --spacing-sm: 0.5rem; /* 8px */
-  --spacing-md: 0.75rem; /* 12px */
-  --spacing-lg: 1rem; /* 16px */
+
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
 
   /* Font Sizes */
-  --font-size-sm: 0.875rem; /* 14px */
-  --font-size-md: 1rem; /* 16px */
-  --font-size-lg: 1.5rem; /* 24px */
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.5rem;
 
   /* Border Radius */
-  --radius-sm: 0.25rem; /* 4px */
-  --radius-md: 0.5rem; /* 8px */
-  --radius-lg: 0.75rem; /* 12px */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
 
   /* Button Sizes */
-  --btn-padding-y: 0.75rem; /* 12px */
-  --btn-padding-x: 1rem; /* 16px */
+  --btn-padding-y: 0.75rem;
+  --btn-padding-x: 1rem;
 
-  /* Headings */
-  --font-size-h1: 2rem; /* 32px */
-  --font-size-h2: 1.5rem; /* 24px */
-  --font-size-h3: 1.25rem; /* 20px */
+  --font-size-h1: 2rem;
+  --font-size-h2: 1.5rem;
+  --font-size-h3: 1.25rem;
   --heading-weight: 600;
   --heading-line-height: 1.3;
 
-  /* Global Elements */
-  --global-border-size: 1px;
-  --global-border-radius: 0.625rem; /* 10px */
-  --global-box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); /* 4px 6px */
-  --global-button-height: 5vh;
-  --global-button-min-height: 1.25rem; /* 20px */
-}
-h1 {
-  font-size: var(--font-size-h1);
-  font-weight: var(--heading-weight);
-  line-height: var(--heading-line-height);
-  margin-bottom: var(--spacing-md);
 }
 
-h2 {
-  font-size: var(--font-size-h2);
-  font-weight: var(--heading-weight);
-  line-height: var(--heading-line-height);
-  margin-bottom: var(--spacing-md);
-}
-
-h3 {
-  font-size: var(--font-size-h3);
-  font-weight: var(--heading-weight);
-  line-height: var(--heading-line-height);
-  margin-bottom: var(--spacing-sm);
-}
 :root{
   --global-border-size: 1px;
   --global-border-radius: 10px;
@@ -163,4 +156,28 @@ body {
 
 h1{
   font-size: 35px;
+}
+
+.error-message{
+  color: var(--color-error-text);
+}
+
+.error{
+  border: 2px solid var(--color-error-border);
+}
+
+button{
+  cursor: pointer;
+}
+
+select{
+  cursor: pointer;
+}
+
+option{
+  cursor: pointer;
+}
+
+button:disabled{
+  cursor: auto;
 }

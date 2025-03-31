@@ -4,7 +4,6 @@ import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { registerUser } from '../../../utils/Authentication.ts'
 const { t } = useI18n()
 import {useTokenStore} from '../../stores/tokenStore.ts'
 // Example schema with confirmPassword & TOS
