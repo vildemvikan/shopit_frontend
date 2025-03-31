@@ -53,7 +53,7 @@
   "sub-category-error":"Sub-category is missing!",
   "images-error": "Upload minimum one image!",
   "price-error": "The price must be above zero (or else change the advertisement type)!",
-  "postal-number-error": "Invalid postal code!"
+  "postal-number-error": "Invalid postal code!",
   "condition-for-parts": "For parts - Broken or missing parts",
 
   "invalidCredentials": "The email address or password you entered is incorrect",
@@ -86,7 +86,7 @@
   "lastNameRequired": "Last name is required.",
   "tooShortPassword": "Password must be at least 6 characters.",
   "passwordConfirmRequired": "Please confirm your password",
-  "matchPassword": "Passwords must match."
+  "matchPassword": "Passwords must match.",
   "condition-for-parts": "For parts - Broken or missing parts",
 
   "chat-message-placeholder": "Message..."

@@ -53,7 +53,7 @@
   "sub-category-error":"Mangler underkategori!",
   "images-error": "Last opp minst ett bilde!",
   "price-error": "Prisen må være større enn null, om ikke velg en annen annonsetype!",
-  "postal-number-error": "Ugjyldig postnummer!"
+  "postal-number-error": "Ugjyldig postnummer!",
   "condition-for-parts": "Må fikses - noen mangler/ødelagte deler",
 
   "loginViewTitle": "Logg inn",
@@ -86,7 +86,7 @@
   "lastNameRequired": "Vennligst oppgi etternavn",
   "tooShortPassword": "Passordet er for kort. Det må være minst 6 tegn",
   "passwordConfirmRequired": "Vennligst bekreft passordet",
-  "matchPassword": "Passordene må være identiske"
+  "matchPassword": "Passordene må være identiske",
   "condition-for-parts": "Må fikses - noen mangler/ødelagte deler",
 
   "chat-message-placeholder": "Melding..."
