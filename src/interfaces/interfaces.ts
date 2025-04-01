@@ -1,4 +1,4 @@
-import type { PaymentMethod } from '@/views/CreateAdvertisementView.vue'
+import type { PaymentMethod } from '@/enums/enums.ts'
 
 export interface ChatMessage {
   id: number,
