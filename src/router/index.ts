@@ -23,8 +23,8 @@ const router = createRouter({
       component: FrontView
     },
     {
-      path: '/',
-      name: 'front-page',
+      path: '/messages',
+      name: 'messages',
       component: MessagesView
     },
     {
