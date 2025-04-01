@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n';
-import {fetchCategories} from '../../../utils/CreateAdvertisement.ts'
+import {fetchCategories} from '../../../utils/Advertisement.ts'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 
 const { t } = useI18n();
