@@ -61,7 +61,7 @@ const onSubmit = handleSubmit(async (values) => {
 <template>
   <!-- Heading & Subheading -->
   <div class="auth-header">
-    <h2>Register</h2>
+    <h2 class="form-title">Register</h2>
     <p>{{ t('header') }}</p>
   </div>
 
@@ -133,7 +133,14 @@ const onSubmit = handleSubmit(async (values) => {
 
 <style scoped>
 
-/* 2) Heading styles */
+.form-title {
+  font-size: var(--font-size-h2);
+  font-weight: var(--heading-weight);
+  color: var(--color-heading);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
 .auth-header {
   text-align: center;
   margin-bottom: var(--spacing-md);
@@ -239,5 +246,25 @@ button {
 button:hover {
   background-color: var(--color-black-button-hover);
   transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .form-title {
+    font-size: 1.5rem;
+  }
+
+  .form-group input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
 }
 </style>
