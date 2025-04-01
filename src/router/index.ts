@@ -7,6 +7,7 @@ import CreateAdvertisementView from '@/views/CreateAdvertisementView.vue'
 import FrontView from '@/views/FrontView.vue'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 import EditAdvertisement from '@/views/EditAdvertisement.vue'
+import AdvertisementView from '@/views/AdvertisementView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,7 @@ const router = createRouter({
       name: 'front-page',
       component: FrontView
     },
+
     {
       path: '/profile',
       name: 'profile',
@@ -45,6 +47,12 @@ const router = createRouter({
       path:'/edit-advertisement/:id',
       name:'edit-advertisement',
       component: EditAdvertisement,
+      props: true
+    },
+    {
+      path: '/advertisement/:id',
+      name:'advertisement',
+      component: AdvertisementView,
       props: true
     }
   ],

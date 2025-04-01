@@ -18,6 +18,14 @@
   "label-price": "Pris",
   "label-condition": "Tilstand",
   "label-delete": "Slett",
+  "label-back-to-search": " Tilbake til søk",
+  "label-back-to-profile": "Tilbake til min profil",
+  "label-allows-auction": "Annonsen tillater at kjøpere kan legge inn bud på prisen.",
+  "label-denies-auction": "Annonsen tillater ikke at kjøpere kan legge inn bud på prisen",
+  "label-allows-direct": "Annonsen tillater direkte salg med VIPPS",
+  "label-denies-direct": "Annonsen tillater direkte salg med VIPPS",
+  "label-free": "GRATIS",
+  "label-sold": "Sold",
 
   "button-type-sell": "Selge",
   "button-type-free": "Gi bort",
@@ -28,6 +36,13 @@
   "button-publish": "Publiser annonse",
   "button-edit": "Lagre endringer",
   "button-discard": "Forkast endringer",
+  "button-auction": "Gi bud",
+  "button-vipps": "Kjøp med VIPPS",
+  "button-contact-seller": "Kontakt selger",
+  "button-edit-advertisement": "Rediger",
+  "button-delete": "Slett",
+  "button-sold": "Marker som solgt",
+  "button-activate": "Marker som aktiv ",
 
   "drop-down-category": "Velg kategori",
   "drop-down-sub-category": "Velg underkategori",
@@ -53,5 +68,8 @@
   "sub-category-error":"Mangler underkategori!",
   "images-error": "Last opp minst ett bilde!",
   "price-error": "Prisen må være større enn null, om ikke velg en annen annonsetype!",
-  "postal-number-error": "Ugjyldig postnummer!"
+  "postal-number-error": "Ugjyldig postnummer!",
+
+  "confirm-deletion-title": "Bekreft Sletting",
+  "confirm-deletion-label": "Er du sikker på at du vil slette annonsen?"
 }
