@@ -87,6 +87,10 @@
   "tooShortPassword": "Passordet er for kort. Det må være minst 6 tegn",
   "passwordConfirmRequired": "Vennligst bekreft passordet",
   "matchPassword": "Passordene må være identiske",
+  "condition-for-parts": "Må fikses - noen mangler/ødelagte deler",
+
+  "chat-message-placeholder": "Melding..."
+}
 
   "forgotPasswordTitle": "Tilbakestill passord",
   "forgotPasswordDescription": "Skriv inn din e-postadresse, så sender vi deg en lenke for å tilbakestille passordet.",

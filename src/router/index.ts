@@ -19,7 +19,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'front-page',
-      component: FrontView
+      component: MessagesView
     },
     {
       path: '/profile',
