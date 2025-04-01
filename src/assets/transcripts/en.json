@@ -74,7 +74,7 @@
   "emailRequired": "Email is required",
   "passwordRequired": "Password is required",
 
-  "header": "Please complete the form below to create a new account",
+  "header": "Create your new account to get started.",
 
   "firstName": "First name",
   "lastName": "Last name",
@@ -90,4 +90,18 @@
   "condition-for-parts": "For parts - Broken or missing parts",
 
   "chat-message-placeholder": "Message..."
+}
+
+  "forgotPasswordTitle": "Reset Your Password",
+  "forgotPasswordDescription": "Enter your email address and we'll send you a password reset link.",
+  "sendResetLink": "Send Reset Link",
+  "resetLinkSent": "A reset link has been sent to your email.",
+  "resetRequestFailed": "Unable to send reset link. Please try again later.",
+  "backToLogin": "Back to login",
+  "resetBtn": "Reset Password",
+  "resetSuccess": "Your password has been successfully reset.",
+  "resetFailed": "Failed to reset password. Please try again.",
+  "invalidOrExpiredTokenTitle": "Invalid or Expired Token",
+  "tryRequestingNewLink": "Try requesting a new link."
+
 }

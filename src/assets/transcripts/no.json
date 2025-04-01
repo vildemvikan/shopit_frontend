@@ -91,3 +91,17 @@
 
   "chat-message-placeholder": "Melding..."
 }
+
+  "forgotPasswordTitle": "Tilbakestill passord",
+  "forgotPasswordDescription": "Skriv inn din e-postadresse, så sender vi deg en lenke for å tilbakestille passordet.",
+  "sendResetLink": "Send tilbakestillingslenke",
+  "resetLinkSent": "En lenke for tilbakestilling er sendt til din e-postadresse.",
+  "resetRequestFailed": "Kunne ikke sende tilbakestillingslenke. Prøv igjen senere.",
+  "backToLogin": "Gå tilbake til logg in",
+  "resetBtn": "Tilbakestill passord",
+  "resetSuccess": "Passordet ditt er tilbakestilt",
+  "resetFailed": "Klarte ikke å tilbakestille passordet.",
+  "invalidOrExpiredTokenTitle": "Ugyldig eller utløpt lenke",
+  "tryRequestingNewLink": "Forespør en ny lenke"
+
+}

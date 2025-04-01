@@ -8,6 +8,10 @@ import FrontView from '@/views/FrontView.vue'
 import AuthenticationView from '@/views/AuthenticationView.vue'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 import EditAdvertisement from '@/views/EditAdvertisement.vue'
+import LoginForm from '@/components/Authentication/LoginForm.vue'
+import SignUpForm from '@/components/Authentication/SignUpForm.vue'
+import ForgotPasswordForm from '@/components/Authentication/ForgotPasswordForm.vue'
+import ResetPasswordForm from '@/components/Authentication/ResetPasswordForm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,8 +54,14 @@ const router = createRouter({
     },
     {
       path: '/auth',
-      name: 'auth',
-      component: AuthenticationView
+      component: AuthenticationView,
+      children: [
+        { path: '', redirect: '/auth/login' },
+        { path: 'login', component: LoginForm,  name: 'Login', },
+        { path: 'signup', component: SignUpForm, name: 'Signup' },
+        { path: 'forgot-password', component: ForgotPasswordForm, name: 'ForgotPassword' },
+        { path: 'reset-password', component: ResetPasswordForm, name: 'ResetPassword' },
+      ]
     }
   ],
 })
