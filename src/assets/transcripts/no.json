@@ -70,6 +70,51 @@
   "price-error": "Prisen må være større enn null, om ikke velg en annen annonsetype!",
   "postal-number-error": "Ugjyldig postnummer!",
 
+  "loginViewTitle": "Logg inn",
+  "loginTab": "Logg inn",
+  "signupTab": "Registrer bruker",
+
+  "email": "E-postadresse",
+  "password": "Passord",
+  "loginBtn": "Logg inn",
+  "forgotPassword": "Glemt passord?",
+  "loginFormHeader": "Logg inn på din konto",
+
+
+  "invalidCredentials": "E-postadresse eller passord er ikke korrekt",
+  "unexpectedError": "Noe gikk galt. Vennligst prøv igjen.",
+
+  "invalidEmail": "Vennligst oppgi en gyldig e-postadresse",
+  "emailRequired": "E-postadresse er påkrevd",
+  "passwordRequired": "Passord er påkrevd",
+
+  "header": "Fyll inn opplysningene nedenfor for å opprette en ny konto",
+
+  "firstName": "Fornavn",
+  "lastName": "Etternavn",
+
+  "confirmPassword": "Bekreft passord",
+  "registerBtn": "Registrer deg",
+
+  "firstNameRequired": "Vennligst oppgi fornavn",
+  "lastNameRequired": "Vennligst oppgi etternavn",
+  "tooShortPassword": "Passordet er for kort. Det må være minst 6 tegn",
+  "passwordConfirmRequired": "Vennligst bekreft passordet",
+  "matchPassword": "Passordene må være identiske",
+  "chat-message-placeholder": "Melding...",
+
+  "forgotPasswordTitle": "Tilbakestill passord",
+  "forgotPasswordDescription": "Skriv inn din e-postadresse, så sender vi deg en lenke for å tilbakestille passordet.",
+  "sendResetLink": "Send tilbakestillingslenke",
+  "resetLinkSent": "En lenke for tilbakestilling er sendt til din e-postadresse.",
+  "resetRequestFailed": "Kunne ikke sende tilbakestillingslenke. Prøv igjen senere.",
+  "backToLogin": "Gå tilbake til logg in",
+  "resetBtn": "Tilbakestill passord",
+  "resetSuccess": "Passordet ditt er tilbakestilt",
+  "resetFailed": "Klarte ikke å tilbakestille passordet.",
+  "invalidOrExpiredTokenTitle": "Ugyldig eller utløpt lenke",
+  "tryRequestingNewLink": "Forespør en ny lenke",
+
   "confirm-deletion-title": "Bekreft Sletting",
   "confirm-deletion-label": "Er du sikker på at du vil slette annonsen?"
 }

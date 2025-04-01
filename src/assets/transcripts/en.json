@@ -72,6 +72,51 @@
   "price-error": "The price must be above zero (or else change the advertisement type)!",
   "postal-number-error": "Invalid postal code!",
 
+  "invalidCredentials": "The email address or password you entered is incorrect",
+  "unexpectedError": "An unexpected error occurred. Please try again later",
+  "loginViewTitle": "Sign in",
+  "loginTab": "Sign in",
+  "signupTab": "Create account",
+
+  "email": "Email address",
+  "password": "Password",
+  "loginBtn": "Sign in",
+  "forgotPassword": "Forgot your Password?",
+  "loginFormHeader": "Log in",
+
+  "invalidEmail": "Please enter a valid email address",
+  "passwordTooShort": "The password is too short. It must be at least 6 characters long",
+
+  "emailRequired": "Email is required",
+  "passwordRequired": "Password is required",
+
+  "header": "Create your new account to get started.",
+
+  "firstName": "First name",
+  "lastName": "Last name",
+
+  "confirmPassword": "Confirm password",
+  "registerBtn": "Register account",
+
+  "firstNameRequired": "First name is required.",
+  "lastNameRequired": "Last name is required.",
+  "tooShortPassword": "Password must be at least 6 characters.",
+  "passwordConfirmRequired": "Please confirm your password",
+  "matchPassword": "Passwords must match.",
+  "chat-message-placeholder": "Message...",
+
+  "forgotPasswordTitle": "Reset Your Password",
+  "forgotPasswordDescription": "Enter your email address and we'll send you a password reset link.",
+  "sendResetLink": "Send Reset Link",
+  "resetLinkSent": "A reset link has been sent to your email.",
+  "resetRequestFailed": "Unable to send reset link. Please try again later.",
+  "backToLogin": "Back to login",
+  "resetBtn": "Reset Password",
+  "resetSuccess": "Your password has been successfully reset.",
+  "resetFailed": "Failed to reset password. Please try again.",
+  "invalidOrExpiredTokenTitle": "Invalid or Expired Token",
+  "tryRequestingNewLink": "Try requesting a new link.",
+
   "confirm-deletion-title": "Confirm Deletion",
   "confirm-deletion-label": "Are you sure you want to delete this advertisement?"
 }
