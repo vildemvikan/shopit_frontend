@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { fetchPostalCodeInfo } from '../../../utils/CreateAdvertisement.ts'
+import { fetchPostalCodeInfo } from '../../../utils/Advertisement.ts'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 
 const advertisementStore = useAdvertisementStore()
@@ -16,7 +16,7 @@ onMounted(() => {
 });
 
 const emit = defineEmits<{
-  (e: 'update:postalNumber', value: string|null): void;
+  (e: 'update:postalNumber', value: string): void;
 }>()
 
 
@@ -26,7 +26,7 @@ interface PostalCodeInfo{
   postalCodeType: string
 }
 
-const postNumber = ref<string|null>(null)
+const postNumber = ref<string>('')
 const city = ref<string|null>('')
 
 function sanitizePostalNumberInput(e: Event) {
@@ -58,7 +58,7 @@ watch(postNumber, (newVal) => {
     fetchPostNumberInformation(newVal);
   } else {
     city.value = null;
-    emit('update:postalNumber', null)
+    emit('update:postalNumber', '')
   }
 });
 

@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import Schema from '@/components/Schema.vue'
-import { fetchAdvertisement } from '../../utils/CreateAdvertisement.ts'
+import { fetchAdvertisement } from '../../utils/Advertisement.ts'
 
 const route = useRoute()
 const id = route.params.id as string
@@ -11,7 +11,6 @@ const advertisement = ref(null)
 onMounted(async () => {
   try {
     advertisement.value = await fetchAdvertisement(id.toString())
-    console.log(advertisement.value)
   } catch (error) {
     console.error('Error fetching advertisement:', error)
   }

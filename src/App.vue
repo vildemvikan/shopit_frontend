@@ -16,16 +16,23 @@ import Navbar from '@/components/Navbar.vue'
 
 .header{
   width: 100%;
-  height: 7.5%;
+  min-width: 350px;
+  height: 7%;
   min-height: 50px;
 }
 
 .view{
   width: 100%;
-  height: 100%;
-  padding-left: 2.5%;
-  padding-right: 2.5%;
-  padding-top: 2vh;
+  min-width: 350px;
+  min-height: 93%;
+  padding: 2vh 2.5% 2vh 2.5%;
+}
+
+@media (max-width: 1000px) {
+  .view{
+    height: fit-content;
+    overflow: scroll;
+  }
 }
 
 </style>

@@ -18,6 +18,15 @@
   "label-price": "Price",
   "label-condition": "Condition",
   "label-delete": "Delete",
+  "label-back-to-search": "Back to search",
+  "label-back-to-profile": "Back to my profile",
+  "label-allows-auction": "The advertisement allows users to bid on the price",
+  "label-denies-auction": "The advertisement does not allow users to bid on the price",
+  "label-allows-direct": "The advertisement allows users to pay with VIPPS",
+  "label-denies-direct": "The advertisement does not allow users to pay with VIPPS",
+  "label-free": "FREE",
+  "label-sold": "Sold",
+
 
   "button-type-sell": "For Sale",
   "button-type-free": "Give Away",
@@ -28,6 +37,14 @@
   "button-publish": "Publish advertisement",
   "button-edit": "Save changes",
   "button-discard": "Discard changes",
+  "button-auction": "Make offer",
+  "button-vipps": "Buy with VIPPS",
+  "button-contact-seller": "Contact seller",
+  "button-edit-advertisement": "Edit",
+  "button-delete": "Delete",
+  "button-sold": "Mark as sold",
+  "button-activate": "Mark as active ",
+
 
   "drop-down-category": "Select category",
   "drop-down-sub-category": "Select sub category",
@@ -54,7 +71,6 @@
   "images-error": "Upload minimum one image!",
   "price-error": "The price must be above zero (or else change the advertisement type)!",
   "postal-number-error": "Invalid postal code!",
-  "condition-for-parts": "For parts - Broken or missing parts",
 
   "invalidCredentials": "The email address or password you entered is incorrect",
   "unexpectedError": "An unexpected error occurred. Please try again later",
@@ -87,10 +103,7 @@
   "tooShortPassword": "Password must be at least 6 characters.",
   "passwordConfirmRequired": "Please confirm your password",
   "matchPassword": "Passwords must match.",
-  "condition-for-parts": "For parts - Broken or missing parts",
-
-  "chat-message-placeholder": "Message..."
-}
+  "chat-message-placeholder": "Message...",
 
   "forgotPasswordTitle": "Reset Your Password",
   "forgotPasswordDescription": "Enter your email address and we'll send you a password reset link.",
@@ -102,6 +115,8 @@
   "resetSuccess": "Your password has been successfully reset.",
   "resetFailed": "Failed to reset password. Please try again.",
   "invalidOrExpiredTokenTitle": "Invalid or Expired Token",
-  "tryRequestingNewLink": "Try requesting a new link."
+  "tryRequestingNewLink": "Try requesting a new link.",
 
+  "confirm-deletion-title": "Confirm Deletion",
+  "confirm-deletion-label": "Are you sure you want to delete this advertisement?"
 }
