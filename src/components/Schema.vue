@@ -11,7 +11,6 @@ import {
   updateAdvertisement
 } from '../../utils/Advertisement.ts'
 import router from '@/router'
-import { id } from 'jiti'
 
 const advertisementStore = useAdvertisementStore()
 
@@ -212,26 +211,26 @@ function discardChanges(){
   window.location.reload();
 }
 
-function saveDraft() {
+async function saveDraft() {
   const valid = validateInput()
   if (valid) {
     const body = buildJSONBody(Status.Inactive)
     try {
-      advertisement(body)
-      router.push('profile')
+      await advertisement(body)
+      await router.push('profile')
     } catch (error) {
       console.log(error)
     }
   }
 }
 
-function publish() {
+async function publish() {
   const invalid = validateInput();
   if (!invalid) {
     const body = buildJSONBody(Status.Inactive)
     try {
-      advertisement(body)
-      router.push('profile')
+      await advertisement(body)
+      await router.push('profile')
     } catch (error) {
       console.log(error)
     }
