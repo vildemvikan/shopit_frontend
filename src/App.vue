@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import Navbar from '@/components/Navbar.vue'
+import websocketService from '../utils/WebSocket.ts'
+const websocket = websocketService;
+websocket.connect("a@a")
 </script>
 
 <template>

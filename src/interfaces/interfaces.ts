@@ -1,11 +1,9 @@
 import type { PaymentMethod } from '@/enums/enums.ts'
 
 export interface ChatMessage {
-  id: number,
   senderId: string,
   recipientId: string,
   itemId: number,
-  chatId: string,
   content: string,
   timestamp: Date
 }

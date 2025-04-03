@@ -12,3 +12,8 @@ export enum PaymentMethod {
   None = 'NONE'
 }
 
+export enum Status{
+  Inactive = 'INACTIVE',
+  Active = 'ACTIVE',
+  Sold = 'SOLD'
+}

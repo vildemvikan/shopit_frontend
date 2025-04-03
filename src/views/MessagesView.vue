@@ -2,9 +2,19 @@
 
 import MessageList from '@/components/Messages/ChatList.vue'
 import Chat from '@/components/Messages/Chat.vue'
-import { ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
-const selectedChat = ref('');
+const currenUserMail = ref("a@a");
+const currentItemId = ref(1);
+
+onMounted(() => {
+  console.log("he")
+})
+
+onUnmounted(() => {
+  console.log("bue")
+})
+
 
 </script>
 
@@ -12,11 +22,14 @@ const selectedChat = ref('');
   <h2>{{ $t('messages') }}</h2>
 
  <div class="container">
-   <div class="sub-containers">
+   <div class="chat-list-wrapper">
      <message-list></message-list>
    </div>
-   <div class="sub-container">
-     <chat></chat>
+   <div class="chat-wrapper">
+     <chat
+       :current-user="currenUserMail"
+       :item-id="currentItemId"
+     ></chat>
    </div>
  </div>
 
@@ -29,8 +42,10 @@ const selectedChat = ref('');
   justify-content: center;
 }
 
-.sub-container {
-  width: 50%
+.chat-list-wrapper, .chat-wrapper{
+  width: 50%;
+  max-width: 50%;
 }
+
 
 </style>
