@@ -89,8 +89,7 @@
   "matchPassword": "Passwords must match.",
   "condition-for-parts": "For parts - Broken or missing parts",
 
-  "chat-message-placeholder": "Message..."
-}
+  "chat-message-placeholder": "Message...",
 
   "forgotPasswordTitle": "Reset Your Password",
   "forgotPasswordDescription": "Enter your email address and we'll send you a password reset link.",
