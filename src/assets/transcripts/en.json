@@ -26,7 +26,21 @@
   "label-denies-direct": "The advertisement does not allow users to pay with VIPPS",
   "label-free": "FREE",
   "label-sold": "Sold",
+  "label-active": "Active",
+  "label-inactive": "Inactive",
+  "label-user-info": "Your user information",
+  "label-change-password": "Change password",
+  "label-old-password": "Old password",
+  "label-new-password": "New password",
+  "label-repeat-new-password": "Repeat new password",
+  "label-my-advertisements": "My advertisements",
 
+  "option-oldest": "Date: Oldest to Newest",
+  "option-newest": "Date: Newest to Oldest",
+  "option-status-all": "Status: All",
+  "option-status-active": "Status: Active",
+  "option-status-inactive": "Status: Inactive",
+  "option-status-sold": "Status: Sold",
 
   "button-type-sell": "For Sale",
   "button-type-free": "Give Away",
@@ -44,6 +58,7 @@
   "button-delete": "Delete",
   "button-sold": "Mark as sold",
   "button-activate": "Mark as active ",
+  "button-save": "Save",
 
 
   "drop-down-category": "Select category",
@@ -71,6 +86,13 @@
   "images-error": "Upload minimum one image!",
   "price-error": "The price must be above zero (or else change the advertisement type)!",
   "postal-number-error": "Invalid postal code!",
+
+  "error-empty-new-password": "New password is missing!",
+  "error-empty-old-password": "Old password is missing!",
+  "error-empty-repeat-password": "Repeat new password!",
+  "error-password-too-short": "Password length must be at least 6 characters!",
+  "error-new-password-same": "New password cannot be the same as old password!",
+  "error-passwords-dont-match": "Repeated password does not match new password!",
 
   "invalidCredentials": "The email address or password you entered is incorrect",
   "unexpectedError": "An unexpected error occurred. Please try again later",
@@ -118,5 +140,18 @@
   "tryRequestingNewLink": "Try requesting a new link.",
 
   "confirm-deletion-title": "Confirm Deletion",
-  "confirm-deletion-label": "Are you sure you want to delete this advertisement?"
+  "confirm-deletion-label": "Are you sure you want to delete this advertisement?",
+
+  "toast-status-changed": "Status is changed!",
+  "toast-status-changed-error": "Error! Could not change status.",
+  "toast-password-changed": "Password is changed!",
+  "toast-password-changed-error": "Error! Could not change password.",
+  "toast-profile-picture-changed": "Profile picture is changed!",
+  "toast-profile-picture-changed-error": "Error! Could not change profile picture",
+  "toast-advertisement-created": "New advertisement is created!",
+  "toast-advertisement-created-error": "Error! Could not create advertisement.",
+  "toast-advertisement-changed": "Advertisement is edited!",
+  "toast-advertisement-changed-error": "Error! Could not edit advertisement.",
+  "toast-advertisement-deleted": "Advertisement is deleted!",
+  "toast-advertisement-deleted-error": "Error! Could not delete advertisement."
 }
