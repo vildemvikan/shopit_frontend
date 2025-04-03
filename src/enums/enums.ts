@@ -11,6 +11,11 @@ export enum PaymentMethod {
   Auction = 'AUCTION',
   None = 'NONE'
 }
+export enum Status{
+  Active = 'ACTIVE',
+  Inactive = 'INACTIVE',
+  Sold = 'SOLD'
+}
 
 export enum Status{
   Inactive = 'INACTIVE',

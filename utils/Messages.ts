@@ -1,6 +1,8 @@
 import axios from 'axios'
 import type { ChatMessage } from '@/interfaces/interfaces.ts'
 
+import type {ChatMessage} from '@/interfaces/interfaces.ts'
+
 const baseUrl: string = 'http://localhost:8080';
 
 export async function fetchChatMessages(senderId: string, recipientId: string, itemId: number): Promise<ChatMessage[] | []> {

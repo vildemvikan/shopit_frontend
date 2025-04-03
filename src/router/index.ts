@@ -8,6 +8,7 @@ import FrontView from '@/views/FrontView.vue'
 import AuthenticationView from '@/views/AuthenticationView.vue'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 import EditAdvertisement from '@/views/EditAdvertisement.vue'
+import AdvertisementView from '@/views/AdvertisementView.vue'
 import LoginForm from '@/components/Authentication/LoginForm.vue'
 import SignUpForm from '@/components/Authentication/SignUpForm.vue'
 import ForgotPasswordForm from '@/components/Authentication/ForgotPasswordForm.vue'
@@ -19,6 +20,11 @@ const router = createRouter({
     {
       path: '/',
       name: 'front-page',
+      component: FrontView
+    },
+    {
+      path: '/messages',
+      name: 'messages',
       component: MessagesView
     },
     {
@@ -62,6 +68,12 @@ const router = createRouter({
         { path: 'forgot-password', component: ForgotPasswordForm, name: 'ForgotPassword' },
         { path: 'reset-password', component: ResetPasswordForm, name: 'ResetPassword' },
       ]
+    },
+    {
+      path: '/advertisement/:id',
+      name:'advertisement',
+      component: AdvertisementView,
+      props: true
     }
   ],
 })

@@ -33,7 +33,7 @@ export const useAdvertisementStore = defineStore('advertisement', {
     forSale: true as boolean,
     payment: PaymentMethod.None as PaymentMethod,
     price: 0 as number,
-    postalNumber: null as string| null,
+    postalNumber: '' as string,
   }),
 
   actions: {
@@ -67,7 +67,7 @@ export const useAdvertisementStore = defineStore('advertisement', {
     updatePayment(newPaymentMethod: PaymentMethod) {
       this.payment = newPaymentMethod
     },
-    updatePostalNumber(newPostalNumber: string | null) {
+    updatePostalNumber(newPostalNumber: string) {
       this.postalNumber = newPostalNumber
     },
 

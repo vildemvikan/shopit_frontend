@@ -5,8 +5,6 @@ import { onMounted, ref, watch } from 'vue'
 onMounted(() => {
   forSale.value = props.forSale
   images.value = props.images
-
-  console.log(props.forSale)
 });
 
 const emit = defineEmits<{
@@ -62,7 +60,6 @@ function addImage(event: Event){
         caption: '',
         publicId: null
       })
-      console.log(images.value)
       emit('update:images', images.value);
     }
     reader.readAsDataURL(file)

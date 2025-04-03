@@ -11,6 +11,9 @@
   --vt-c-dark-lavendel: #888DA7;
   --vt-c-dark-dark-lavendel: #313056FF;
 
+  --vt-c-light-blue: #AED2FF;
+  --vt-c-blue: #a2beee;
+
   --vt-c-black: #181818;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
@@ -18,7 +21,15 @@
   --vt-c-indigo: #2c3e50;
 
   --vt-c-red: #b70000;
-  --vt-c-orange: #313056;
+  --ct-c-light-red: #FF8383;
+  --ct-c-light-dark-red: #f36e6e;
+  --vt-c-orange: #FF8F06;
+  --vt-c-dark-orange: #ff7300;
+  --vt-c-yellow: #FFEDAE;
+  --vt-c-dark-yellow: #ffe096;
+
+  --vt-c-transparent-white: rgba(255, 255, 255, 0.8);
+  --vt-c-transparent-black: rgba(0, 0, 0, 0.6);
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
@@ -52,24 +63,40 @@
 }
 
 :root{
+  --color-white-background: var(--vt-c-white);
   --color-lavendel-background: var(--vt-c-lavendel);
   --color-light-lavendel-background: var(--vt-c-light-lavendel);
+  --color-transparent-black-background: var(--vt-c-transparent-black);
 
   --color-black-button: var(--vt-c-black);
+  --color-white-button: var(--vt-c-white);
   --color-purple-button: var(--vt-c-dark-lavendel);
   --color-lavendel-button: var(--vt-c-lavendel);
   --color-dark-lavendel-button: var(--vt-c-dark-dark-lavendel);
   --color-grey-button: var(--vt-c-grey);
-
+  --color-orange-button: var(--vt-c-orange);
+  --color-dark-orange-button: var(--vt-c-dark-orange);
+  --color-light-blue-button: var(--vt-c-light-blue);
+  --color-blue-button: var(--vt-c-blue);
+  --color-transparent-button: var(--vt-c-transparent-white);
+  --color-gray-button: var(--vt-c-grey);
+  --color-yellow-button: var(--vt-c-yellow);
+  --color-dark-yellow-button: var(--vt-c-dark-yellow);
+  --color-light-red-button: var(--ct-c-light-red);
+  --color-light-dark-red-button: var(--ct-c-light-dark-red);
   --color-error-border: var(--vt-c-red);
 
   --color-white-text: var(--vt-c-white);
+  --color-black-text: var(--vt-c-black);
   --color-error-text: var(--vt-c-red);
+  --color-dark-orange-text: var(--vt-c-dark-orange);
 
+  --color-orange-border: var(--vt-c-orange);
+  --color-black-border: var(--vt-c-black);
 
+  --color-gray-divider: var(--vt-c-grey);
 
   --color-black-button-hover: var(--vt-c-black-hover);
-  --color-white-button: var(--vt-c-white);
 
   --spacing-sm: 0.5rem;
   --spacing-md: 0.75rem;
@@ -99,6 +126,8 @@
 
 :root{
   --global-border-size: 1px;
+  --global-thicc-border-size: 2px;
+  --global-thicccc-border-size: 3.5px;
   --global-border-radius: 10px;
   --global-box-shaddow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --global-button-height: 5vh;

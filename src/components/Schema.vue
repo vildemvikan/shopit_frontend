@@ -6,10 +6,10 @@ import SectionD from '@/components/Schema/SectionD.vue'
 import SectionC from '@/components/Schema/SectionC.vue'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 import {
-  createAdvertisement,
+  advertisement,
   fetchAdvertisement,
   updateAdvertisement
-} from '../../utils/CreateAdvertisement.ts'
+} from '../../utils/Advertisement.ts'
 import router from '@/router'
 
 const advertisementStore = useAdvertisementStore()
@@ -77,8 +77,8 @@ const payment = ref<PaymentMethod>(
 const price = ref<number>(
   props.new ? advertisementStore.price : props.advertisement?.price || 0
 );
-const postalNumber = ref<string | null>(
-  props.new ? advertisementStore.postalNumber : props.advertisement?.location.postalCode|| null
+const postalNumber = ref<string>(
+  props.new ? advertisementStore.postalNumber : props.advertisement?.location.postalCode|| ''
 );
 
 const titleError = ref<boolean>(false)
@@ -148,7 +148,6 @@ function updateImages(newImageList: Image[]) {
 
 function updateTitle(newTitle: string) {
   title.value = newTitle
-  console.log(description.value)
   if(props.new){advertisementStore.updateTitle(newTitle)}
   titleCheck()
 }
@@ -184,6 +183,10 @@ function updateTags(newTagList: string[]) {
 
 function updateForSale(newStatus: boolean) {
   forSale.value = newStatus
+  if(!newStatus){
+    price.value = 0
+    payment.value = PaymentMethod.None
+  }
   if(props.new){advertisementStore.updateForSale(newStatus)}
 }
 
@@ -198,7 +201,7 @@ function updatePayment(newPaymentMethod: PaymentMethod) {
   if(props.new){advertisementStore.updatePayment(newPaymentMethod)}
 }
 
-function updatePostalNumber(newPostalNumber: string | null) {
+function updatePostalNumber(newPostalNumber: string) {
   postalNumber.value = newPostalNumber
   if(props.new){advertisementStore.updatePostalNumber(newPostalNumber)}
   postalNumberCheck()
@@ -208,27 +211,26 @@ function discardChanges(){
   window.location.reload();
 }
 
-function saveDraft() {
+async function saveDraft() {
   const valid = validateInput()
-  console.log(valid)
   if (valid) {
     const body = buildJSONBody(Status.Inactive)
     try {
-      createAdvertisement(body)
-      router.push('profile')
+      await advertisement(body)
+      await router.push('profile')
     } catch (error) {
       console.log(error)
     }
   }
 }
 
-function publish() {
+async function publish() {
   const invalid = validateInput();
   if (!invalid) {
     const body = buildJSONBody(Status.Inactive)
     try {
-      createAdvertisement(body)
-      router.push('profile')
+      await advertisement(body)
+      await router.push('profile')
     } catch (error) {
       console.log(error)
     }
@@ -236,15 +238,13 @@ function publish() {
 }
 
 async function commitChanges(){
-  console.log("validating input")
   const invalid = validateInput();
   console.log(invalid)
   if(!invalid){
-    console.log("Building json body")
     const body = buildJSONBody(Status.Active)
     try{
-      console.log("Sending to server")
       await updateAdvertisement(body, props.id);
+      await router.push(`/advertisement/${props.id}`)
     } catch (error){
       console.log(error)
     }
@@ -308,7 +308,7 @@ function buildJSONBody(status: Status) {
         :sub-category-error="subCategoryError"
       />
     </div>
-    <div class="section">
+    <div class="section" v-if="forSale">
       <SectionC
         @update:price="updatePrice"
         @update:payment="updatePayment"

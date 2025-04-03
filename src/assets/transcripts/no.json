@@ -18,6 +18,29 @@
   "label-price": "Pris",
   "label-condition": "Tilstand",
   "label-delete": "Slett",
+  "label-back-to-search": " Tilbake til søk",
+  "label-back-to-profile": "Tilbake til min profil",
+  "label-allows-auction": "Annonsen tillater at kjøpere kan legge inn bud på prisen.",
+  "label-denies-auction": "Annonsen tillater ikke at kjøpere kan legge inn bud på prisen",
+  "label-allows-direct": "Annonsen tillater direkte salg med VIPPS",
+  "label-denies-direct": "Annonsen tillater direkte salg med VIPPS",
+  "label-free": "GRATIS",
+  "label-sold": "Sold",
+  "label-active": "Aktiv",
+  "label-inactive": "Inaktiv",
+  "label-user-info": "Dine brukeropplysninger",
+  "label-change-password": "Endre passord",
+  "label-old-password": "Gammelt passord",
+  "label-new-password": "Nytt passord",
+  "label-repeat-new-password": "Gjenta nytt passord",
+  "label-my-advertisements": "Mine annonser",
+
+  "option-oldest": "Dato: Nyeste først",
+  "option-newest": "Date: Eldste først",
+  "option-status-all": "Status: Alle",
+  "option-status-active": "Status: Aktiv",
+  "option-status-inactive": "Status: Påbegynt",
+  "option-status-sold": "Status: Solgt",
 
   "button-type-sell": "Selge",
   "button-type-free": "Gi bort",
@@ -28,6 +51,14 @@
   "button-publish": "Publiser annonse",
   "button-edit": "Lagre endringer",
   "button-discard": "Forkast endringer",
+  "button-auction": "Gi bud",
+  "button-vipps": "Kjøp med VIPPS",
+  "button-contact-seller": "Kontakt selger",
+  "button-edit-advertisement": "Rediger",
+  "button-delete": "Slett",
+  "button-sold": "Marker som solgt",
+  "button-activate": "Marker som aktiv ",
+  "button-save": "Lagre",
 
   "drop-down-category": "Velg kategori",
   "drop-down-sub-category": "Velg underkategori",
@@ -54,7 +85,6 @@
   "images-error": "Last opp minst ett bilde!",
   "price-error": "Prisen må være større enn null, om ikke velg en annen annonsetype!",
   "postal-number-error": "Ugjyldig postnummer!",
-  "condition-for-parts": "Må fikses - noen mangler/ødelagte deler",
 
   "loginViewTitle": "Logg inn",
   "loginTab": "Logg inn",
@@ -87,7 +117,6 @@
   "tooShortPassword": "Passordet er for kort. Det må være minst 6 tegn",
   "passwordConfirmRequired": "Vennligst bekreft passordet",
   "matchPassword": "Passordene må være identiske",
-  "condition-for-parts": "Må fikses - noen mangler/ødelagte deler",
 
   "chat-message-placeholder": "Melding...",
 
@@ -101,6 +130,8 @@
   "resetSuccess": "Passordet ditt er tilbakestilt",
   "resetFailed": "Klarte ikke å tilbakestille passordet.",
   "invalidOrExpiredTokenTitle": "Ugyldig eller utløpt lenke",
-  "tryRequestingNewLink": "Forespør en ny lenke"
+  "tryRequestingNewLink": "Forespør en ny lenke",
 
+  "confirm-deletion-title": "Bekreft Sletting",
+  "confirm-deletion-label": "Er du sikker på at du vil slette annonsen?"
 }
