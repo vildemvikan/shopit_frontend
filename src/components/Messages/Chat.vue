@@ -6,22 +6,6 @@ import type { ChatMessage } from '@/interfaces/interfaces.ts'
 import type { UserInfo } from '@/interfaces/interfaces.ts'
 import websocketService from '../../../utils/WebSocket.ts'
 
-export interface ChatMessageNoTimeStamp {
-  senderId: string;
-  recipientId: string;
-  itemId: number;
-  content: string
-}
-
-export interface ChatMessageWithTimeStamp {
-  senderId: string;
-  recipientId: string;
-  itemId: number;
-  chatId: string;
-  content: string;
-  timestamp: Date
-}
-
 const { bus } = useEventsBus();
 
 const chatMessageInfo: Ref<ChatMessage[]>= ref([]);

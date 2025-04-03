@@ -39,3 +39,16 @@ export interface DisplayAdvertisement{
   images: Image[]
   publishedAt: string,
 }
+
+export interface ChatCard {
+  lastMessageContent: string,
+  lastMessageTimestamp: string,
+  lastSenderId: string,
+  senderId: string,
+  recipientId: string,
+  itemId: number,
+  status: Status
+  itemImage: Image
+  itemTitle: string,
+  recipientProfilePic: string,
+}

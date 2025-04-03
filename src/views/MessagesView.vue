@@ -7,15 +7,6 @@ import { onMounted, onUnmounted, ref } from 'vue'
 const currenUserMail = ref("a@a");
 const currentItemId = ref(1);
 
-onMounted(() => {
-  console.log("he")
-})
-
-onUnmounted(() => {
-  console.log("bue")
-})
-
-
 </script>
 
 <template>

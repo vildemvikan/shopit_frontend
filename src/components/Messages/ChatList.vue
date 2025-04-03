@@ -3,10 +3,9 @@ import { onMounted, ref, watch } from 'vue'
 import useEventsBus from '../../../utils/EventBus.ts'
 import { send } from 'vite'
 import type { Status } from '@/enums/enums.ts'
-import type { Image } from '@/interfaces/interfaces.ts'
+import type { ChatCard, Image } from '@/interfaces/interfaces.ts'
 import { fetchChatList } from '../../../utils/Messages.ts'
 import { useTokenStore } from '@/stores/tokenStore.ts'
-import ChatCard from '@/components/Messages/ChatCard.vue'
 
 const { emit } = useEventsBus();
 
@@ -15,19 +14,6 @@ const { bus } = useEventsBus();
 const currentUser = ref<string | null>(null);
 const selectedChatId = ref<string | null>(null);
 let chatList = ref<ChatCard[]>([]);
-
-export interface ChatCard {
-  lastMessageContent: string,
-  lastMessageTimestamp: string,
-  lastSenderId: string,
-  senderId: string,
-  recipientId: string,
-  itemId: number,
-  status: Status
-  itemImage: Image
-  itemTitle: string,
-  recipientProfilePic: string,
-}
 
 /*const props = defineProps<{
   message: ChatMessageNoTimeStamp
