@@ -1,53 +1,46 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useForm, useField } from 'vee-validate';
+import * as yup from 'yup';
 import { useI18n } from 'vue-i18n';
-import { useForm, useField } from 'vee-validate'
-import * as yup from 'yup'
-import { useTokenStore } from '@/stores/tokenStore.ts'
-/**
- * We can access translation keys via useI18n().
- */
-const { t } = useI18n();
-const schema = yup.object({
-  email: yup.string().email(t('invalidEmail')).required(t('emailRequired')),
-  password: yup.string().required(t('passwordRequired'))
-})
-const tokenStore = useTokenStore()
-defineEmits(['forgot-password'])
+import { sendResetEmail } from '../../../utils/Authentication.ts';
 
-const { handleSubmit } = useForm({
-  validationSchema: schema,
+const { t } = useI18n();
+
+const schema = yup.object({
+  email: yup.string().email(t('invalidEmail')).required(t('emailRequired'))
 });
+
+const { handleSubmit } = useForm({ validationSchema: schema });
 const { value: email, errorMessage: emailError } = useField('email', undefined, {
   validateOnValueUpdate: false,
 });
 
-const { value: password, errorMessage: passwordError } = useField('password', undefined, {
-  validateOnValueUpdate: false,
-});
-const serverError = ref(''); // optional: for displaying global login errors
+const serverError = ref('');
+const serverSuccess = ref('');
+const isSubmitting = ref(false)
+const onSubmit = handleSubmit(async (values) => {
+  serverError.value = '';
+  serverSuccess.value = '';
+  isSubmitting.value = true;
 
-const onSubmit = handleSubmit( async (values) => {
-  serverError.value = ''; // clear previous error
   try {
-
-    await tokenStore.login(values.email, values.password);
-
+    await sendResetEmail(values.email);
+    console.log(values.email)
+    serverSuccess.value = t('resetLinkSent');
   } catch (error: any) {
-    if (error.response?.status === 401) {
-      serverError.value = t('invalidCredentials');
-    } else {
-      console.log(error.response?.statusText);
-      serverError.value = t('unexpectedError');
-    }
+    serverError.value = t('resetRequestFailed');
+  } finally {
+    isSubmitting.value = false;
   }
 });
-
 </script>
 
 <template>
-  <form class="login-form" @submit.prevent="onSubmit" novalidate>
-    <h2 class="form-title">{{ t('loginFormHeader') }}</h2>
+  <form class="forgot-password-form" @submit.prevent="onSubmit" novalidate>
+    <h2 class="form-title">{{ t('forgotPasswordTitle') }}</h2>
+    <p class="form-description">{{ t('forgotPasswordDescription') }}</p>
+
     <div class="form-group">
       <label for="email">{{ t('email') }}</label>
       <input
@@ -58,41 +51,30 @@ const onSubmit = handleSubmit( async (values) => {
       />
       <p class="input-error" :class="{ visible: emailError }">
         {{ emailError || '\u00A0' }}
-      </p>    </div>
+      </p>
+    </div>
 
-    <div class="form-group">
-      <label for="password">{{ t('password') }}</label>
-      <input
-        id="password"
-        type="password"
-        v-model="password"
-        :placeholder="t('password')"
-      />
-      <p class="input-error" :class="{ visible: passwordError }">
-        {{ passwordError || '\u00A0' }}
-      </p>    </div>
     <p v-if="serverError" class="server-error">{{ serverError }}</p>
-    <button type="submit">
-      {{ t('loginBtn') }}
-    </button>
+    <p v-if="serverSuccess" class="server-success">{{ serverSuccess }}</p>
 
+    <button type="submit" :disabled="isSubmitting">
+      <span v-if="!isSubmitting">{{ t('sendResetLink') }}</span>
+      <span v-else class="spinner"></span>
+    </button>
     <div class="footer-links">
-      <RouterLink :to="{ name: 'ForgotPassword' }">
-        {{ t('forgotPassword') }}
+      <RouterLink :to="{ name: 'Login' }">
+        {{ t('backToLogin') }}
       </RouterLink>
     </div>
   </form>
 </template>
 
 <style scoped>
-.login-form {
+.forgot-password-form {
   display: flex;
   flex-direction: column;
-
-
   gap: var(--spacing-md);
 }
-
 
 .form-title {
   font-size: var(--font-size-h2);
@@ -102,28 +84,26 @@ const onSubmit = handleSubmit( async (values) => {
   text-align: center;
 }
 
+.form-description {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--vt-c-text-light-2);
+  margin-bottom: var(--spacing-md);
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
 }
+
 label {
   margin-bottom: var(--spacing-sm);
   font-size: var(--font-size-md);
   color: var(--color-text);
-
 }
 
-input:focus {
-  border-color: var(--color-purple-button);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(136, 141, 167, 0.2); /* light lavender glow */
-}
-
-/* Input styling */
 input {
   width: 100%;
-  /* Make inputs bigger:
-     more padding, bigger font size. */
   padding: var(--spacing-md) var(--spacing-lg);
   font-size: var(--font-size-md);
   border: var(--global-border-size) solid var(--color-border);
@@ -131,7 +111,12 @@ input {
   box-sizing: border-box;
 }
 
-/* Button styling */
+input:focus {
+  border-color: var(--color-purple-button);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(136, 141, 167, 0.2);
+}
+
 button {
   background-color: var(--color-black-button);
   color: var(--color-white-text);
@@ -150,30 +135,28 @@ button:hover {
   background-color: var(--color-black-button-hover);
   transform: translateY(-2px);
 }
-
-/* Footer links styling */
-.footer-links {
-  text-align: right;
-  margin-top: var(--spacing-sm);
-  font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-md);
-}
-.footer-links {
-  margin-top: var(--spacing-md);
-  text-align: right;
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin: 0 auto;
 }
 
-.footer-links a {
-  font-size: var(--font-size-sm);
-  text-decoration: none;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.footer-links a:hover {
-  text-decoration: underline;
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
-
 .input-error {
-  min-height: 1.25rem; /* Adjust based on your font size */
+  min-height: 1.25rem;
   font-size: var(--font-size-sm);
   color: transparent;
   transition: color 0.2s;
@@ -184,11 +167,34 @@ button:hover {
   color: red;
 }
 
-.server-error {
-  color: red;
+.server-error,
+.server-success {
   font-size: var(--font-size-sm);
   text-align: center;
-  margin: var(--spacing-sm) 0;
+  margin-top: var(--spacing-sm);
+}
+
+.server-error {
+  color: red;
+}
+
+.server-success {
+  color: green;
+}
+
+.footer-links {
+  margin-top: var(--spacing-md);
+  text-align: right;
+}
+
+.footer-links a {
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 600px) {
