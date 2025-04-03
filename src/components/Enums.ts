@@ -4,8 +4,3 @@ enum PaymentMethod {
   None = 'CONTACT'
 }
 
-enum Status{
-  Active = 'ACTIVE',
-  Inactive = 'INACTIVE',
-  Sold = 'SOLD'
-}
