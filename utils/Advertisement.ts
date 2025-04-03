@@ -1,8 +1,9 @@
 import axios from 'axios';
+import {Status} from '@/enums/enums.ts'
 
 const baseURL = 'http://127.0.0.1:8080'
 
-const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGZhbnQub3JnIiwiaWF0IjoxNzQzNTIwMzM2LCJleHAiOjE3NDM1MjIxMzZ9.s7YK0EiudJ9WnYulGPT3tGcZUEmzQHCKMZUKFdk6k6p-8AslykZ21PSo6vmvr5AIOrEfFLTuKo2jVWki4Fbcww'
+const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGZhbnQub3JnIiwiaWF0IjoxNzQzNjc5NzM2LCJleHAiOjE3NDM2ODE1MzZ9.dB81TmEtavZXRPOMe1z_EeRpnjvE72zxcFUSIH_vRPF4R_DvHQOz2pf0X4nPBtRqGuoReQ5IkU_AdzkzfNXc3A'
 export async function fetchPostalCodeInfo(postalCode: string): Promise<any> {
   const url = `https://api.bring.com/address/api/open/postalCode/postalCode.json?pnr=${postalCode}&country=NO`;
   try {
@@ -28,7 +29,12 @@ export async function fetchCategories(){
 export async function fetchAdvertisement(id:string){
   const url = baseURL + '/items/' + id
   try{
-    const response = await axios.get(url)
+    const response = await axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     console.log(response.data)
     return await response.data
   } catch (error){

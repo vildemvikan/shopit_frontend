@@ -111,7 +111,7 @@ function toProfile(){
     </div>
     <div class="info">
       <Info
-        :owner="false"
+        :owner="owner"
         :description="description"
         :title="title"
         :for-sale="forSale"
