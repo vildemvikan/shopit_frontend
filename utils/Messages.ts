@@ -1,6 +1,4 @@
 import axios from 'axios'
-import type { ChatMessage } from '@/interfaces/interfaces.ts'
-
 import type {ChatMessage} from '@/interfaces/interfaces.ts'
 
 const baseUrl: string = 'http://localhost:8080';

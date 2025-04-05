@@ -70,7 +70,7 @@ const websocketService = {
     }
   },
 
-  sendMessage(senderMail: string, recipientMail: string, itemId: number, content: string, timestamp: Date) {
+  sendMessage(senderMail: string, recipientMail: string, itemId: number, content: string) {
     if (!stompClient || !state.connected || !content.trim()) {
       console.warn('Cannot send message: not connected or empty message');
       return false;
@@ -82,7 +82,6 @@ const websocketService = {
         recipientId: recipientMail,
         itemId,
         content,
-        timestamp
       };
 
       console.log("Message", message)

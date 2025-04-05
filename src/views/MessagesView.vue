@@ -1,11 +1,36 @@
 <script setup lang="ts">
 
-import MessageList from '@/components/Messages/ChatList.vue'
+import MessageList, { type ChatRoomInfo } from '@/components/Messages/ChatList.vue'
 import Chat from '@/components/Messages/Chat.vue'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
+import { fetchChatList } from '../../utils/Messages.ts'
+import type { ChatCardInfo } from '@/interfaces/interfaces.ts'
 
-const currenUserMail = ref("a@a");
-const currentItemId = ref(1);
+const chatList = ref<ChatCardInfo[]>([]);
+let currentChatRoomInfo = reactive<ChatRoomInfo>({
+  senderMail: "",
+  recipientMail: "",
+  itemId: 0,
+  profileImgUrl: "",
+  }
+);
+
+onMounted(async ()=> {
+  sessionStorage.setItem("email", "a@a");
+  //todo: let currentUser = useTokenStore().email!;
+  currentChatRoomInfo.senderMail = sessionStorage.getItem("email")!;
+  console.log("getting chat list")
+  chatList.value = await fetchChatList(currentChatRoomInfo.senderMail);
+  //select top chat or last active chat - session storage
+})
+
+const onSelectedChatCard = (data: ChatRoomInfo) => {
+  currentChatRoomInfo.senderMail = data.senderMail;
+  currentChatRoomInfo.recipientMail = data.recipientMail;
+  currentChatRoomInfo.itemId = data.itemId;
+  currentChatRoomInfo.profileImgUrl = data.profileImgUrl;
+}
+
 
 </script>
 
@@ -14,13 +39,14 @@ const currentItemId = ref(1);
 
  <div class="container">
    <div class="chat-list-wrapper">
-     <message-list></message-list>
+     <message-list
+       :chat-list="chatList"
+       @select-chat="onSelectedChatCard"
+     ></message-list>
    </div>
    <div class="chat-wrapper">
-     <chat
-       :current-user="currenUserMail"
-       :item-id="currentItemId"
-     ></chat>
+     <Chat :current-chat-room-info="currentChatRoomInfo"
+     ></Chat>
    </div>
  </div>
 
@@ -30,7 +56,10 @@ const currentItemId = ref(1);
 .container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  gap: 2vh;
+  background-color: var(--color-lavendel-background);
+  padding: 2vh 20vh 2ch  20vh;
+  border-radius: var(--global-border-radius);
 }
 
 .chat-list-wrapper, .chat-wrapper{

@@ -3,50 +3,43 @@ import { onMounted, reactive, type Ref, ref, type UnwrapRef, watch } from 'vue'
 import { fetchChatMessages, fetchProfileInfo } from '../../../utils/Messages.ts'
 import useEventsBus from '../../../utils/EventBus.ts'
 import type { ChatMessage } from '@/interfaces/interfaces.ts'
-import type { UserInfo } from '@/interfaces/interfaces.ts'
 import websocketService from '../../../utils/WebSocket.ts'
+import type { ChatRoomInfo } from '@/components/Messages/ChatList.vue'
 
 const { bus } = useEventsBus();
 
 const chatMessageInfo: Ref<ChatMessage[]>= ref([]);
-const selectedUser: Ref<string | null> = ref(null);
-const itemId: Ref<number> = ref(0);
 
-const props = defineProps({
-  currentUser: String,
-  //itemId: Number,
-  //selectedUser: String
-})
+const props = defineProps<{
+  currentChatRoomInfo: ChatRoomInfo
+}>();
+
 const profileInfo = ref();
 const messageText = ref('');
 
-watch(()=> bus.value.get('selectChat'), async (val) => {
-  console.log("selected data received: ", val[0])
-  const userInfo = val[0];
-  selectedUser.value = userInfo.recipientMail
-  itemId.value = userInfo.itemId;
-  await displayMessages(userInfo)
-  displayProfile(userInfo.profileImgUrl, userInfo.recipientMail)
+watch(props.currentChatRoomInfo, async (newVal) => {
+  await displayMessages(newVal)
+  displayProfile(newVal.profileImgUrl, newVal.recipientMail)
 });
 
 watch(()=> bus.value.get('message'), async (val) => {
   chatMessageInfo.value.push(val[0])
 });
 
-const displayMessages = async (userInfo: UserInfo) => {
-  chatMessageInfo.value = await fetchChatMessages(userInfo.senderMail, userInfo.recipientMail, userInfo.itemId);
-  for (let i = 0; i < chatMessageInfo.value.length; i++)  {
+const displayMessages = async (chatRoomInfo: ChatRoomInfo) => {
+  chatMessageInfo.value = await fetchChatMessages(chatRoomInfo.senderMail, chatRoomInfo.recipientMail, chatRoomInfo.itemId);
+
+  /*for (let i = 0; i < chatMessageInfo.value.length; i++)  {
     console.log(chatMessageInfo.value[i])
-  }
+  }*/
 }
 
-const displayMessage = (senderMail: string, recipientMail: string, itemId: number, content: string, timestamp: Date) => {
+const displayMessage = (senderMail: string, recipientMail: string, itemId: number, content: string) => {
   const newChatMsg: ChatMessage = {
     senderId: senderMail,
     recipientId: recipientMail,
     itemId,
     content,
-    timestamp
   }
   chatMessageInfo.value.push(newChatMsg)
 }
@@ -65,15 +58,15 @@ const sendMessage = (e: Event) => {
   const message = messageText.value.innerText.trimEnd();
 
   const websocket = websocketService;
-  websocket.sendMessage(props.currentUser!, selectedUser.value!, itemId.value!, message, new Date(8.64e15));
+  websocket.sendMessage(props.currentChatRoomInfo.senderMail, props.currentChatRoomInfo.recipientMail, props.currentChatRoomInfo.itemId, message);
   //todo: send message
-  displayMessage(props.currentUser!, selectedUser.value!, itemId.value!, message, Date.prototype);
+  displayMessage(props.currentChatRoomInfo.senderMail!, props.currentChatRoomInfo.recipientMail, props.currentChatRoomInfo.itemId, message);
   console.log("text :", message)
   messageText.value.innerText= "";
 }
 
 const isActive = () => {
-  return selectedUser.value !== null;
+  return props.currentChatRoomInfo.senderMail !== "";
 }
 </script>
 
@@ -81,12 +74,11 @@ const isActive = () => {
   <div class="chat-container">
     <div class="profile">
       <img src="/src/assets/icons/profile.svg" alt="profile-pic">
-      selected: {{selectedUser}} current logged in: {{ props.currentUser}} item: {{props.itemId}}
     </div>
     <div class="message-box" :class="{ hidden : false}">
       <div
         v-for="info in chatMessageInfo"
-        :class="['message', info.senderId === selectedUser ? 'receiver' : 'sender']">
+        :class="['message', info.senderId !== props.currentChatRoomInfo.senderMail ? 'receiver' : 'sender']">
         <p>{{info.content}}</p>
       </div>
     </div>
@@ -101,6 +93,7 @@ const isActive = () => {
           :placeholder-text="$t('chat-message-placeholder')"></div>
         <button @click="sendMessage">Send</button>
       </div>
+      <span style="color:red">error message?</span>
     </div>
   </div>
 </template>

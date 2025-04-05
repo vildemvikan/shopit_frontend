@@ -6,7 +6,6 @@ export interface ChatMessage {
   recipientId: string,
   itemId: number,
   content: string,
-  timestamp: Date
 }
 
 export interface Image{
@@ -25,12 +24,6 @@ export interface Option {
   value: PaymentMethod;
 }
 
-export interface UserInfo {
-  senderMail: string,
-  recipientMail: string,
-  itemId: number
-}
-
 export interface DisplayAdvertisement{
   id: number
   name: string,
@@ -40,7 +33,7 @@ export interface DisplayAdvertisement{
   publishedAt: string,
 }
 
-export interface ChatCard {
+export interface ChatCardInfo {
   lastMessageContent: string,
   lastMessageTimestamp: string,
   lastSenderId: string,

@@ -1,47 +1,38 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import useEventsBus from '../../../utils/EventBus.ts'
-import { send } from 'vite'
-import type { Status } from '@/enums/enums.ts'
-import type { ChatCard, Image } from '@/interfaces/interfaces.ts'
-import { fetchChatList } from '../../../utils/Messages.ts'
-import { useTokenStore } from '@/stores/tokenStore.ts'
-
-const { emit } = useEventsBus();
+import type { ChatCardInfo } from '@/interfaces/interfaces.ts'
+import ChatCard from '@/components/Messages/ChatCard.vue'
 
 const { bus } = useEventsBus();
 
-const currentUser = ref<string | null>(null);
 const selectedChatId = ref<string | null>(null);
-let chatList = ref<ChatCard[]>([]);
 
-/*const props = defineProps<{
-  message: ChatMessageNoTimeStamp
-}>()*/
+const props = defineProps<{
+  chatList: ChatCardInfo[],
+}>();
+
+const emit = defineEmits<{
+  'selectChat': [chatInfo: ChatRoomInfo];
+}>();
 
 // todo: Propper dette slik at message --newMessage--> children
 watch(()=> bus.value.get('messageReceived'), async (val) => {
   const messageFrom = val[0].recipientId;
 });
 
+/*
 onMounted(async () => {
   sessionStorage.setItem("email", "a@a");
-  //let currentUser = useTokenStore().email!;
+  //todo: let currentUser = useTokenStore().email!;
   currentUser.value = sessionStorage.getItem("email")!;
   console.log("getting chat list")
   chatList.value = await fetchChatList(currentUser.value);
-})
+})*/
 
-const sendSelectedChat = (data: ChatCard) => {
+const sendSelectedChat = (data: ChatCardInfo) => {
   console.log("selected data sent: ", data.itemId, data.senderId)
   selectedChatId.value = data.recipientId;
-  const info = {
-    senderMail: data.senderId,
-    recipientMail: data.recipientId,
-    itemId: data.itemId,
-    profileImgUrl: "",
-  }
-  console.log(info)
 
   emit('selectChat', {
     senderMail: data.senderId,
@@ -49,6 +40,13 @@ const sendSelectedChat = (data: ChatCard) => {
     itemId: data.itemId,
     profileImgUrl: "",
   })
+}
+
+export interface ChatRoomInfo {
+  senderMail: string
+  recipientMail: string
+  itemId: number
+  profileImgUrl: string,
 }
 
 </script>
@@ -59,10 +57,21 @@ const sendSelectedChat = (data: ChatCard) => {
          v-for="(chat) in chatList" :key="chat.recipientId + chat.itemId">
       {{ chat }}
     </div>
+    <ChatCard>
+    </ChatCard>
   </div>
 </template>
 
 <style scoped>
+.message-cards {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-list-box:hover {
+  background-color: lightgray;
+}
+
 .placeholder {
   width: 50vh;
   height:50vh;
@@ -72,6 +81,6 @@ const sendSelectedChat = (data: ChatCard) => {
 
 .chat-list-box {
   border: solid;
-  border-radius: var(--global-border-radius);
+  border-bottom: none;
 }
 </style>
