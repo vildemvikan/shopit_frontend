@@ -127,6 +127,7 @@
   "matchPassword": "Passwords must match.",
 
   "chat-message-placeholder": "Message...",
+  "chat-message-prefix": "you: ",
 
   "forgotPasswordTitle": "Reset Your Password",
   "forgotPasswordDescription": "Enter your email address and we'll send you a password reset link.",

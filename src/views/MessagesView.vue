@@ -1,34 +1,70 @@
 <script setup lang="ts">
 
-import MessageList, { type ChatRoomInfo } from '@/components/Messages/ChatList.vue'
+import MessageList from '@/components/Messages/ChatList.vue'
 import Chat from '@/components/Messages/Chat.vue'
-import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { fetchChatList } from '../../utils/Messages.ts'
-import type { ChatCardInfo } from '@/interfaces/interfaces.ts'
+import type { ChatCardInfo, ChatMessage, ChatRoomInfo } from '@/interfaces/interfaces.ts'
+import useEventsBus from '../../utils/EventBus.ts'
 
 const chatList = ref<ChatCardInfo[]>([]);
 let currentChatRoomInfo = reactive<ChatRoomInfo>({
   senderMail: "",
   recipientMail: "",
   itemId: 0,
-  profileImgUrl: "",
   }
 );
 
+const { bus } = useEventsBus();
+
+watch(()=> bus.value.get('messageReceived'), async () => {
+  chatList.value = await fetchChatList(currentChatRoomInfo.senderMail)
+});
+
+watch(()=> bus.value.get('messageSent'), async () => {
+  chatList.value = await fetchChatList(currentChatRoomInfo.senderMail)
+});
+
+// todo: computed property that sorts chatlist based on last message timestamp
+
 onMounted(async ()=> {
-  sessionStorage.setItem("email", "a@a");
+  //sessionStorage.setItem("email", "a@a");
   //todo: let currentUser = useTokenStore().email!;
   currentChatRoomInfo.senderMail = sessionStorage.getItem("email")!;
   console.log("getting chat list")
   chatList.value = await fetchChatList(currentChatRoomInfo.senderMail);
-  //select top chat or last active chat - session storage
+
+  // select top chat
+  if (chatList.value.length > 0) {
+    onSelectedChatCard({
+      senderMail: chatList.value[0].senderId,
+      recipientMail: chatList.value[0].recipientId,
+      itemId: chatList.value[0].itemId,
+    })
+  }
+  //select top chat or last active chat - session storage*/
 })
 
+watch(() => sessionStorage.getItem("email"), async (val) => {
+  console.log("change in current user")
+  currentChatRoomInfo.senderMail = sessionStorage.getItem("email")!;
+  chatList.value = await fetchChatList(currentChatRoomInfo.senderMail);
+})
+
+watch(()=> bus.value.get('messageReceived'), async (val) => {
+  const payload = JSON.parse(val[0].body)
+  console.log(payload)
+  //chatList.value.push(payload)
+});
+
+const isUpdated = ref(false);
+
 const onSelectedChatCard = (data: ChatRoomInfo) => {
+  isUpdated.value = false;
   currentChatRoomInfo.senderMail = data.senderMail;
   currentChatRoomInfo.recipientMail = data.recipientMail;
   currentChatRoomInfo.itemId = data.itemId;
-  currentChatRoomInfo.profileImgUrl = data.profileImgUrl;
+  isUpdated.value = true;
 }
 
 

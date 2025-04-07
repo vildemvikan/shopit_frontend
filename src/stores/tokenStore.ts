@@ -50,5 +50,6 @@ export const useTokenStore = defineStore('tokenStore', {
   getters: {
     isAuthenticated: (state) => !!state.jwtToken,
     getToken: (state) => state.jwtToken,
+    getEmail: (state) => state.email,
   }
 })

@@ -6,6 +6,7 @@ export interface ChatMessage {
   recipientId: string,
   itemId: number,
   content: string,
+  timestamp: Date,
 }
 
 export interface Image{
@@ -41,7 +42,13 @@ export interface ChatCardInfo {
   recipientId: string,
   itemId: number,
   status: Status
-  itemImage: Image
+  itemImage: string,
   itemTitle: string,
   recipientProfilePic: string,
+}
+
+export interface ChatRoomInfo {
+  senderMail: string
+  recipientMail: string
+  itemId: number
 }

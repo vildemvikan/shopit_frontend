@@ -119,6 +119,7 @@
   "matchPassword": "Passordene må være identiske",
 
   "chat-message-placeholder": "Melding...",
+  "chat-message-prefix": "du: ",
 
   "forgotPasswordTitle": "Tilbakestill passord",
   "forgotPasswordDescription": "Skriv inn din e-postadresse, så sender vi deg en lenke for å tilbakestille passordet.",
