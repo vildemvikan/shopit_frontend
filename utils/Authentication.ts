@@ -3,7 +3,7 @@ import axios from 'axios'
 
 
 
-export const getJwtToken = async (email: string, password: string) => {
+export const getTokens = async (email: string, password: string) => {
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -92,3 +92,22 @@ export const resetPasswordWithToken = async (
     throw error;
   }
 };
+export const refreshToken = async (
+    token: string
+  ) => {
+    const config = {
+      headers: {"Content-Type": "application/json" },
+    };
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/auth/refresh',
+        { token},
+        config
+      );
+      return response;
+    } catch(error: any) {
+      console.error("Failed on refreshing error", error)
+      throw error;
+    }
+  }
+

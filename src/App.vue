@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import Navbar from '@/components/Navbar.vue'
+import {useTokenStore} from '@/stores/tokenStore.ts'
+import { onMounted } from 'vue'
+onMounted(() => {
+  const store = useTokenStore()
+  store.reHydrate()
+})
 </script>
 
 <template>
