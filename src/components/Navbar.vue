@@ -1,8 +1,16 @@
 <script setup lang="ts">
 
 import { useRouter } from 'vue-router'
-import {ref} from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import NotificationDropdown from '../components/Notification/NotificationDropdown.vue'
+
+onMounted(() => {
+  window.addEventListener('closeNotificationSheet', closeMobileNotification)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('closeNotificationSheet', closeMobileNotification)
+})
+const dropdownRef = ref<HTMLElement | null>(null)
 
 const options = [
   { icon: 'create.svg', label: 'create-advertisement', path: 'create-advertisement'},
@@ -11,9 +19,40 @@ const options = [
   { icon: 'profile.svg', label: 'profile' , path: 'profile'},
 ]
 const showDropdown = ref(false)
-function toggleNotifications() {
+let lastToggledEvent: Event | null = null
+
+function toggleNotifications(event?: MouseEvent) {
   showDropdown.value = !showDropdown.value
-  console.log(showDropdown.value)
+
+  // Track the event that triggered the toggle
+  lastToggledEvent = event || null
+
+  nextTick(() => {
+    setTimeout(() => {
+      if (showDropdown.value) {
+        document.addEventListener('click', handleClickOutside)
+      } else {
+        document.removeEventListener('click', handleClickOutside)
+      }
+    }, 0)
+  })
+}
+
+function handleClickOutside(event: MouseEvent) {
+  // Ignore the exact event that triggered toggle
+  if (event === lastToggledEvent) {
+    lastToggledEvent = null
+    return
+  }
+
+  if (
+    showDropdown.value &&
+    dropdownRef.value &&
+    !dropdownRef.value.contains(event.target as Node)
+  ) {
+    showDropdown.value = false
+    document.removeEventListener('click', handleClickOutside)
+  }
 }
 const showMobileNotification = ref(false)
 function toggleMobileNotification() {
@@ -63,8 +102,14 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
         <button class="notification-bell" @click="toggleNotifications">
           <img class="icon" :src="iconPath('notifications.svg')" alt="notifications" />
           <span class="option-text">{{ $t('notifications') }}</span>
-          <NotificationDropdown v-if="showDropdown" class="dropdown-position" />
         </button>
+
+        <transition name="fade-slide">
+          <!-- dropdownRef must be here -->
+          <div v-if="showDropdown" ref="dropdownRef" class="dropdown-position">
+            <NotificationDropdown />
+          </div>
+        </transition>
       </div>
       <button
         v-for="option in options"
@@ -85,9 +130,16 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
 
 
   </nav>
-  <div v-if="showMobileNotification" class="notification-sheet" @click.self="closeMobileNotification">
-    <div class="sheet-content">
-      <NotificationDropdown />
+  <div
+    v-if="showMobileNotification"
+    class="notification-backdrop"
+    @click.self="closeMobileNotification"
+  >
+    <!-- The sheet itself -->
+    <div class="notification-sheet">
+      <div class="sheet-content">
+        <NotificationDropdown />
+      </div>
     </div>
   </div>
 
@@ -231,7 +283,7 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
     top: 0;
     right: 0;
     left: 0;
-    height: 90%;
+    height: 100 %;
     width: 100%;
 
     z-index: 1;
@@ -256,6 +308,67 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
     z-index: 2; /* higher than .options */
   }
 
+  .notification-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50vh;
+    width: 100vw;
+    background: white;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease-out;
+    overflow-y: auto;
+  }
+
+  .sheet-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    height:100%;
+  }
+  .notification-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--vt-c-transparent-black);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* aligns sheet to bottom */
+    z-index: 9998; /* under sheet */
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.fade-slide-enter-to,
+.fade-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
 
