@@ -1,0 +1,272 @@
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue'
+import dayjs from 'dayjs'
+import { useI18n } from 'vue-i18n'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import { getNotification } from '../../../utils/Notification.ts'
+const deleteIcon = new URL('@/assets/icons/x.svg', import.meta.url).href
+const refreshIcon = new URL('@/assets/icons/refresh2.svg', import.meta.url).href
+const perPage = 3
+const visibleCount = ref(perPage)
+dayjs.extend(relativeTime)
+dayjs.locale('nb')
+
+
+async function refreshNotifications() {
+  const result = await getNotification()
+  if (Array.isArray(result)) {
+    notifications.value = result
+    visibleCount.value = perPage // reset visible items
+  }
+}
+const notifications = ref([
+  {
+    id: 1,
+    type: 'BID_PLACED',
+    args: { user: 'John Doe', item: 'iPhone 13' },
+    createdAt: '2025-04-06T12:00:00Z',
+    link: '/items/1'
+  },
+  {
+    id: 2,
+    type: 'ITEM_BOUGHT',
+    args: { user: 'Alice Smith Smith Smith Smith Smith Smith', item: 'Stol' },
+    createdAt: '2025-04-05T08:00:00Z',
+    link: '/items/2'
+  },
+  {
+    id: 3,
+    type: 'BID_PLACED',
+    args: { user: 'Carlos Vega', item: 'MacBook Pro' },
+    createdAt: '2025-04-04T15:30:00Z',
+    link: '/items/3'
+  },
+  {
+    id: 4,
+    type: 'ITEM_BOUGHT',
+    args: { user: 'Emma Johnson', item: 'PS5' },
+    createdAt: '2025-04-03T11:00:00Z',
+    link: '/items/4'
+  },
+  {
+    id: 5,
+    type: 'BID_PLACED',
+    args: { user: 'Liam Chen', item: 'AirPods' },
+    createdAt: '2025-04-02T09:00:00Z',
+    link: '/items/5'
+  },
+  {
+    id: 6,
+    type: 'ITEM_BOUGHT',
+    args: { user: 'Sophia Lee', item: 'Samsung TV' },
+    createdAt: '2025-04-01T20:00:00Z',
+    link: '/items/6'
+  },
+  {
+    id: 7,
+    type: 'BID_PLACED',
+    args: { user: 'Noah Patel', item: 'Gaming Chair' },
+    createdAt: '2025-03-31T14:00:00Z',
+    link: '/items/7'
+  },
+  {
+    id: 8,
+    type: 'ITEM_BOUGHT',
+    args: { user: 'Ava Müller', item: 'Wireless Mouse' },
+    createdAt: '2025-03-30T10:00:00Z',
+    link: '/items/8'
+  },
+  {
+    id: 9,
+    type: 'BID_PLACED',
+    args: { user: 'Lucas Wang', item: 'GoPro Hero' },
+    createdAt: '2025-03-29T17:00:00Z',
+    link: '/items/9'
+  },
+  {
+    id: 10,
+    type: 'ITEM_BOUGHT',
+    args: { user: 'Mia Rossi', item: 'Smart Watch' },
+    createdAt: '2025-03-28T13:00:00Z',
+    link: '/items/10'
+  }
+])
+const deleteNotification = async (id: number) => {
+  try {
+    await deleteNotification(id)
+    notifications.value = notifications.value.filter(n => n.id !== id)
+  } catch (e) {
+    console.error('Failed to delete notification', e)
+  }
+}
+
+const { locale } = useI18n()
+dayjs.locale(locale.value)
+watch(locale, (newLocale) => {
+  dayjs.locale(newLocale)
+})
+function timeAgo(date: string): string {
+  return dayjs(date).fromNow()
+}
+
+
+const visibleNotifications = computed(() =>
+  notifications.value.slice(0, visibleCount.value)
+)
+
+function loadMore() {
+  visibleCount.value += perPage
+}
+</script>
+
+<template>
+  <div class="dropdown">
+    <div class="dropdown-header">
+      <h4>Varslinger</h4>
+      <button @click="refreshNotifications" class="refresh-btn" aria-label="Refresh notifications">
+        <img :src="refreshIcon" alt="Refresh"  class="icon"/>
+      </button>
+    </div>
+    <div
+      v-for="notification in visibleNotifications"
+      :key="notification.id"
+      class="item"
+    >
+      <div class="msg">
+        {{ $t(`notification.${notification.type}`, notification.args) }}
+      </div>
+      <div class="time">{{ timeAgo(notification.createdAt) }}</div>
+      <router-link
+        v-if="notification.link"
+        :to="notification.link"
+        class="link"
+      >
+        {{ $t(`notification.readMore`) }}
+      </router-link>
+      <button class="delete-btn" @click="deleteNotification(notification.id)">
+        <img :src="deleteIcon" alt="delete notification" class="icon">
+      </button>
+    </div>
+    <div v-if="visibleCount < notifications.length" class="load-more-wrapper">
+      <button class="load-more-btn" @click="loadMore">{{ $t(`notification.showMore`) }}</button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.refresh-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  transition: transform 0.2s;
+}
+.refresh-btn img {
+  width: 30px;
+  height: 30px;
+}
+
+.refresh-btn:hover img {
+  transform: rotate(90deg);
+}
+.dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: var(--color-white-background);
+  width: 300px;
+  border: var(--global-border-size) solid var(--color-black-border);
+  border-radius: var(--global-border-radius);
+  padding: var(--spacing-sm);
+  z-index: 1000;
+  box-shadow: var(--global-box-shaddow);
+  font-family: inherit;
+  overflow-y: auto;
+  max-height: 450px;
+}
+
+h4 {
+  text-align: left;
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--heading-weight);
+  border-bottom: var(--global-border-size) solid var(--color-black-border);
+  padding-bottom: var(--spacing-sm);
+}
+
+.item {
+  text-align: left;
+  margin-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: var(--global-border-size) solid var(--color-black-border);
+}
+
+.item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.msg {
+  font-size: var(--font-size-sm);
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+.time {
+  font-size: var(--font-size-xs);
+  color: var(--vt-c-text-light-2);
+  margin-bottom: var(--spacing-sm);
+}
+
+.link {
+  font-size: var(--font-size-xs);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+.load-more-wrapper {
+  text-align: center;
+  margin-top: var(--spacing-sm);
+}
+
+.load-more-btn {
+  background-color: var(--color-light-blue-button);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.load-more-btn:hover {
+  background-color: var(--color-blue-button);
+}
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--color-error-text);
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  float: right;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.delete-button:hover .icon {
+  filter: brightness(0.6);
+}
+</style>

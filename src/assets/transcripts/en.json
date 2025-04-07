@@ -153,5 +153,17 @@
   "toast-advertisement-changed": "Advertisement is edited!",
   "toast-advertisement-changed-error": "Error! Could not edit advertisement.",
   "toast-advertisement-deleted": "Advertisement is deleted!",
-  "toast-advertisement-deleted-error": "Error! Could not delete advertisement."
+  "toast-advertisement-deleted-error": "Error! Could not delete advertisement.",
+
+
+  "notification": {
+    "BID_PLACED": "{item} received a new bid",
+    "ITEM_BOUGHT": "{user} bought '{item}'",
+    "BID_ACCEPTED": "{user} accepted your bid on {item}",
+    "NEW_BID": "{user} placed a new bid on {item}",
+    "OUTBID": "You were outbid on {item}",
+    "MESSAGE_RECEIVED": "You received a new message about {item}",
+    "showMore": "Load more",
+    "readMore": "Go to message"
+  }
 }

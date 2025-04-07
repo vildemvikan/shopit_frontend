@@ -2,15 +2,27 @@
 
 import { useRouter } from 'vue-router'
 import {ref} from 'vue'
+import NotificationDropdown from '../components/Notification/NotificationDropdown.vue'
 
 const options = [
-  { icon: 'notifications.svg', label: 'notifications', path: 'notifications'},
   { icon: 'create.svg', label: 'create-advertisement', path: 'create-advertisement'},
   { icon: 'messages.svg', label: 'messages', path: 'messages'},
   { icon: 'bookmark.svg', label: 'bookmarks', path: 'bookmarks' },
   { icon: 'profile.svg', label: 'profile' , path: 'profile'},
 ]
+const showDropdown = ref(false)
+function toggleNotifications() {
+  showDropdown.value = !showDropdown.value
+  console.log(showDropdown.value)
+}
+const showMobileNotification = ref(false)
+function toggleMobileNotification() {
+  showMobileNotification.value = !showMobileNotification.value
+}
 
+function closeMobileNotification() {
+  showMobileNotification.value = false
+}
 const router = useRouter()
 
 const currentRoute = router.currentRoute
@@ -37,27 +49,47 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
       <H1>ShopIT</H1>
     </button>
 
-    <button class="option" id="menu" @click="toggleMenu" alt="burger-menu">
-      <img class="icon" id="burger-icon" :src="status ? iconPath('exit.svg') : iconPath('burger.svg')" alt="Menu">
-    </button>
+    <div class="mobile-icons mobile-only">
+      <button class="mobile-icon" @click="toggleMobileNotification">
+        <img class="icon" :src="iconPath('notifications.svg')" alt="notifications" />
+      </button>
+      <button class="mobile-icon" @click="toggleMenu">
+        <img class="icon" :src="status ? iconPath('exit.svg') : iconPath('burger.svg')" alt="menu" />
+      </button>
+    </div>
 
     <div class="options" :class="{'open':status}">
+      <div class="notification-wrapper desktop-only">
+        <button class="notification-bell" @click="toggleNotifications">
+          <img class="icon" :src="iconPath('notifications.svg')" alt="notifications" />
+          <span class="option-text">{{ $t('notifications') }}</span>
+          <NotificationDropdown v-if="showDropdown" class="dropdown-position" />
+        </button>
+      </div>
       <button
         v-for="option in options"
         :key="option.label"
         class="option"
         id="button-option"
         type="button"
-        @click="navigateTo(option.path)">
+        @click="option.label === 'notifications' ? toggleNotifications() : navigateTo(option.path)"
+        >
         <img class="icon" id="option-icon" :src="iconPath(option.icon)" :alt="$t(option.label)">
         <span class="option-text"
               :class="{active: currentRoute.name == option.path}">
           {{ $t(option.label) }}
         </span>
-      </button>
+              </button>
     </div>
-  </nav>
 
+
+
+  </nav>
+  <div v-if="showMobileNotification" class="notification-sheet" @click.self="closeMobileNotification">
+    <div class="sheet-content">
+      <NotificationDropdown />
+    </div>
+  </div>
 
 </template>
 
@@ -102,7 +134,6 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   margin: 5px;
   place-items: center;
   cursor: pointer;
-
   background-color: transparent;
   border: none;
 }
@@ -118,19 +149,69 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
 .icon{
   height: 100%;
 }
+.mobile-icons {
+  display: none;
+}
 
-#menu{
+.mobile-icon {
+  background: transparent;
+  border: none;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+.notification-bell {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  height: 100%;
+  padding: 0;
+}
+.notification-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%; /* Match other options */
+  margin: 5px;
+}
+.notification-wrapper button {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0;
+}
+
+
+.desktop-only {
+  display: block;
+}
+.mobile-only {
+  display: none;
+}
+.mobile-icons {
   display: none;
 }
 
 @media (max-width: 800px) {
-  /* Show hamburger on mobile */
-  #menu {
-    display: block;
-    z-index: 2;
+  .desktop-only {
+    display: none;
+  }
+  .mobile-only {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* space between bell and burger */
   }
 
-  #burger-icon{
+  .icon {
+    height: 24px;
+  }
+
+  .mobile-notification .icon{
     height: 60%;
   }
 
@@ -143,15 +224,14 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   .options.open {
     display: flex;
     flex-direction: column;
-    position: absolute;
+    position: fixed;
     place-content: center;
     background-color: white;
-
 
     top: 0;
     right: 0;
     left: 0;
-    height: 92.5%;
+    height: 90%;
     width: 100%;
 
     z-index: 1;
@@ -164,9 +244,18 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
     margin: 0;
   }
 
-  #option-icon{
+
+  .options.open #option-icon {
     display: none;
   }
+  .mobile-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative; /* Or use position: absolute if necessary */
+    z-index: 2; /* higher than .options */
+  }
+
 }
 </style>
 
