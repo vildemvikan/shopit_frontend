@@ -2,7 +2,7 @@
 
 import MessageList from '@/components/Messages/ChatList.vue'
 import Chat from '@/components/Messages/Chat.vue'
-import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, type Ref, ref, watch } from 'vue'
 import { fetchChatList } from '../../utils/Messages.ts'
 import type { ChatCardInfo, ChatMessage, ChatRoomInfo } from '@/interfaces/interfaces.ts'
 import useEventsBus from '../../utils/EventBus.ts'
@@ -22,10 +22,16 @@ watch(()=> bus.value.get('messageReceived'), async () => {
 });
 
 watch(()=> bus.value.get('messageSent'), async () => {
-  chatList.value = await fetchChatList(currentChatRoomInfo.senderMail)
+  setTimeout(async () => {
+    chatList.value = await fetchChatList(currentChatRoomInfo.senderMail)
+  }, 100)
 });
 
-// todo: computed property that sorts chatlist based on last message timestamp
+const sortedMessages: Ref<ChatCardInfo[]> = computed(() => {
+  return [...chatList.value].sort((a, b) => {
+    return new Date(b.lastMessageTimestamp).getTime() - new Date(a.lastMessageTimestamp).getTime();
+  });
+});
 
 onMounted(async ()=> {
   //sessionStorage.setItem("email", "a@a");
@@ -76,7 +82,7 @@ const onSelectedChatCard = (data: ChatRoomInfo) => {
  <div class="container">
    <div class="chat-list-wrapper">
      <message-list
-       :chat-list="chatList"
+       :chat-list="sortedMessages"
        @select-chat="onSelectedChatCard"
      ></message-list>
    </div>

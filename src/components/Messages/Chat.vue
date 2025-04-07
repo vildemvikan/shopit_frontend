@@ -93,8 +93,8 @@ const sendMessage = (e: Event) => {
   charCount.value = 0
 
   const { emit } = useEventsBus();
-  // todo sender recipient Id og melding til chatlist- reciver, resorterer, bytter ut melding og tidspunkt
   emit('messageSent')
+  emit('refreshList', message, props.currentChatRoomInfo.recipientMail, props.currentChatRoomInfo.itemId)
 }
 
 // Group messages by time intervals

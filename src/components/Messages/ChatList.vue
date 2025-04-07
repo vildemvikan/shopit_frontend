@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import type { ChatCardInfo, ChatRoomInfo } from '@/interfaces/interfaces.ts'
 import ChatCard from '@/components/Messages/ChatCard.vue'
+import useEventsBus from '../../../utils/EventBus.ts'
 
 const isUpdated = ref(false);
 const selectedChatId = ref<string | null>(null);
@@ -16,7 +17,6 @@ const emit = defineEmits<{
 
 onMounted(() => {
   // todo: ref a boolean and check with watch
-  console.log(props.chatList)
   if (props.chatList.length > 0) {
     emit('selectChat', {
       senderMail: props.chatList[0].senderId,
@@ -26,7 +26,7 @@ onMounted(() => {
   }
 })
 
-const sendSelectedChat = (e: Event, data: ChatCardInfo) => {
+const sendSelectedChat = (data: ChatCardInfo) => {
   document.querySelectorAll('.chat-list-box').forEach(item => {
     item.classList.remove('active');
   });
@@ -47,7 +47,7 @@ const sendSelectedChat = (e: Event, data: ChatCardInfo) => {
 
 <template>
   <div class="message-cards">
-    <div class="chat-list-box" :id="chat.recipientId + chat.itemId" @click="sendSelectedChat($event, chat)" :class="{ hasMessage : true}"
+    <div class="chat-list-box" :id="chat.recipientId + chat.itemId" @click="sendSelectedChat(chat)" :class="{ hasMessage : true}"
          v-for="chat in chatList" :key="chat.recipientId + chat.itemId">
       <ChatCard
         :chat-card-data="chat">
