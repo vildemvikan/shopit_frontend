@@ -21,9 +21,19 @@ onMounted(async () => {
   }
 })
 
-function toProfile(){
-  router.push('/profile')
+async function toProfile(){
+  await router.push('/profile')
 }
+
+async function goToCategory(){
+  await router.push({name: 'search', query: {category: advertisement.value?.categoryId}})
+}
+
+async function goToSubCategory(){
+  await router.push({name: 'search', query: {subCategory: advertisement.value?.subCategoryId}})
+}
+
+
 </script>
 
 <template>
@@ -37,9 +47,9 @@ function toProfile(){
         <img class="label-icon" src="@/assets/icons/back.svg" alt="Back to profile">
         {{$t('label-back-to-profile')}}
         &nbsp;</label>
-      <label class="route-label" id="category">{{advertisement.categoryName}}</label>
+      <label class="route-label" id="category" @click="goToCategory">{{advertisement.categoryName}}</label>
       /
-      <label class="route-label" id="category">{{advertisement.subCategoryName}}</label>
+      <label class="route-label" id="category" @click="goToSubCategory">{{advertisement.subCategoryName}}</label>
     </div>
 
     <div class="content">
