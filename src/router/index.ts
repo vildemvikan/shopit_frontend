@@ -14,6 +14,16 @@ import SignUpForm from '@/components/Authentication/SignUpForm.vue'
 import ForgotPasswordForm from '@/components/Authentication/ForgotPasswordForm.vue'
 import ResetPasswordForm from '@/components/Authentication/ResetPasswordForm.vue'
 import SearchView from '@/views/SearchView.vue'
+import { useTokenStore } from '@/stores/tokenStore.ts'
+
+const restrictedRoutes = [
+  'profile',
+  'notifications',
+  'messages',
+  'bookmarks',
+  'edit-advertisement',
+  'create-advertisement'
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -79,6 +89,7 @@ const router = createRouter({
     },
     {
       path: '/auth',
+      name: 'auth',
       component: AuthenticationView,
       children: [
         { path: '', redirect: '/auth/login' },
@@ -98,11 +109,18 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (from.name === 'create-advertisement' && to.name !== 'create-advertisement') {
-    const advertisementStore = useAdvertisementStore()
-    advertisementStore.$reset()
+  if (restrictedRoutes.includes(to.name as string)) {
+    const tokenStore = useTokenStore();
+    if (!tokenStore.isAuthenticated) {
+      return next({ path: '/auth/login' });
+    }
   }
-  next()
-})
+  if (from.name === 'create-advertisement' && to.name !== 'create-advertisement') {
+    const advertisementStore = useAdvertisementStore();
+    advertisementStore.$reset();
+  }
+  next();
+});
+
 
 export default router
