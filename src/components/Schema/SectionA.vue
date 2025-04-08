@@ -209,7 +209,7 @@ watch(forSale, (newValue)=>{
 }
 
 .adjustment-button:hover{
-  background-color: var(--color-grey-button);
+  background-color: var(--color-gray-button);
 }
 
 .adjustment-button:active{
