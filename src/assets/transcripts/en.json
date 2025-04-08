@@ -6,6 +6,8 @@
   "profile": "My Profile",
   "edit-advertisement": "Edit Advertisement",
 
+  "title-advertisements": "Advertisements",
+
   "label-type": "Advertisement type",
   "label-images": "Images",
   "label-title": "Title",
@@ -34,6 +36,21 @@
   "label-new-password": "New password",
   "label-repeat-new-password": "Repeat new password",
   "label-my-advertisements": "My advertisements",
+  "label-shop-by-category": "Shop by category",
+  "label-search": "Search for anything ...",
+  "label-area": "County",
+  "label-all-categories": "All categories",
+  "label-listing-type": "Listing type",
+  "label-min-price": "From NOK",
+  "label-max-price": "To NOK",
+  "label-published": "Published",
+  "label-filter-search": "Filter search",
+  "label-results": "Results",
+
+  "filter-for-sale": "For sale",
+  "filter-for-free": "For free",
+  "filter-new-today": "New today",
+
 
   "option-oldest": "Date: Oldest to Newest",
   "option-newest": "Date: Newest to Oldest",
@@ -41,6 +58,10 @@
   "option-status-active": "Status: Active",
   "option-status-inactive": "Status: Inactive",
   "option-status-sold": "Status: Sold",
+  "option-category-all": "All categories",
+  "option-cheapest": "Price: Low to High",
+  "option-most-expensive": "Price: High to Low",
+
 
   "button-type-sell": "For Sale",
   "button-type-free": "Give Away",
@@ -59,6 +80,7 @@
   "button-sold": "Mark as sold",
   "button-activate": "Mark as active ",
   "button-save": "Save",
+  "button-search": "Search",
 
 
   "drop-down-category": "Select category",
