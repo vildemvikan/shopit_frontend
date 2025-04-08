@@ -81,6 +81,8 @@
   "button-activate": "Mark as active ",
   "button-save": "Save",
   "button-search": "Search",
+  "button-logout": "Log out",
+  "button-delete-user": "Delete user",
 
 
   "drop-down-category": "Select category",
