@@ -153,5 +153,13 @@
   "tryRequestingNewLink": "Forespør en ny lenke",
 
   "confirm-deletion-title": "Bekreft Sletting",
-  "confirm-deletion-label": "Er du sikker på at du vil slette annonsen?"
+  "confirm-deletion-label": "Er du sikker på at du vil slette annonsen?",
+  "notification": {
+    "BID_PLACED": "{item} har fått et nytt bud",
+    "ITEM_BOUGHT": "{user} har kjøpt {item}",
+    "BID_ACCEPTED": "{user} godtok budet ditt på {item}",
+    "NEW_BID": "{user} la inn et nytt bud på {item}",
+    "OUTBID": "Du ble overbydd på {item}",
+    "MESSAGE_RECEIVED": "{user} har sendt deg en ny melding"
+  }
 }
