@@ -17,8 +17,10 @@ const currentRoute = router.currentRoute
 
 const status = ref(false)
 
-function navigateTo(path: string) {
-  if (path) router.push('/' + path)
+async function navigateTo(path: string) {
+  if(path == '/'){
+    await router.push('/')
+  } else router.push('/' + path)
   status.value = false
 }
 
@@ -109,10 +111,11 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
 
 .option:hover{
   transform: scale(1.05);
+  text-decoration: underline var(--global-thicc-border-size) solid var(--color-dark-orange-text);
 }
 
 .option-text.active{
-  border-bottom: 2px solid orange;
+  border-bottom: var(--global-thicc-border-size) solid var(--color-dark-orange-text);
 }
 
 .icon{

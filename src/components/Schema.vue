@@ -6,7 +6,7 @@ import SectionD from '@/components/Schema/SectionD.vue'
 import SectionC from '@/components/Schema/SectionC.vue'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 import {
-  advertisement,
+  createAdvertisement,
   fetchAdvertisement,
   updateAdvertisement
 } from '../../utils/Advertisement.ts'
@@ -216,7 +216,7 @@ async function saveDraft() {
   if (valid) {
     const body = buildJSONBody(Status.Inactive)
     try {
-      await advertisement(body)
+      await createAdvertisement(body)
       await router.push('profile')
     } catch (error) {
       console.log(error)
@@ -229,7 +229,7 @@ async function publish() {
   if (!invalid) {
     const body = buildJSONBody(Status.Inactive)
     try {
-      await advertisement(body)
+      await createAdvertisement(body)
       await router.push('profile')
     } catch (error) {
       console.log(error)
@@ -388,7 +388,7 @@ button{
 }
 
 #discard-button{
-  background-color: var(--color-grey-button);
+  background-color: var(--color-gray-button);
 }
 
 .bottom-button{

@@ -6,6 +6,8 @@
   "profile": "Min profil",
   "edit-advertisement": "Rediger annonse",
 
+  "title-advertisements": "Annonser",
+
   "label-type": "Type handel",
   "label-images": "Bilder",
   "label-title": "Annonsetittel",
@@ -34,6 +36,20 @@
   "label-new-password": "Nytt passord",
   "label-repeat-new-password": "Gjenta nytt passord",
   "label-my-advertisements": "Mine annonser",
+  "label-shop-by-category": "Handle ut i fra kategori",
+  "label-search": "Search etter hva som helst...",
+  "label-area": "Område (fylke)",
+  "label-all-categories": "Alle kategorier",
+  "label-listing-type": "Type annonse",
+  "label-min-price": "Fra NOK",
+  "label-max-price": "Til NOK",
+  "label-published": "Publisert",
+  "label-filter-search": "Filtrer søk",
+  "label-results": "Resultater",
+
+  "filter-for-sale": "Til salgs",
+  "filter-for-free": "Gis bort",
+  "filter-new-today": "Ny i dag",
 
   "option-oldest": "Dato: Nyeste først",
   "option-newest": "Date: Eldste først",
@@ -41,6 +57,10 @@
   "option-status-active": "Status: Aktiv",
   "option-status-inactive": "Status: Påbegynt",
   "option-status-sold": "Status: Solgt",
+  "option-category-all": "All kategorier",
+
+  "option-cheapest": "Pris: Lav til høy",
+  "option-most-expensive": "Pris: Høy til lav",
 
   "button-type-sell": "Selge",
   "button-type-free": "Gi bort",
@@ -59,6 +79,7 @@
   "button-sold": "Marker som solgt",
   "button-activate": "Marker som aktiv ",
   "button-save": "Lagre",
+  "button-search": "Search",
 
   "drop-down-category": "Velg kategori",
   "drop-down-sub-category": "Velg underkategori",
