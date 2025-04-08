@@ -11,9 +11,13 @@ interface ExtendedChatMessage extends ChatMessage {
 
 const { bus } = useEventsBus();
 const chatMessageInfo: Ref<ExtendedChatMessage[]>= ref([]);
-const props = defineProps<{
-  currentChatRoomInfo: ChatRoomInfo
-}>();
+
+// todo: notification
+const currentChatRoomInfo = reactive({
+  senderMail: "",
+  recipientMail: "",
+  itemId: 0
+});
 
 const profileInfo = ref();
 const messageText = ref('')
@@ -23,10 +27,16 @@ const charCount = ref(0)
 const lastText = ref('')
 const isExceeded = computed(() => charCount.value > MAX_CHARS);
 
-watch(props.currentChatRoomInfo, async (newVal) => {
+watch(() => bus.value.get('selectChat'), (val) => {
+  currentChatRoomInfo.recipientMail = val[0].recipientMail;
+  currentChatRoomInfo.senderMail = val[0].senderMail;
+  currentChatRoomInfo.itemId = val[0].itemId
+});
+
+watch(currentChatRoomInfo, async (newVal) => {
   if (newVal.itemId === 0) return;
 
-  const test = await displayMessages(newVal)
+  await displayMessages(newVal)
   const messageList = document.querySelector("#message-list")
   messageList!.scrollTop = messageList!.scrollHeight;
   await displayProfile(newVal.recipientMail)
@@ -34,7 +44,7 @@ watch(props.currentChatRoomInfo, async (newVal) => {
 
 watch(()=> bus.value.get('messageReceived'), async (val) => {
   const payload = JSON.parse(val[0].body)
-  displayMessage(payload.senderId, payload.recipientId, payload.itemId, payload.content, payload.timestamp);
+  displayMessage(payload.senderId, payload.recipientId, payload.itemId, payload.content, new Date(payload.timestamp));
 });
 
 const displayMessages = async (chatRoomInfo: ChatRoomInfo) => {
@@ -84,17 +94,15 @@ const sendMessage = (e: Event) => {
 
   const message = messageText.value.innerText.trimEnd();
 
-  console.log("message: ", message)
-
   const websocket = websocketService;
-  websocket.sendMessage(props.currentChatRoomInfo.senderMail, props.currentChatRoomInfo.recipientMail, props.currentChatRoomInfo.itemId, message);
-  displayMessage(props.currentChatRoomInfo.senderMail!, props.currentChatRoomInfo.recipientMail, props.currentChatRoomInfo.itemId, message, new Date());
+  websocket.sendMessage(currentChatRoomInfo.senderMail, currentChatRoomInfo.recipientMail, currentChatRoomInfo.itemId, message);
+  displayMessage(currentChatRoomInfo.senderMail!, currentChatRoomInfo.recipientMail, currentChatRoomInfo.itemId, message, new Date(Date.now()));
   messageText.value.innerText= "";
   charCount.value = 0
 
   const { emit } = useEventsBus();
   emit('messageSent')
-  emit('refreshList', message, props.currentChatRoomInfo.recipientMail, props.currentChatRoomInfo.itemId)
+  emit('refreshList', message, currentChatRoomInfo.recipientMail, currentChatRoomInfo.itemId)
 }
 
 // Group messages by time intervals
@@ -179,10 +187,6 @@ const setCursorToEnd = () => {
   sel.addRange(range)
 }
 
-const isActive = () => {
-  return props.currentChatRoomInfo.senderMail !== "";
-}
-
 const formatTime = (date?: Date) => {
   if (!date) return '';
 
@@ -220,7 +224,7 @@ const formatTime = (date?: Date) => {
             <span>{{ formatTime(info.timestamp) }}</span>
           </div>
 
-          <div :class="['message', info.senderId !== props.currentChatRoomInfo.senderMail ? 'receiver' : 'sender']">
+          <div :class="['message', info.senderId !== currentChatRoomInfo.senderMail ? 'receiver' : 'sender']">
             <p>{{ info.content }}</p>
           </div>
         </template>

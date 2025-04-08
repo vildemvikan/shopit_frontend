@@ -17,6 +17,10 @@ let currentChatRoomInfo = reactive<ChatRoomInfo>({
 
 const { bus } = useEventsBus();
 
+const isChatEmpty = computed (()=> {
+  return chatList.value.length === 0;
+})
+
 watch(()=> bus.value.get('messageReceived'), async () => {
   chatList.value = await fetchChatList(currentChatRoomInfo.senderMail)
 });
@@ -57,13 +61,15 @@ watch(() => sessionStorage.getItem("email"), async (val) => {
   chatList.value = await fetchChatList(currentChatRoomInfo.senderMail);
 })
 
-watch(()=> bus.value.get('messageReceived'), async (val) => {
-  const payload = JSON.parse(val[0].body)
-  console.log(payload)
-  //chatList.value.push(payload)
-});
-
 const isUpdated = ref(false);
+
+watch(()=> bus.value.get('selectChat'), (val) => {
+  {
+    currentChatRoomInfo.senderMail = val[0].senderMail;
+    currentChatRoomInfo.recipientMail = val[0].recipientMail;
+    currentChatRoomInfo.itemId = val[0].itemId;
+  }
+})
 
 const onSelectedChatCard = (data: ChatRoomInfo) => {
   isUpdated.value = false;
@@ -80,15 +86,14 @@ const onSelectedChatCard = (data: ChatRoomInfo) => {
   <h2>{{ $t('messages') }}</h2>
 
  <div class="container">
-   <div class="chat-list-wrapper">
+   <div v-if="!isChatEmpty" class="chat-list-wrapper">
      <message-list
        :chat-list="sortedMessages"
        @select-chat="onSelectedChatCard"
      ></message-list>
    </div>
-   <div class="chat-wrapper">
-     <Chat :current-chat-room-info="currentChatRoomInfo"
-     ></Chat>
+   <div v-if="!isChatEmpty"class="chat-wrapper">
+     <Chat></Chat>
    </div>
  </div>
 
@@ -100,13 +105,25 @@ const onSelectedChatCard = (data: ChatRoomInfo) => {
   flex-direction: row;
   gap: 2vh;
   background-color: var(--color-lavendel-background);
-  padding: 2vh 20vh 2ch  20vh;
+  padding: 2vh 2vh;
   border-radius: var(--global-border-radius);
+  min-height: 85vh;
+  max-height: 85vh;
+  height: 85vh;
+  justify-content: center;
 }
 
 .chat-list-wrapper, .chat-wrapper{
   width: 50%;
   max-width: 50%;
+}
+
+@media (max-width: 1000px) {
+
+  .chat-list-wrapper, .chat-wrapper{
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 

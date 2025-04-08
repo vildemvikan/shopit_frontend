@@ -8,6 +8,7 @@ import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   chatCardData: ChatCardInfo,
+  hasUnreadMsg: boolean
 }>();
 
 dayjs.extend(relativeTime)
@@ -34,8 +35,8 @@ const displayMessage = computed(()=> {
 <template>
   <div class="card">
     <div class="image-box">
-      <img :src="props.chatCardData.itemImage?.url || 'src/assets/icons/no_image.svg'" class="display-image" alt="display image">
-      <img :src="props.chatCardData.recipientProfilePic?.url || 'src/assets/icons/profile.svg'" class="avatar" alt="avatar">
+      <img :src="props.chatCardData.itemImage || 'src/assets/icons/no_image.svg'" class="display-image" alt="display image">
+      <img :src="props.chatCardData.recipientProfilePic || 'src/assets/icons/profile.svg'" class="avatar" alt="avatar">
     </div>
     <div class="text-info">
       <div class="date-info">
@@ -43,7 +44,7 @@ const displayMessage = computed(()=> {
       </div>
       <div class="title-and-notification">
         <h3>{{props.chatCardData.itemTitle}}</h3>
-        <div class="notification-dot"></div>
+        <div v-if="props.hasUnreadMsg" class="notification-dot"></div>
       </div>
       <div class="last-message">
         <label id="message">{{displayMessage}}</label>
@@ -77,8 +78,6 @@ const displayMessage = computed(()=> {
   flex-direction: row;
   width: 100%;
 }
-
-/* todo: v-if active */
 
 .notification-dot {
   height: 15px;

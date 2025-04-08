@@ -1,46 +1,73 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import type { ChatCardInfo, ChatRoomInfo } from '@/interfaces/interfaces.ts'
+import type { ChatCardInfo, ChatMessage, ChatRoomInfo } from '@/interfaces/interfaces.ts'
 import ChatCard from '@/components/Messages/ChatCard.vue'
 import useEventsBus from '../../../utils/EventBus.ts'
 
-const isUpdated = ref(false);
 const selectedChatId = ref<string | null>(null);
 
 const props = defineProps<{
-  chatList: ChatCardInfo[],
+  chatList: ExtendedChatCardInfo[],
 }>();
 
-const emit = defineEmits<{
-  'selectChat': [chatInfo: ChatRoomInfo];
-}>();
+const { emit } = useEventsBus();
+
+interface ExtendedChatCardInfo extends ChatCardInfo {
+  hasUnreadMessage?: boolean;
+}
+
+
+const { bus } = useEventsBus();
+watch(()=> bus.value.get('messageReceived'), async (val) => {
+  const payload = JSON.parse(val[0].body)
+  console.log(payload)
+
+  if (selectedChatId && selectedChatId.value !== payload.recipientId + payload.itemId) {
+    toggleNewMessage(payload.recipientId, payload.itemId, true)
+  }
+});
 
 onMounted(() => {
   // todo: ref a boolean and check with watch
-  if (props.chatList.length > 0) {
-    emit('selectChat', {
-      senderMail: props.chatList[0].senderId,
-      recipientMail: props.chatList[0].recipientId,
-      itemId: props.chatList[0].itemId,
-    })
-  }
+  setTimeout(() => {
+    if (props.chatList.length > 0) {
+      emit('selectChat', {
+        senderMail: props.chatList[0].senderId,
+        recipientMail: props.chatList[0].recipientId,
+        itemId: props.chatList[0].itemId,
+      });
+      document.getElementById(props.chatList[0].recipientId+props.chatList[0].itemId)?.classList.add('active');
+    }
+  }, 30)
 })
+
 
 const sendSelectedChat = (data: ChatCardInfo) => {
   document.querySelectorAll('.chat-list-box').forEach(item => {
     item.classList.remove('active');
   });
 
+  toggleNewMessage(data.recipientId, data.itemId, false)
+
   document.getElementById(data.recipientId+data.itemId)?.classList.add('active');
 
   console.log("selected data sent: ", data.itemId, data.senderId)
-  selectedChatId.value = data.recipientId;
+  selectedChatId.value = data.recipientId + data.itemId;
 
   emit('selectChat', {
     senderMail: data.senderId,
     recipientMail: data.recipientId,
     itemId: data.itemId,
   })
+}
+
+const toggleNewMessage = (recipientId: string, itemId: number, mode: boolean) => {
+  const chat = props.chatList.find(
+    c => c.recipientId === recipientId && c.itemId === itemId
+  );
+  if (chat) {
+    chat.hasUnreadMessage = mode;
+  }
 }
 
 </script>
@@ -50,7 +77,9 @@ const sendSelectedChat = (data: ChatCardInfo) => {
     <div class="chat-list-box" :id="chat.recipientId + chat.itemId" @click="sendSelectedChat(chat)" :class="{ hasMessage : true}"
          v-for="chat in chatList" :key="chat.recipientId + chat.itemId">
       <ChatCard
-        :chat-card-data="chat">
+        :chat-card-data="chat"
+        :has-unread-msg="chat.hasUnreadMessage || false"
+      >
       </ChatCard>
     </div>
     <div class="advertisement">
