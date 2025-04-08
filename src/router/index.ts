@@ -13,14 +13,33 @@ import LoginForm from '@/components/Authentication/LoginForm.vue'
 import SignUpForm from '@/components/Authentication/SignUpForm.vue'
 import ForgotPasswordForm from '@/components/Authentication/ForgotPasswordForm.vue'
 import ResetPasswordForm from '@/components/Authentication/ResetPasswordForm.vue'
+import SearchView from '@/views/SearchView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '',
       name: 'front-page',
       component: FrontView
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: SearchView,
+      props: route => ({
+        search: route.query.search || null,
+        category: route.query.category || null,
+        subCategory: route.query.subCategory || null,
+        conditions: route.query.conditions || null,
+        counties: route.query.counties || null,
+        maxPrice: route.query.maxPrice || null,
+        minPrice: route.query.minPrice || null,
+        date: route.query.date || null,
+        type: route.query.type || null,
+        sortBy: route.query.sortBy || null,
+        displayType: route.query.displayType || null
+      })
     },
     {
       path: '/messages',
