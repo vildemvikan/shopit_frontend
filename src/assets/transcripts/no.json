@@ -7,6 +7,8 @@
   "edit-advertisement": "Rediger annonse",
 
   "title-advertisements": "Annonser",
+  "title-popular-categories": "Populære kategorier",
+  "title-new-advertisements": "Nye annonser",
 
   "label-type": "Type handel",
   "label-images": "Bilder",
@@ -36,8 +38,8 @@
   "label-new-password": "Nytt passord",
   "label-repeat-new-password": "Gjenta nytt passord",
   "label-my-advertisements": "Mine annonser",
-  "label-shop-by-category": "Handle ut i fra kategori",
-  "label-search": "Search etter hva som helst...",
+  "label-shop-by-category": "Handle kategori",
+  "label-search": "Søk etter hva som helst...",
   "label-area": "Område (fylke)",
   "label-all-categories": "Alle kategorier",
   "label-listing-type": "Type annonse",
@@ -57,7 +59,7 @@
   "option-status-active": "Status: Aktiv",
   "option-status-inactive": "Status: Påbegynt",
   "option-status-sold": "Status: Solgt",
-  "option-category-all": "All kategorier",
+  "option-category-all": "Alle kategorier",
 
   "option-cheapest": "Pris: Lav til høy",
   "option-most-expensive": "Pris: Høy til lav",
@@ -80,6 +82,8 @@
   "button-activate": "Marker som aktiv ",
   "button-save": "Lagre",
   "button-search": "Search",
+  "button-logout": "Logg ut",
+  "button-delete-user": "Slett bruker",
 
   "drop-down-category": "Velg kategori",
   "drop-down-sub-category": "Velg underkategori",
