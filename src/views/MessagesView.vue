@@ -2,10 +2,9 @@
 
 import MessageList from '@/components/Messages/ChatList.vue'
 import Chat from '@/components/Messages/Chat.vue'
-import { computed, onMounted, onUnmounted, reactive, type Ref, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { fetchChatList } from '../../utils/Messages.ts'
-import type { ChatCardInfo, ChatMessage, ChatRoomInfo } from '@/interfaces/interfaces.ts'
-import useEventsBus from '../../utils/EventBus.ts'
+import type { ChatCardInfo, ChatRoomInfo } from '@/interfaces/interfaces.ts'
 
 const chatList = ref<ChatCardInfo[]>([]);
 let currentChatRoomInfo = reactive<ChatRoomInfo>({
@@ -15,70 +14,16 @@ let currentChatRoomInfo = reactive<ChatRoomInfo>({
   }
 );
 
-const { bus } = useEventsBus();
+const hasSelectedMessage = ref(false);
 
 const isChatEmpty = computed (()=> {
   return chatList.value.length === 0;
 })
 
-watch(()=> bus.value.get('messageReceived'), async () => {
-  chatList.value = await fetchChatList(currentChatRoomInfo.senderMail)
-});
-
-watch(()=> bus.value.get('messageSent'), async () => {
-  setTimeout(async () => {
-    chatList.value = await fetchChatList(currentChatRoomInfo.senderMail)
-  }, 100)
-});
-
-const sortedMessages: Ref<ChatCardInfo[]> = computed(() => {
-  return [...chatList.value].sort((a, b) => {
-    return new Date(b.lastMessageTimestamp).getTime() - new Date(a.lastMessageTimestamp).getTime();
-  });
-});
-
 onMounted(async ()=> {
-  //sessionStorage.setItem("email", "a@a");
-  //todo: let currentUser = useTokenStore().email!;
-  currentChatRoomInfo.senderMail = sessionStorage.getItem("email")!;
-  console.log("getting chat list")
-  chatList.value = await fetchChatList(currentChatRoomInfo.senderMail);
-
-  // select top chat
-  if (chatList.value.length > 0) {
-    onSelectedChatCard({
-      senderMail: chatList.value[0].senderId,
-      recipientMail: chatList.value[0].recipientId,
-      itemId: chatList.value[0].itemId,
-    })
-  }
-  //select top chat or last active chat - session storage*/
-})
-
-watch(() => sessionStorage.getItem("email"), async (val) => {
-  console.log("change in current user")
   currentChatRoomInfo.senderMail = sessionStorage.getItem("email")!;
   chatList.value = await fetchChatList(currentChatRoomInfo.senderMail);
 })
-
-const isUpdated = ref(false);
-
-watch(()=> bus.value.get('selectChat'), (val) => {
-  {
-    currentChatRoomInfo.senderMail = val[0].senderMail;
-    currentChatRoomInfo.recipientMail = val[0].recipientMail;
-    currentChatRoomInfo.itemId = val[0].itemId;
-  }
-})
-
-const onSelectedChatCard = (data: ChatRoomInfo) => {
-  isUpdated.value = false;
-  currentChatRoomInfo.senderMail = data.senderMail;
-  currentChatRoomInfo.recipientMail = data.recipientMail;
-  currentChatRoomInfo.itemId = data.itemId;
-  isUpdated.value = true;
-}
-
 
 </script>
 
@@ -88,11 +33,11 @@ const onSelectedChatCard = (data: ChatRoomInfo) => {
  <div class="container">
    <div v-if="!isChatEmpty" class="chat-list-wrapper">
      <message-list
-       :chat-list="sortedMessages"
-       @select-chat="onSelectedChatCard"
+       :current-user="currentChatRoomInfo.senderMail"
      ></message-list>
    </div>
-   <div v-if="!isChatEmpty"class="chat-wrapper">
+   <button>back</button>
+   <div v-if="!isChatEmpty" class="chat-wrapper">
      <Chat></Chat>
    </div>
  </div>
@@ -118,7 +63,7 @@ const onSelectedChatCard = (data: ChatRoomInfo) => {
   max-width: 50%;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 8000px) {
 
   .chat-list-wrapper, .chat-wrapper{
     width: 100%;

@@ -12,7 +12,6 @@ interface ExtendedChatMessage extends ChatMessage {
 const { bus } = useEventsBus();
 const chatMessageInfo: Ref<ExtendedChatMessage[]>= ref([]);
 
-// todo: notification
 const currentChatRoomInfo = reactive({
   senderMail: "",
   recipientMail: "",

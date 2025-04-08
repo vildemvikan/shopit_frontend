@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import type { ChatCardInfo} from '@/interfaces/interfaces.ts'
 import { Status } from '@/enums/enums.ts'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import type { ExtendedChatCardInfo } from '@/components/Messages/ChatList.vue'
 
 const props = defineProps<{
-  chatCardData: ChatCardInfo,
-  hasUnreadMsg: boolean
+  chatCardData: ExtendedChatCardInfo
 }>();
 
 dayjs.extend(relativeTime)
@@ -44,7 +43,7 @@ const displayMessage = computed(()=> {
       </div>
       <div class="title-and-notification">
         <h3>{{props.chatCardData.itemTitle}}</h3>
-        <div v-if="props.hasUnreadMsg" class="notification-dot"></div>
+        <div v-if="props.chatCardData.hasUnreadMessage" class="notification-dot"></div>
       </div>
       <div class="last-message">
         <label id="message">{{displayMessage}}</label>
