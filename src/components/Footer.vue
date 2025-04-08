@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { displayStore } from '@/stores/displayStore.ts'
 const { t, locale } = useI18n()
+
+const display = displayStore()
 
 const theme = ref<'manual-light' | 'manual-dark'>('manual-light')
 
 function toggleTheme(newTheme: 'manual-light' | 'manual-dark') {
+  display.updateMode(newTheme)
   theme.value = newTheme
 }
 
 function changeLanguage(lang: string) {
+  display.updateLanguage(lang)
   locale.value = lang
 }
 
