@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {Status} from '@/enums/enums.ts'
+import { Condition, County, Status } from '@/enums/enums.ts'
 
 const baseURL = 'http://127.0.0.1:8080'
 
-const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGZhbnQub3JnIiwiaWF0IjoxNzQzNjc5NzM2LCJleHAiOjE3NDM2ODE1MzZ9.dB81TmEtavZXRPOMe1z_EeRpnjvE72zxcFUSIH_vRPF4R_DvHQOz2pf0X4nPBtRqGuoReQ5IkU_AdzkzfNXc3A'
+const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhQGEiLCJpYXQiOjE3NDQxMDU5NDIsImV4cCI6MTc0NDEwNzc0Mn0.R5Dq85l7GYDzXYoAZOOObANPlA91qKFiFAW4UvWKUcbL9AQnXRzjPzgZDc6YgrS_NeGsJEP4oTn6dc65B5p4Uw"
 export async function fetchPostalCodeInfo(postalCode: string): Promise<any> {
   const url = `https://api.bring.com/address/api/open/postalCode/postalCode.json?pnr=${postalCode}&country=NO`;
   try {
@@ -43,7 +43,68 @@ export async function fetchAdvertisement(id:string){
   }
 }
 
-export async function advertisement(data: string){
+export async function fetchNewestAdvertisements(size: number){
+  const url = baseURL + '/items'
+  try{
+    const response = await axios.get(url, {
+      params: {
+        page: 0,
+        size: size
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    console.log(response.data)
+    return response.data
+  } catch (error){
+    console.error(error)
+    return new Error("Error! Could not fetch advertisements.")
+  }
+}
+
+export async function searchAdvertisements(
+  size: number,
+  page: number,
+  keyword: string|null,
+  categoryId:number|null,
+  subCategoryId:number|null,
+  conditions: string[]|null,
+  counties: string[]|null,
+  minPrice: number|null,
+  maxPrice: number|null,
+  forSale: boolean|null,
+  field: string,
+  direction: string
+){
+  const url = baseURL + '/items/search'
+  try{
+    const response = await axios.get(url, {
+      params: {
+        page: page,
+        size: size,
+        keyword: keyword,
+        categoryId:categoryId,
+        subCategoryId:subCategoryId,
+        condition: conditions ? conditions.join(',') : null,
+        county: counties ? counties.join(',') : null,
+        maxPrice: maxPrice,
+        minPrice:minPrice,
+        forSale: forSale,
+        sortField: field,
+        sortDir: direction
+      },
+    });
+    console.log(response.data)
+    return response.data
+  } catch (error){
+    console.error(error)
+    return new Error("Error! Could not fetch advertisements.")
+  }
+}
+
+export async function createAdvertisement(data: string){
   const url = baseURL + '/items'
   try{
     const response = await axios.post(url, data, {
