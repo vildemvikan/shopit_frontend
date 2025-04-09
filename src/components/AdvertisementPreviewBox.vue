@@ -2,7 +2,7 @@
 import { Status } from '@/enums/enums.ts'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { createBookmark, deleteBookmark } from '../../utils/Bookmark.ts'
 import { useRouter } from 'vue-router'
 
@@ -12,7 +12,7 @@ dayjs.extend(relativeTime)
 
 
 const props = defineProps<{
-  id: string
+  id: number
   title: string
   price: number
   status: Status
@@ -29,7 +29,7 @@ const timeAgo = computed(() => dayjs(props.date).fromNow())
 
 async function bookmarkItem(){
   try{
-    const result = await createBookmark(props.id)
+    const result = await createBookmark(props.id.toString())
     if(result == 401){
       await router.push('/auth')
     }
@@ -42,7 +42,7 @@ async function bookmarkItem(){
 
 async function removeBookmark(){
   try{
-    const result = await deleteBookmark(props.id)
+    const result = await deleteBookmark(props.id.toString())
     if(result == 401){
       await router.push('/auth')
     }
