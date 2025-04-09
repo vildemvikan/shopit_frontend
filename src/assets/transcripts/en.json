@@ -145,7 +145,8 @@
 
   "confirmPassword": "Confirm password",
   "registerBtn": "Register account",
-
+  "registrationSuccess": "Register success",
+  "emailTaken": "Email has been taken",
   "firstNameRequired": "First name is required.",
   "lastNameRequired": "Last name is required.",
   "tooShortPassword": "Password must be at least 6 characters.",
@@ -162,6 +163,7 @@
   "resetBtn": "Reset Password",
   "resetSuccess": "Your password has been successfully reset.",
   "resetFailed": "Failed to reset password. Please try again.",
+  "resetPasswordTitle": "Reset your password",
   "invalidOrExpiredTokenTitle": "Invalid or Expired Token",
   "tryRequestingNewLink": "Try requesting a new link.",
 
