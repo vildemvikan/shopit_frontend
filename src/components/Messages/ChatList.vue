@@ -4,12 +4,10 @@ import type { ChatCardInfo, } from '@/interfaces/interfaces.ts'
 import ChatCard from '@/components/Messages/ChatCard.vue'
 import useEventsBus from '../../../utils/EventBus.ts'
 import { fetchChatList } from '../../../utils/Messages.ts'
+import { useTokenStore } from '@/stores/tokenStore.ts'
+import webSocket from '../../../utils/WebSocket.ts'
 
 const selectedChatId = ref<string | null>(null);
-
-const props = defineProps<{
-  currentUser: string;
-}>();
 
 const chatList: Ref<ExtendedChatCardInfo[]> = ref([]);
 
@@ -22,18 +20,18 @@ export interface ExtendedChatCardInfo extends ChatCardInfo {
 const { bus } = useEventsBus();
 
 watch(()=> bus.value.get('messageReceived'), async (val) => {
-  chatList.value = await fetchChatList(props.currentUser)
+  chatList.value = await fetchChatList()
 
   const payload = JSON.parse(val[0].body)
 
-  if (selectedChatId && selectedChatId.value !== payload.senderId + payload.itemId) {
+  if (selectedChatId.value && selectedChatId.value !== payload.senderId + payload.itemId) {
     toggleNewMessage(payload.recipientId, payload.itemId, true)
   }
 });
 
 watch(()=> bus.value.get('messageSent'), async () => {
   setTimeout(async () => {
-    chatList.value = await fetchChatList(props.currentUser)
+    chatList.value = await fetchChatList()
   }, 100)
 });
 
@@ -52,7 +50,12 @@ onMounted(async () => {
   // todo: responsive + her var det tomt gitt
 
   console.log("getting chat list")
-  chatList.value = await fetchChatList(props.currentUser);
+  if (useTokenStore().getEmail && useTokenStore().getEmail !== null) {
+    if (!webSocket.isConnected()) {
+      webSocket.connect(useTokenStore().getEmail!)
+    }
+    chatList.value = await fetchChatList();
+  }
 
   if (isMobile()) {
     return;

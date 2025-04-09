@@ -86,7 +86,6 @@ const websocketService = {
         content,
       };
 
-      console.log("Message", message)
       stompClient.publish({
         destination: '/app/chat',
         body: JSON.stringify(message)
