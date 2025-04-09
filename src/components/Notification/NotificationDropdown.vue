@@ -179,7 +179,7 @@ function loadMore() {
   <div class="dropdown">
     <div class="mobile-drag-bar" />
     <div class="dropdown-header">
-      <h4>Varslinger</h4>
+      <h4>{{$t('title-notifications')}}</h4>
       <button @click="refreshNotifications" class="refresh-btn" aria-label="Refresh notifications">
         <img :src="refreshIcon" alt="Refresh"  class="icon"/>
       </button>
