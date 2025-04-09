@@ -64,9 +64,9 @@ onMounted(async () => {
   setTimeout(() => {
     if (chatList.value.length > 0) {
       emit('selectChat', {
-        senderMail: chatList.value[0].senderId,
-        recipientMail: chatList.value[0].recipientId,
-        itemId: chatList.value[0].itemId,
+        senderMail: sortedMessages.value[0].senderId,
+        recipientMail: sortedMessages.value[0].recipientId,
+        itemId: sortedMessages.value[0].itemId,
       });
       document.getElementById(sortedMessages.value[0].recipientId+sortedMessages.value[0].itemId)?.classList.add('active');
     }
