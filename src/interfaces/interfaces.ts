@@ -2,13 +2,11 @@ import type { PaymentMethod } from '@/enums/enums.ts'
 import { Condition, Status } from '@/enums/enums.ts'
 
 export interface ChatMessage {
-  id: number,
   senderId: string,
   recipientId: string,
   itemId: number,
-  chatId: string,
   content: string,
-  timestamp: Date
+  timestamp: Date,
 }
 
 export interface Image{
@@ -31,13 +29,6 @@ export interface Option {
   text: string;
   value: PaymentMethod;
 }
-
-export interface UserInfo {
-  senderMail: string,
-  recipientMail: string,
-  itemId: number
-}
-
 
 export interface Location{
   postalCode: number,
@@ -122,4 +113,23 @@ export interface SearchItems{
 export interface Pageable{
   pageNumber: number,
   pageSize: number,
+}
+
+export interface ChatCardInfo {
+  lastMessageContent: string,
+  lastMessageTimestamp: string,
+  lastSenderId: string,
+  senderId: string,
+  recipientId: string,
+  itemId: number,
+  status: Status
+  itemImage: string,
+  itemTitle: string,
+  recipientProfilePic: string,
+}
+
+export interface ChatRoomInfo {
+  senderMail: string
+  recipientMail: string
+  itemId: number
 }

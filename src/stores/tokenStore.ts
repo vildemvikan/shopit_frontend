@@ -121,5 +121,6 @@ export const useTokenStore = defineStore('tokenStore', {
       return !!state.jwtToken && Date.now() < state.accessTokenExpiresAt;
     },
     getToken: (state) => state.jwtToken,
+    getEmail: (state) => state.email,
   }
 })

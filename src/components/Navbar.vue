@@ -87,7 +87,7 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
 <template>
   <nav class="navbar">
     <button class="logo" @click="navigateTo('/')">
-      <H1>ShopIT</H1>
+      ShopIT
     </button>
 
     <div class="mobile-icons mobile-only">
