@@ -18,11 +18,12 @@ const props = defineProps<{
   maxPrice: number | null,
   forSale: boolean | null,
   forFree: boolean | null,
-  conditionFacet: any[]
-  forSaleFacet: any[]
-  countyFacet: any[]
-  categoryFacet: any[]
-  subcategoryFacet: any[]
+  conditionFacet: any
+  forSaleFacet: any
+  countyFacet: any
+  categoryFacet: any
+  subcategoryFacet: any
+  publishedTodayFacet:any
 }>()
 
 
@@ -294,9 +295,18 @@ watch(
           type="checkbox"
           :id="'published'"
           :value="true"
+          :disabled="!props.publishedTodayFacet || !props.publishedTodayFacet['true']"
           v-model="publishedToDay"
         />
-        <label :for="'published'" id="county">{{$t('filter-new-today')}}</label>
+        <label
+          :for="'published'"
+          id="county"
+          :class="{ disabled: !props.publishedTodayFacet || !props.publishedTodayFacet['true'] }">
+          {{$t('filter-new-today')}}
+          <span>
+            ({{ publishedTodayFacet && publishedTodayFacet['true'] ? publishedTodayFacet['true'] : '0' }})
+          </span>
+        </label>
       </div>
     </div>
   </div>

@@ -45,7 +45,7 @@ const router = createRouter({
         counties: route.query.counties || null,
         maxPrice: route.query.maxPrice || null,
         minPrice: route.query.minPrice || null,
-        date: route.query.date || null,
+        publishedToday: route.query.publishedToday || null,
         type: route.query.type || null,
         sortBy: route.query.sortBy || null,
         displayType: route.query.displayType || null

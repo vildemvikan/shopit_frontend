@@ -36,11 +36,12 @@ const conditions = ref<string[]|null>(null)
 const counties = ref<string[]|null>(null)
 const published = ref<boolean|null>(null)
 
-const conditionFacet = ref<any[]>([])
-const forSaleFacet = ref<any[]>([])
-const countyFacet = ref<any[]>([])
-const categoryFacet = ref<any[]>([])
-const subCategoryFacet = ref<any[]>([])
+const conditionFacet = ref<any>(null)
+const forSaleFacet = ref<any>(null)
+const countyFacet = ref<any>(null)
+const categoryFacet = ref<any>(null)
+const subCategoryFacet = ref<any>(null)
+const publishedTodayFacet = ref<any>(null)
 
 onMounted(async () => {
   if (route.query.category) {
@@ -90,6 +91,10 @@ async function newFilters(newFilters: MenuFilter){
 
   console.log(forFree.value)
 
+  if(published.value == false){
+    published.value = null
+  }
+
   if(forSale.value && forFree.value){
     forSale.value = null
   } if(forSale.value == false && (forFree.value == false || forFree.value == null)){
@@ -111,7 +116,7 @@ async function updateRoute() {
   if (counties.value && counties.value.length > 0) query.counties = counties.value
   if (conditions.value && conditions.value.length > 0) query.conditions = conditions.value
   if (forSale.value !== null) query.forSale = forSale.value
-  if (published.value !== null) query.published = published.value
+  if (published.value !== null) query.publishedToday = published.value
   if (orderBy.value) query.sortBy = orderBy.value
   await router.push({ name: 'search', query })
   page.value = 0
@@ -139,6 +144,7 @@ async function fetchAdvertisements(){
       minPrice.value,
       maxPrice.value,
       forSale.value,
+      published.value,
       field,
       direction
     )
@@ -151,6 +157,7 @@ async function fetchAdvertisements(){
     categoryFacet.value = result.categoryFacet
     subCategoryFacet.value = result.subCategoryFacet
     countyFacet.value = result.countyFacet
+    publishedTodayFacet.value = result.publishedTodayFacet
 
     console.log('SEARCH')
     console.log(advertisements.value)
@@ -197,6 +204,7 @@ function toggleDisplay(){
         :county-facet="countyFacet"
         :category-facet="categoryFacet"
         :subcategory-facet="subCategoryFacet"
+        :published-today-facet="publishedTodayFacet"
       />
     </div>
 

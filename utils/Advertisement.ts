@@ -84,6 +84,7 @@ export async function searchAdvertisements(
   minPrice: number|null,
   maxPrice: number|null,
   forSale: boolean|null,
+  publishedToday: boolean|null,
   field: string,
   direction: string
 ){
@@ -111,6 +112,7 @@ export async function searchAdvertisements(
         maxPrice: maxPrice,
         minPrice:minPrice,
         forSale: forSale,
+        onlyToday: publishedToday,
         sortField: field,
         sortDir: direction
       },headers
