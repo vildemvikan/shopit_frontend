@@ -5,7 +5,7 @@ import {DisplayAdvertisement} from '@/interfaces/interfaces.ts'
 import { fetchNewestAdvertisements } from '../../../utils/Advertisement.ts'
 import AdvertisementPreview from '@/components/AdvertisementPreviewBox.vue'
 
-const SIZE = 5
+const SIZE = 6
 const advertisements = ref<DisplayAdvertisement[]>([])
 
 async function loadAdvertisements(){
@@ -61,6 +61,7 @@ onMounted(async () => {
   width: 100%;
   height: 85%;
   gap: 20px;
+  padding: 5px;
   overflow-x: scroll;
 }
 

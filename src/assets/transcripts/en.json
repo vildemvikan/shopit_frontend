@@ -9,6 +9,8 @@
   "title-advertisements": "Advertisements",
   "title-popular-categories": "Popular Categories",
   "title-new-advertisements": "New Advertisements",
+  "title-bookmarks": "Bookmarks",
+  "title-notifications": "Notifications",
 
   "label-type": "Advertisement type",
   "label-images": "Images",
@@ -89,6 +91,7 @@
 
   "drop-down-category": "Select category",
   "drop-down-sub-category": "Select sub category",
+  "drop-down-condition": "Select condition",
 
   "input-tag": "Tag",
   "input-title": "Title",

@@ -1,15 +1,27 @@
 <script setup lang="ts">
 import { Status } from '@/enums/enums.ts'
 import dayjs from 'dayjs'
+import 'dayjs/locale/nb'
+import 'dayjs/locale/en'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { createBookmark, deleteBookmark } from '../../utils/Bookmark.ts'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
-const router = useRouter()
+const { locale } = useI18n()
+
+watch(locale, (newLocale) => {
+  dayjs.locale(newLocale)
+}, { immediate: true })
 
 dayjs.extend(relativeTime)
+const router = useRouter()
 
+
+const emit = defineEmits<{
+  (e: 'remove-bookmark'): void;
+}>()
 
 const props = defineProps<{
   id: number
@@ -25,7 +37,12 @@ const props = defineProps<{
 
 const bookmarked = ref<boolean>(props.isBookmarked)
 
-const timeAgo = computed(() => dayjs(props.date).fromNow())
+const timeAgo = computed(() => {
+  // Remap "no" to "nb" for Day.js compatibility
+  const lang = locale.value === 'no' ? 'nb' : locale.value;
+  // Ensure that Day.js uses the updated locale for each computation
+  return dayjs(props.date).locale(lang).fromNow();
+});
 
 async function bookmarkItem(){
   try{
@@ -47,6 +64,8 @@ async function removeBookmark(){
       await router.push('/auth')
     }
     bookmarked.value = !(result == 204)
+    await emit('remove-bookmark')
+
   } catch (error){
     bookmarked.value = true
   }

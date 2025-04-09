@@ -9,6 +9,11 @@ import { createBookmark, deleteBookmark } from '../../utils/Bookmark.ts'
 
 dayjs.extend(relativeTime)
 const router = useRouter();
+
+const emit = defineEmits<{
+  (e: 'remove-bookmark'): void;
+}>()
+
 const props = defineProps<{
   id: number
   title: string
@@ -49,6 +54,7 @@ async function removeBookmark(){
       await router.push('/auth')
     }
     bookmarked.value = !(result == 204)
+    await emit('remove-bookmark')
   } catch (error){
     bookmarked.value = true
   }
@@ -170,6 +176,8 @@ async function goToAdvertisement(){
   border-radius: calc(var(--global-border-radius)/2);
   padding-left: 5%;
   padding-right: 5%;
+  font-weight: bold;
+  color: var(--color-black-text);
 }
 
 #status-active{

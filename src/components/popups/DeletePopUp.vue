@@ -84,19 +84,17 @@ function cancelDelete() {
   z-index: 1000;
 }
 
-/* Popup container */
 .popup {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: var(--color-white-background);
+  background: var(--color-background);
   padding: 20px 30px;
   border-radius: var(--global-border-radius);
   text-align: center;
   max-width: 90%;
 }
 
-/* Buttons styling */
 .buttons {
   display: flex;
   justify-content: center;
@@ -113,15 +111,12 @@ function cancelDelete() {
 .delete-btn {
   background-color: var(--color-light-red-button);
 }
-
 .delete-btn:hover {
   background-color: var(--color-light-dark-red-button);
 }
-
 .cancel-btn {
-  background-color: var(--color-light-blue-button); /* blue */
+  background-color: var(--color-light-blue-button);
 }
-
 .cancel-btn:hover {
   background-color: var(--color-blue-button);
 }

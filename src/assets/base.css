@@ -39,7 +39,7 @@
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  --vt-c-text-dark-2: rgba(255, 254, 254, 0.64);
 
 
   --vt-hokieStone-6t:  #C8C9CA;
@@ -137,21 +137,19 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  html:not(.manual-light) {
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
     --color-background-mute: var(--vt-c-black-mute);
-
     --color-border: var(--vt-c-divider-dark-2);
     --color-border-hover: var(--vt-c-divider-dark-1);
-
     --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
+    --color-text: var(--vt-c-text-dark-1);
   }
 }
 
 html.manual-dark {
-  --color-background: var(--vt-c-black);
+  --color-background: var(--vt-c-black-soft);
   --color-background-soft: var(--vt-c-black-soft);
   --color-background-mute: var(--vt-c-black-mute);
 
@@ -159,19 +157,15 @@ html.manual-dark {
   --color-border-hover: var(--vt-c-divider-dark-1);
 
   --color-heading: var(--vt-c-text-dark-1);
-  --color-text: var(--vt-c-text-dark-2);
-}
+  --color-text: var(--vt-c-text-dark-1);
 
-html.manual-light {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
+  .invertible-icon, .inv-icon, #inv-icon, .inv-image {
+    filter: invert(100%);
+  }
 
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
+  h1{
+    color: var(--vt-c-white);
+  }
 }
 
 *,

@@ -9,6 +9,8 @@
   "title-advertisements": "Annonser",
   "title-popular-categories": "Populære kategorier",
   "title-new-advertisements": "Nye annonser",
+  "title-bookmarks": "Bokmerker",
+  "title-notifications": "Notefikasjoner",
 
   "label-type": "Type handel",
   "label-images": "Bilder",
@@ -87,6 +89,7 @@
 
   "drop-down-category": "Velg kategori",
   "drop-down-sub-category": "Velg underkategori",
+  "drop-down-condition": "Velg tilstand",
 
   "input-tag":"Emneknagg",
   "input-title": "Tittel",

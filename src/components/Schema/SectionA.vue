@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import { onMounted, ref, watch } from 'vue'
+import {Image} from '@/interfaces/interfaces.ts'
 
 onMounted(() => {
   forSale.value = props.forSale
@@ -18,11 +19,6 @@ const props = defineProps<{
   imagesError: boolean;
 }>()
 
-interface Image{
-  url: string,
-  caption: string
-  publicId: number|null
-}
 const forSale = ref(true)
 const images = ref<Image[]>([])
 
@@ -140,6 +136,10 @@ watch(forSale, (newValue)=>{
 </template>
 
 <style scoped>
+
+H3, label{
+  color: var(--color-black-text);
+}
 
 .type-buttons{
   display: flex;

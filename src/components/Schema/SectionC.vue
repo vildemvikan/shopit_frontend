@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n';
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 
@@ -35,11 +35,10 @@ enum PaymentMethod {
 const price = ref<number>(0)
 const payment = ref<PaymentMethod>(PaymentMethod.None)
 
-// Options as an array of strings
-const options: Option[] = [
-  {text:t('option-vipps'), value: PaymentMethod.Direct},
-  {text: t('option-auction'), value: PaymentMethod.Auction}];
-
+const options = computed<Option[]>(() => [
+  { text: t('option-vipps'), value: PaymentMethod.Direct },
+  { text: t('option-auction'), value: PaymentMethod.Auction }
+]);
 
 function checked(state: PaymentMethod){
   return state === payment.value
@@ -95,6 +94,10 @@ watch(payment, (newPayment)=>{
 </template>
 
 <style scoped>
+
+H3, label{
+  color: var(--color-black-text);
+}
 .price-input-container {
   display: flex;
   flex-direction: row;

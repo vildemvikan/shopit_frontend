@@ -44,7 +44,7 @@ async function goToSubCategory(){
         class="route-label"
         id="back-to"
         @click="toProfile()">
-        <img class="label-icon" src="@/assets/icons/back.svg" alt="Back to profile">
+        <img class="inv-icon" src="@/assets/icons/back.svg" alt="Back to profile">
         {{$t('label-back-to-profile')}}
         &nbsp;</label>
       <label class="route-label" id="category" @click="goToCategory">{{advertisement.categoryName}}</label>
@@ -67,7 +67,7 @@ async function goToSubCategory(){
           :owner="advertisement.isOwner"
           :description="advertisement.description"
           :title="advertisement.name"
-          :for-sale="forSale"
+          :for-sale="advertisement.forSale"
           :postal-code="advertisement.location.postalCode"
           :city="advertisement.location.city"
           :price="advertisement.price"
@@ -107,7 +107,7 @@ async function goToSubCategory(){
   text-decoration: underline;
 }
 
-.label-icon{
+.inv-icon{
   height: 1em;
 }
 
@@ -122,8 +122,6 @@ async function goToSubCategory(){
 #category{
   color: var(--color-dark-orange-text);
 }
-
-
 
 .content{
   display: flex;

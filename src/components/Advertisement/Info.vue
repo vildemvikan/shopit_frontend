@@ -91,6 +91,7 @@ async function handleStatusChange(status: Status){
     <div class="info-box" >
       <label v-if="forSale && props.status !== Status.Sold" class="for-sale-info">{{$t('button-type-sell')}}</label>
       <label v-if="!forSale && props.status !== Status.Sold" class="for-sale-info">{{$t('button-type-free')}}</label>
+
       <label v-if="props.status === Status.Sold" class="for-sale-info" id="sold">{{$t('label-sold')}}</label>
       <div class="location-info">
         <img src="@/assets/icons/location.svg" alt="Location" class="location-icon">
@@ -128,10 +129,11 @@ async function handleStatusChange(status: Status){
       <button
       class="button"
       id="yellow-button"
-      v-if="props.status !== Status.Sold"
+      v-if="props.status !== Status.Sold && props.status !== Status.Inactive"
       @click="handleStatusChange(Status.Sold)">
         <label class="button-label" id="yellow-button-label">{{$t('button-sold')}}</label>
       </button>
+
       <button
         class="button"
         id="gray-button"
@@ -168,27 +170,26 @@ async function handleStatusChange(status: Status){
   <hr class="divider">
   <div class="payment-info" v-if="owner">
     <label v-if="payment === PaymentMethod.Auction">
-      <img class="label-icon" src="@/assets/icons/check.svg" alt="allows">
+      <img class="icon" src="@/assets/icons/check.svg" alt="allows">
       {{ $t('label-allows-auction') }}</label>
     <label v-if="payment !== PaymentMethod.Auction">
-      <img class="label-icon" src="@/assets/icons/x.svg" alt="denies">
+      <img class="icon" src="@/assets/icons/x.svg" alt="denies">
       {{ $t('label-denies-auction') }}</label>
     <label v-if="payment === PaymentMethod.Direct">
-      <img class="label-icon" src="@/assets/icons/check.svg" alt="allows">
+      <img class="icon" src="@/assets/icons/check.svg" alt="allows">
       {{ $t('label-allows-direct') }}</label>
     <label v-if="payment !== PaymentMethod.Direct">
-      <img class="label-icon" src="@/assets/icons/x.svg" alt="denies">
+      <img class="icon" src="@/assets/icons/x.svg" alt="denies">
       {{ $t('label-denies-direct') }}</label>
 
   </div>
   <div class="seller" v-if="!owner">
     <div class="profile-picture">
-      <img src="@/assets/icons/profile.svg" alt="profile-picture" class="profile-image">
+      <img src="@/assets/icons/profile.svg" alt="profile-picture" class="inv-image">
     </div>
     <div class="seller-info">
       <label class="seller-name">{{seller}}</label>
     </div>
-
   </div>
 
 </template>
@@ -213,6 +214,7 @@ async function handleStatusChange(status: Status){
   padding-left: 10px;
   background-color: var(--color-gray-button);
   border-radius: calc(var(--global-border-radius)/2);
+  color: var(--color-black-text);
 }
 
 #sold{
@@ -324,7 +326,7 @@ async function handleStatusChange(status: Status){
 
   padding: 2px;
   border-radius: calc(var(--global-border-radius)/2);
-  border: var(--global-border-size) solid var(--color-black-border);
+  border: var(--global-border-size) solid var(--color-text);
 }
 
 .condition-label, .description-label{
@@ -362,11 +364,11 @@ async function handleStatusChange(status: Status){
   width: 15%;
   max-width: 100px;
   aspect-ratio: 1/1;
-  border: var(--global-border-size) solid var(--color-black-border);
+  border: var(--global-border-size) solid var(--color-text);
   border-radius: 100%;
 }
 
-.profile-image{
+.inv-image{
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
@@ -386,7 +388,7 @@ async function handleStatusChange(status: Status){
   flex-direction: column;
 }
 
-.label-icon{
+.icon{
   height: 1em;
 }
 

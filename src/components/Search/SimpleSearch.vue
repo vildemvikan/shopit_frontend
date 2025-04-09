@@ -16,7 +16,7 @@ function emitKeyWord(){
 <template>
   <div class="simple-search">
     <div class="search-bar">
-      <img src="@/assets/icons/search.svg" class="search-icon" alt="search">
+      <img src="@/assets/icons/search.svg" class="inv-icon" alt="search">
       <input
         class="search-input"
         :placeholder="t('label-search')"
@@ -53,15 +53,17 @@ function emitKeyWord(){
   border-radius: calc(var(--global-border-radius)/2);
 }
 
-.search-icon{
+.inv-icon{
   height: 60%;
   margin: 10px;
 }
 
 .search-input{
   width: 100%;
-  height: 100%;
+  height: 90%;
   border: none;
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 .search-input:focus{
