@@ -10,7 +10,7 @@ import { createBookmark, deleteBookmark } from '../../utils/Bookmark.ts'
 dayjs.extend(relativeTime)
 const router = useRouter();
 const props = defineProps<{
-  id: string
+  id: number
   title: string
   price: number
   status: Status;
@@ -31,7 +31,7 @@ const timeAgo = computed(() => {
 
 async function bookmarkItem(){
   try{
-    const result = await createBookmark(props.id)
+    const result = await createBookmark(props.id.toString())
     if(result == 401){
       await router.push('/auth')
     }
@@ -44,7 +44,7 @@ async function bookmarkItem(){
 
 async function removeBookmark(){
   try{
-    const result = await deleteBookmark(props.id)
+    const result = await deleteBookmark(props.id.toString())
     if(result == 401){
       await router.push('/auth')
     }
