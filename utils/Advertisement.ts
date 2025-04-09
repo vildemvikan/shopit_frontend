@@ -164,6 +164,8 @@ export async function updateAdvertisement(data: string, id:string){
 
 export async function changeStatus(status: Status, id: string){
   const url = baseURL + '/items/' + id + '/status'
+  const tokenStore = useTokenStore();
+  const token = tokenStore.getToken;
   try{
     const response = await axios.put(url, {status: status}, {
       headers: {

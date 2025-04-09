@@ -6,10 +6,13 @@ import { computed, ref } from 'vue'
 import { createBookmark, deleteBookmark } from '../../utils/Bookmark.ts'
 import { useRouter } from 'vue-router'
 
+dayjs.extend(relativeTime)
 const router = useRouter()
 
-dayjs.extend(relativeTime)
 
+const emit = defineEmits<{
+  (e: 'remove-bookmark'): void;
+}>()
 
 const props = defineProps<{
   id: number
@@ -47,6 +50,8 @@ async function removeBookmark(){
       await router.push('/auth')
     }
     bookmarked.value = !(result == 204)
+    await emit('remove-bookmark')
+
   } catch (error){
     bookmarked.value = true
   }
