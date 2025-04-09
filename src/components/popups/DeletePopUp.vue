@@ -1,24 +1,44 @@
 <script setup lang="ts">
 import router from '@/router'
 import { deleteAdvertisement as deleteAdAPI } from '../../../utils/Advertisement.ts'
+import { deleteUser } from '../../../utils/Profile.ts'
+import { useTokenStore } from '@/stores/tokenStore.ts'
 
-// Emits an event to notify the parent to close the delete popup
 const emit = defineEmits<{
   (e: 'close:delete-pop-up', value: boolean): void;
 }>()
 
+const tokenStore = useTokenStore()
+
 const props = defineProps<{
-  id: string
+  id: string|null
+  typeDeleteUser: boolean
+  typeDeleteAdvertisement:boolean
 }>()
 
-async function confirmDelete() {
+async function confirmDeleteAdvertisement() {
   try {
+    if(!props.id) return
     await deleteAdAPI(props.id)
     await router.push('/profile')
     // Emit event to close the popup after deletion
     emit('close:delete-pop-up', true)
   } catch (error) {
     console.error(error)
+  }
+}
+
+async function confirmDeleteUser() {
+  try {
+    const result = await deleteUser()
+    if(result){
+      await tokenStore.emptyTokenStore()
+      await router.push('/')
+    }
+    emit('close:delete-pop-up', true)
+  } catch (error) {
+    console.error(error)
+    emit('close:delete-pop-up', true)
   }
 }
 
@@ -32,9 +52,17 @@ function cancelDelete() {
   <div class="overlay">
     <div class="popup">
       <h3>{{ $t('confirm-deletion-title') }}</h3>
-      <label>{{ $t('confirm-deletion-label') }}</label>
+      <label v-if="typeDeleteUser">{{ $t('confirm-deletion-label-user') }}</label>
+      <label v-if="typeDeleteAdvertisement">{{ $t('confirm-deletion-label') }}</label>
       <div class="buttons">
-        <button class="delete-btn" id="button" @click="confirmDelete">Delete</button>
+        <button class="delete-btn"
+                v-if="typeDeleteAdvertisement"
+                id="button"
+                @click="confirmDeleteAdvertisement">Delete</button>
+        <button class="delete-btn"
+                v-if="typeDeleteUser"
+                id="button"
+                @click="confirmDeleteUser">Delete</button>
         <button class="cancel-btn" id="button" @click="cancelDelete">Cancel</button>
       </div>
     </div>
