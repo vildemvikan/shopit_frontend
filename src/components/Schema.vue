@@ -345,6 +345,8 @@ function buildJSONBody(status: Status) {
 .sections{
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+  height: fit-content;
   gap: 2vh;
   background-color: var(--color-lavendel-background);
   place-items: center;
