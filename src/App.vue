@@ -58,10 +58,4 @@ onMounted(() => {
   width: 100%;
 }
 
-@media (max-width: 1000px) {
-  .view{
-    height: fit-content;
-  }
-}
-
 </style>
