@@ -14,6 +14,7 @@ import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { useTokenStore } from '@/stores/tokenStore.ts'
 
 const app = createApp(App)
 
@@ -34,9 +35,14 @@ app.use(Toast, {
   closeOnClick: true,
   pauseOnHover: true
 })
+
 app.use(pinia)
 app.use(router)
 app.use(i18n)
+
+const tokenStore = useTokenStore()
+tokenStore.initializeTimer()
+
 app.mount('#app')
 
 
