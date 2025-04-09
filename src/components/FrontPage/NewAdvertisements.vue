@@ -25,7 +25,7 @@ onMounted(async () => {
 
 <template>
   <div class="content">
-    <h2 class="title">New Advertisements</h2>
+    <h2 class="title">{{$t('title-new-advertisements')}}</h2>
     <div class="advertisements">
       <div class="new-advertisement" v-for="advertisement in advertisements">
         <AdvertisementPreview

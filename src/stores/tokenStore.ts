@@ -1,13 +1,13 @@
 import {defineStore} from 'pinia'
-import { getTokens, refreshToken, registerUser } from '../../utils/Authentication.ts'
+import { getToken, logout, refreshToken, registerUser } from '../../utils/Authentication.ts'
 import router from '@/router'
+
 
 export const useTokenStore = defineStore('tokenStore', {
   state: () => ({
-    jwtToken: '',
-    refreshToken: '',
-    email: null as string | null,
-    accessTokenExpiresAt:0,
+    jwtToken: null as string|null,
+    refreshToken: null as string|null,
+    accessTokenExpiresAt: 0 as number,
     tokenTimer: null as ReturnType<typeof setTimeout> | null
   }),
 
@@ -16,18 +16,21 @@ export const useTokenStore = defineStore('tokenStore', {
   },
 
   actions: {
+
     async login(email: string, password: string) {
       try{
-        const response = await getTokens(email, password);
-        this.jwtToken = response.data.accessToken
-        this.refreshToken = response.data.refreshToken
-        this.email = email;
+        const response: { token:string} = await getToken(email, password);
+        this.jwtToken = response.token
         this.accessTokenExpiresAt = Date.now() + 30 * 60 * 1000 // 30 minutes
+        this.startRefreshTimer()
+
+        console.log("Expiration:" + this.accessTokenExpiresAt)
         await router.push('/')
       } catch (error: any) {
         throw new Error('Error logging in')
       }
 },
+
     async registerAndSaveToken(
       firstName: string,
       lastName: string,
@@ -36,10 +39,8 @@ export const useTokenStore = defineStore('tokenStore', {
     ) {
       try {
         const response = await registerUser(firstName, lastName, email, password);
-        this.jwtToken = response.data.accessToken;
-        this.refreshToken = response.data.refreshToken;
+        this.jwtToken = response.data.token;
         this.accessTokenExpiresAt = Date.now() + 30 * 60 * 1000
-
         console.log(response.data.token);
       } catch (error: any) {
         if (error.response?.status === 409) {
@@ -49,54 +50,76 @@ export const useTokenStore = defineStore('tokenStore', {
         }
       }
     },
-    async refreshAccessToken() {
+
+    async logOut(){
       try {
-        const response = await refreshToken(this.refreshToken)
-        this.jwtToken = response.data.accessToken
+        if(!this.jwtToken) return
+        const response = await logout(this.jwtToken)
+        if(response == 200){
+          await this.emptyTokenStore()
+          await router.push('/')
+        }
+      } catch (error){
+        console.error('Could not logout / delete refresh token from cookie')
+      }
+    },
+
+    async refreshAccessToken() {
+      console.log('refreshing token')
+      try {
+        const response = await refreshToken()
+        this.jwtToken = response.token
         this.accessTokenExpiresAt = Date.now() + 30 * 60 * 1000
         this.startRefreshTimer()
       } catch (error) {
-        this.emptyTokenStore()
+        await this.emptyTokenStore()
         throw new Error('Failed to refresh access token')
       }
     },
+
     startRefreshTimer() {
       if (this.tokenTimer) clearTimeout(this.tokenTimer)
 
-      const refreshDelay = 25 * 60 * 1000 // 25 minutes
+      const remainingTime = this.accessTokenExpiresAt - Date.now();
+      console.log('Remaining time:' + remainingTime)
+
+      const refreshMargin = 5 * 60 * 1000; // 5 minutes
+      const refreshDelay = Math.max(remainingTime - refreshMargin, 0);
+
       this.tokenTimer = setTimeout(async () => {
-        if (this.isAccessTokenExpired()) {
+        if (this.isAccessTokenExpired() || (this.accessTokenExpiresAt - Date.now()) < refreshMargin) {
           await this.refreshAccessToken()
         }
       }, refreshDelay)
     },
 
-    async reHydrate() {
-      if (!this.jwtToken || !this.refreshToken) {
-        return;
-      }
-
-      if (this.isAccessTokenExpired()) {
-        await this.refreshAccessToken()
-      } else {
-        this.startRefreshTimer()
-      }
-    },
-
-    emptyTokenStore() {
-      this.jwtToken = '';
-      this.email = null;
-      this.refreshToken=''
-      router.push('/');
+    async emptyTokenStore() {
+      this.jwtToken = null;
+      await router.push('/');
     },
 
     isAccessTokenExpired(): boolean {
+      console.log(Date.now())
+      console.log(this.accessTokenExpiresAt)
       return Date.now() > this.accessTokenExpiresAt;
+    },
+
+    async initializeTimer() {
+      if (this.jwtToken && this.accessTokenExpiresAt) {
+        if (!this.isAccessTokenExpired()) {
+          this.startRefreshTimer();
+        } else {
+          await this.refreshAccessToken()
+        }
+      }
     }
+
   },
 
   getters: {
-    isAuthenticated: (state) => !!state.jwtToken,
+    isAuthenticated: (state) => {
+      return !!state.jwtToken && Date.now() < state.accessTokenExpiresAt;
+    },
     getToken: (state) => state.jwtToken,
   }
 })

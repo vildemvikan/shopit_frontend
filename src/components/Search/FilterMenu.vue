@@ -7,7 +7,7 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const emit = defineEmits(['updateFilter'])
+const emit = defineEmits(['updateFilter', 'updatePrice'])
 
 const props = defineProps<{
   conditions: Condition[] | null
@@ -18,11 +18,12 @@ const props = defineProps<{
   maxPrice: number | null,
   forSale: boolean | null,
   forFree: boolean | null,
-  conditionFacet: any[]
-  forSaleFacet: any[]
-  countyFacet: any[]
-  categoryFacet: any[]
-  subcategoryFacet: any[]
+  conditionFacet: any
+  forSaleFacet: any
+  countyFacet: any
+  categoryFacet: any
+  subcategoryFacet: any
+  publishedTodayFacet:any
 }>()
 
 
@@ -111,11 +112,14 @@ const filterValues = computed(() => ({
   conditions: selectedConditions.value,
   published: publishedToDay.value,
   counties: selectedCounties.value,
-  minPrice: minPrice.value,
-  maxPrice: maxPrice.value
 }))
 
-// Now watch the computed filterValues and emit an event on changes.
+
+
+function updatePrice(){
+  emit('updatePrice', {min: minPrice.value, max:maxPrice.value})
+}
+
 watch(
   filterValues,
   (newFilter) => {
@@ -123,6 +127,7 @@ watch(
   },
   { deep: true }
 )
+
 </script>
 
 <template>
@@ -255,7 +260,7 @@ watch(
           <input class="price" id="max-price" v-model="maxPrice">
           <small>{{$t('label-max-price')}}</small>
         </div>
-        <button class="price-search">
+        <button class="price-search" @click="updatePrice">
           {{$t('button-search')}}
         </button>
       </div>
@@ -290,9 +295,18 @@ watch(
           type="checkbox"
           :id="'published'"
           :value="true"
+          :disabled="!props.publishedTodayFacet || !props.publishedTodayFacet['true']"
           v-model="publishedToDay"
         />
-        <label :for="'published'" id="county">{{$t('filter-new-today')}}</label>
+        <label
+          :for="'published'"
+          id="county"
+          :class="{ disabled: !props.publishedTodayFacet || !props.publishedTodayFacet['true'] }">
+          {{$t('filter-new-today')}}
+          <span>
+            ({{ publishedTodayFacet && publishedTodayFacet['true'] ? publishedTodayFacet['true'] : '0' }})
+          </span>
+        </label>
       </div>
     </div>
   </div>

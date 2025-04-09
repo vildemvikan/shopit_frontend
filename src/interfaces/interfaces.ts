@@ -103,11 +103,12 @@ export interface MenuFilter{
 }
 
 export interface Search{
-  categoryFacet: any[]
-  conditionFacet: any[]
-  countyFacet: any[]
-  forSaleFacet: any[]
-  subCategoryFacet: any[]
+  categoryFacet: any
+  conditionFacet: any
+  countyFacet: any
+  forSaleFacet: any
+  subCategoryFacet: any
+  publishedTodayFacet: any
   items: SearchItems
 }
 

@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import Navbar from '@/components/Navbar.vue'
-import {useTokenStore} from '@/stores/tokenStore.ts'
 import { onMounted } from 'vue'
+import Footer from '@/components/Footer.vue'
+import { useI18n } from 'vue-i18n'
+import { displayStore } from '@/stores/displayStore'
+
+const store = displayStore()
+const { locale } = useI18n()
 onMounted(() => {
-  const store = useTokenStore()
-  store.reHydrate()
+  if (store.language) {
+    locale.value = store.language
+  }
+  if (store.mode) {
+    document.documentElement.classList.add(store.mode)
+  }
 })
 </script>
 
@@ -15,6 +24,9 @@ onMounted(() => {
   </div>
   <div class="view">
     <router-view></router-view>
+    <footer class="footer">
+      <Footer/>
+    </footer>
   </div>
 </template>
 
@@ -28,17 +40,22 @@ onMounted(() => {
 }
 
 .view{
+  position: relative;
   width: 100%;
   min-width: 350px;
-  min-height: 93%;
+  min-height: calc(816px - 50px);
+  height: 100vh;
   padding: 2vh 2.5% 2vh 2.5%;
+  overflow: scroll;
 }
 
-@media (max-width: 1000px) {
-  .view{
-    height: fit-content;
-    overflow: scroll;
-  }
+.footer{
+  position: absolute;
+  left: 0;
+  margin-top: 15px;
+  height: 7%;
+  min-height: 50px;
+  width: 100%;
 }
 
 </style>

@@ -82,6 +82,8 @@ async function handleStatusChange(status: Status){
     v-if="displayDeletePopUp"
     @close:delete-pop-up="displayDeletePopUp = false"
     :id="advertisementId"
+    :type-delete-advertisement="true"
+    :type-delete-user="false"
   />
 
   <H1 class="title" v-if="props.title">{{props.title}}</H1>

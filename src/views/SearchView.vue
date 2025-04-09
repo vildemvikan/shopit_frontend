@@ -36,11 +36,12 @@ const conditions = ref<string[]|null>(null)
 const counties = ref<string[]|null>(null)
 const published = ref<boolean|null>(null)
 
-const conditionFacet = ref<any[]>([])
-const forSaleFacet = ref<any[]>([])
-const countyFacet = ref<any[]>([])
-const categoryFacet = ref<any[]>([])
-const subCategoryFacet = ref<any[]>([])
+const conditionFacet = ref<any>(null)
+const forSaleFacet = ref<any>(null)
+const countyFacet = ref<any>(null)
+const categoryFacet = ref<any>(null)
+const subCategoryFacet = ref<any>(null)
+const publishedTodayFacet = ref<any>(null)
 
 onMounted(async () => {
   if (route.query.category) {
@@ -71,22 +72,37 @@ async function newKeyword(newKeyword:string){
   keyWord.value = newKeyword
   await updateRoute()
 }
+
+async function newPrice(newPrices: {min: number, max:number}){
+  console.log(newPrices)
+  minPrice.value = newPrices.min
+  maxPrice.value = newPrices.max
+  await updateRoute()
+}
+
 async function newFilters(newFilters: MenuFilter){
   categoryId.value = newFilters.categoryId
   subCategoryId.value = newFilters.subCategoryId
-  minPrice.value = newFilters.minPrice
-  maxPrice.value = newFilters.maxPrice
   conditions.value = newFilters.conditions
   counties.value = newFilters.counties
   forSale.value = newFilters.forSale
   forFree.value = newFilters.forFree
   published.value = newFilters.published
 
+  console.log(forFree.value)
+
+  if(published.value == false){
+    published.value = null
+  }
+
   if(forSale.value && forFree.value){
     forSale.value = null
   } if(forSale.value == false && (forFree.value == false || forFree.value == null)){
     forSale.value = null
+  } if(forFree.value == true){
+    forSale.value = false
   }
+
   await updateRoute()
 }
 
@@ -100,7 +116,7 @@ async function updateRoute() {
   if (counties.value && counties.value.length > 0) query.counties = counties.value
   if (conditions.value && conditions.value.length > 0) query.conditions = conditions.value
   if (forSale.value !== null) query.forSale = forSale.value
-  if (published.value !== null) query.published = published.value
+  if (published.value !== null) query.publishedToday = published.value
   if (orderBy.value) query.sortBy = orderBy.value
   await router.push({ name: 'search', query })
   page.value = 0
@@ -128,6 +144,7 @@ async function fetchAdvertisements(){
       minPrice.value,
       maxPrice.value,
       forSale.value,
+      published.value,
       field,
       direction
     )
@@ -140,6 +157,7 @@ async function fetchAdvertisements(){
     categoryFacet.value = result.categoryFacet
     subCategoryFacet.value = result.subCategoryFacet
     countyFacet.value = result.countyFacet
+    publishedTodayFacet.value = result.publishedTodayFacet
 
     console.log('SEARCH')
     console.log(advertisements.value)
@@ -172,6 +190,7 @@ function toggleDisplay(){
       <h1 class="page-title">{{$t('title-advertisements')}}</h1>
       <FilterMenu
         @update-filter="newFilters"
+        @update-price="newPrice"
         :for-sale="forSale"
         :for-free="forFree"
         :category-id="categoryId"
@@ -185,6 +204,7 @@ function toggleDisplay(){
         :county-facet="countyFacet"
         :category-facet="categoryFacet"
         :subcategory-facet="subCategoryFacet"
+        :published-today-facet="publishedTodayFacet"
       />
     </div>
 
@@ -277,6 +297,7 @@ function toggleDisplay(){
   display: flex;
   flex-direction: row;
   width: 100%;
+  height: fit-content;
 
 }
 

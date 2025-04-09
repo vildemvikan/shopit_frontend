@@ -2,7 +2,7 @@
 
 import { fetchCategories } from '../../../utils/Categories.ts'
 import { onMounted, ref } from 'vue'
-import {Category} from '@/interfaces/interfaces.ts'
+import type {Category} from '@/interfaces/interfaces.ts'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -22,7 +22,7 @@ async function loadCategories() {
   }
 }
 
-async function searchCategory(categoryId: string){
+async function searchCategory(categoryId: number){
   await router.push({name: 'search', query: {category: categoryId}})
 
 }
@@ -31,7 +31,7 @@ async function searchCategory(categoryId: string){
 
 <template>
   <div class="content">
-    <h2 class="title">Popular Categories</h2>
+    <h2 class="title">{{$t('title-popular-categories')}}</h2>
     <div class="categories">
       <div class="category" v-for="category in categories">
         <div class="image-background" @click="searchCategory(category.id)">
