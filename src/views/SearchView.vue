@@ -71,22 +71,33 @@ async function newKeyword(newKeyword:string){
   keyWord.value = newKeyword
   await updateRoute()
 }
+
+async function newPrice(newPrices: {min: number, max:number}){
+  console.log(newPrices)
+  minPrice.value = newPrices.min
+  maxPrice.value = newPrices.max
+  await updateRoute()
+}
+
 async function newFilters(newFilters: MenuFilter){
   categoryId.value = newFilters.categoryId
   subCategoryId.value = newFilters.subCategoryId
-  minPrice.value = newFilters.minPrice
-  maxPrice.value = newFilters.maxPrice
   conditions.value = newFilters.conditions
   counties.value = newFilters.counties
   forSale.value = newFilters.forSale
   forFree.value = newFilters.forFree
   published.value = newFilters.published
 
+  console.log(forFree.value)
+
   if(forSale.value && forFree.value){
     forSale.value = null
   } if(forSale.value == false && (forFree.value == false || forFree.value == null)){
     forSale.value = null
+  } if(forFree.value == true){
+    forSale.value = false
   }
+
   await updateRoute()
 }
 
@@ -172,6 +183,7 @@ function toggleDisplay(){
       <h1 class="page-title">{{$t('title-advertisements')}}</h1>
       <FilterMenu
         @update-filter="newFilters"
+        @update-price="newPrice"
         :for-sale="forSale"
         :for-free="forFree"
         :category-id="categoryId"
@@ -277,6 +289,7 @@ function toggleDisplay(){
   display: flex;
   flex-direction: row;
   width: 100%;
+  height: fit-content;
 
 }
 

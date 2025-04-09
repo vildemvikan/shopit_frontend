@@ -7,7 +7,7 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const emit = defineEmits(['updateFilter'])
+const emit = defineEmits(['updateFilter', 'updatePrice'])
 
 const props = defineProps<{
   conditions: Condition[] | null
@@ -111,11 +111,14 @@ const filterValues = computed(() => ({
   conditions: selectedConditions.value,
   published: publishedToDay.value,
   counties: selectedCounties.value,
-  minPrice: minPrice.value,
-  maxPrice: maxPrice.value
 }))
 
-// Now watch the computed filterValues and emit an event on changes.
+
+
+function updatePrice(){
+  emit('updatePrice', {min: minPrice.value, max:maxPrice.value})
+}
+
 watch(
   filterValues,
   (newFilter) => {
@@ -123,6 +126,7 @@ watch(
   },
   { deep: true }
 )
+
 </script>
 
 <template>
@@ -255,7 +259,7 @@ watch(
           <input class="price" id="max-price" v-model="maxPrice">
           <small>{{$t('label-max-price')}}</small>
         </div>
-        <button class="price-search">
+        <button class="price-search" @click="updatePrice">
           {{$t('button-search')}}
         </button>
       </div>
