@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, type Ref, ref, type UnwrapRef, watch } from 'vue'
+import { computed, reactive, type Ref, ref, watch } from 'vue'
 import { fetchChatMessages, fetchProfileInfo } from '../../../utils/Messages.ts'
 import useEventsBus from '../../../utils/EventBus.ts'
 import type { ChatMessage, ChatRoomInfo } from '@/interfaces/interfaces.ts'
@@ -23,7 +23,6 @@ const messageText = ref('')
 
 const MAX_CHARS = 250
 const charCount = ref(0)
-const lastText = ref('')
 const isExceeded = computed(() => charCount.value > MAX_CHARS);
 
 watch(() => bus.value.get('selectChat'), (val) => {
