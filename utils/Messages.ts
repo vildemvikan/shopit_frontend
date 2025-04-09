@@ -15,7 +15,7 @@ export async function fetchChatMessages(recipientId: string, itemId: number): Pr
         'Authorization': `Bearer ${token}`
       }
     });
-    return await response.data
+    return await response.data.content
   } catch (error) {
     console.error("Error fetching chat messages: ", error)
     return [];
@@ -51,7 +51,8 @@ export async function fetchChatList() {
         'Authorization': `Bearer ${token}`
       }
     });
-    return await response.data;
+    console.log(response)
+    return await response.data.content;
   } catch(error) {
     console.error("Error fetching chat list: ", error)
     return null;
