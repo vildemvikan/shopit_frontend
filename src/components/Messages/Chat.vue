@@ -47,7 +47,7 @@ watch(()=> bus.value.get('messageReceived'), async (val) => {
 });
 
 const displayMessages = async (chatRoomInfo: ChatRoomInfo) => {
-  const messages = await fetchChatMessages(chatRoomInfo.senderMail, chatRoomInfo.recipientMail, chatRoomInfo.itemId);
+  const messages = await fetchChatMessages(chatRoomInfo.recipientMail, chatRoomInfo.itemId);
 
   const messagesWithTime = messages.map(msg => {
     return {

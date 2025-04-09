@@ -6,9 +6,11 @@ import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { fetchChatList } from '../../utils/Messages.ts'
 import type { ChatCardInfo, ChatRoomInfo } from '@/interfaces/interfaces.ts'
 import useEventsBus from '../../utils/EventBus.ts'
+import { useTokenStore } from '@/stores/tokenStore.ts'
+import webSocket from '../../utils/WebSocket.ts'
 
 const chatList = ref<ChatCardInfo[]>([]);
-let currentChatRoomInfo = reactive<ChatRoomInfo>({
+const currentChatRoomInfo = reactive<ChatRoomInfo>({
   senderMail: "",
   recipientMail: "",
   itemId: 0,
@@ -32,8 +34,13 @@ const isChatEmpty = computed (()=> {
 })
 
 onMounted(async ()=> {
-  currentChatRoomInfo.senderMail = sessionStorage.getItem("email")!;
-  chatList.value = await fetchChatList(currentChatRoomInfo.senderMail);
+  if (useTokenStore().getEmail && useTokenStore().getEmail !== null) {
+    if (!webSocket.isConnected()) {
+      webSocket.connect(useTokenStore().getEmail!)
+    }
+    currentChatRoomInfo.senderMail = useTokenStore().getEmail!;
+    chatList.value = await fetchChatList();
+  }
 })
 
 </script>
