@@ -154,6 +154,10 @@ async function goToSubCategory(){
 
 
 @media (max-width: 1000px){
+
+  .advertisement{
+    height: fit-content;
+  }
   .content{
     display: flex;
     flex-direction: column;
