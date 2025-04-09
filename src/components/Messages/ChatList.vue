@@ -68,7 +68,7 @@ onMounted(async () => {
         recipientMail: chatList.value[0].recipientId,
         itemId: chatList.value[0].itemId,
       });
-      document.getElementById(chatList.value[0].recipientId+chatList.value[0].itemId)?.classList.add('active');
+      document.getElementById(sortedMessages.value[0].recipientId+sortedMessages.value[0].itemId)?.classList.add('active');
     }
   }, 100)
 })
