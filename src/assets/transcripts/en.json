@@ -167,6 +167,7 @@
 
   "confirm-deletion-title": "Confirm Deletion",
   "confirm-deletion-label": "Are you sure you want to delete this advertisement?",
+  "confirm-deletion-label-user": "Are you sure you want to delete your ShopIt account?",
 
   "toast-status-changed": "Status is changed!",
   "toast-status-changed-error": "Error! Could not change status.",
