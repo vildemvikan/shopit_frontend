@@ -147,10 +147,6 @@ watch(statusFilter, async (newVal, oldVal) => {
   flex-direction: row;
   width: 100%;
   height: calc(calc(100% - 80px) / 4);
-  border-radius: calc(var(--global-border-radius)/2);
-  border: var(--global-border-size) solid var(--color-gray-divider);
-  box-shadow: var(--global-box-shaddow);
-  cursor: pointer;
 }
 
 .advertisement:hover{
