@@ -13,14 +13,43 @@ import LoginForm from '@/components/Authentication/LoginForm.vue'
 import SignUpForm from '@/components/Authentication/SignUpForm.vue'
 import ForgotPasswordForm from '@/components/Authentication/ForgotPasswordForm.vue'
 import ResetPasswordForm from '@/components/Authentication/ResetPasswordForm.vue'
+import SearchView from '@/views/SearchView.vue'
+import { useTokenStore } from '@/stores/tokenStore.ts'
+
+const restrictedRoutes = [
+  'profile',
+  'notifications',
+  'messages',
+  'bookmarks',
+  'edit-advertisement',
+  'create-advertisement'
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '',
       name: 'front-page',
       component: FrontView
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: SearchView,
+      props: route => ({
+        search: route.query.search || null,
+        category: route.query.category || null,
+        subCategory: route.query.subCategory || null,
+        conditions: route.query.conditions || null,
+        counties: route.query.counties || null,
+        maxPrice: route.query.maxPrice || null,
+        minPrice: route.query.minPrice || null,
+        publishedToday: route.query.publishedToday || null,
+        type: route.query.type || null,
+        sortBy: route.query.sortBy || null,
+        displayType: route.query.displayType || null
+      })
     },
     {
       path: '/messages',
@@ -60,9 +89,10 @@ const router = createRouter({
     },
     {
       path: '/auth',
+      name: 'auth',
       component: AuthenticationView,
       children: [
-        { path: '', redirect: '/auth/login' },
+        { path: '', redirect: '/auth/login',  name:'Redirect' },
         { path: 'login', component: LoginForm,  name: 'Login', },
         { path: 'signup', component: SignUpForm, name: 'Signup' },
         { path: 'forgot-password', component: ForgotPasswordForm, name: 'ForgotPassword' },
@@ -79,11 +109,18 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (from.name === 'create-advertisement' && to.name !== 'create-advertisement') {
-    const advertisementStore = useAdvertisementStore()
-    advertisementStore.$reset()
+  if (restrictedRoutes.includes(to.name as string)) {
+    const tokenStore = useTokenStore();
+    if (!tokenStore.isAuthenticated) {
+      return next({ path: '/auth/login' });
+    }
   }
-  next()
-})
+  if (from.name === 'create-advertisement' && to.name !== 'create-advertisement') {
+    const advertisementStore = useAdvertisementStore();
+    advertisementStore.$reset();
+  }
+  next();
+});
+
 
 export default router

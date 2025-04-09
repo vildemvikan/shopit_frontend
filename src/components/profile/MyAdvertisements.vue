@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import Pagination from '@/components/Pagination.vue'
-import MyAdvertisementPreview from '@/components/profile/MyAdvertisementPreview.vue'
+import MyAdvertisementPreview from '@/components/AdvertisementPreviewList.vue'
 import { onMounted, ref, watch } from 'vue'
 import { fetchUserAdvertisements, fetchUserInformation } from '../../../utils/Profile.ts'
 import type {DisplayAdvertisement} from '@/interfaces/interfaces.ts'
@@ -83,11 +83,17 @@ watch(statusFilter, async (newVal, oldVal) => {
     <div class="advertisements">
       <div v-for="advertisement in advertisements" class="advertisement">
         <MyAdvertisementPreview
-        :title="advertisement.name"
-        :status="advertisement.status"
-        :price="advertisement.price"
-        :date="advertisement.publishedAt"
-        :image="advertisement.images[0].url"
+          :id="advertisement.id"
+          :title="advertisement.name"
+          :status="advertisement.status"
+          :price="advertisement.price"
+          :date="advertisement.publishedAt"
+          :image="advertisement.images[0].url"
+          :location="advertisement.location.city"
+          :isBookmarked="advertisement.isBookmarked"
+          :display-location="false"
+          :display-bookmark="false"
+          :display-status="true"
         @click="goToAdvertisement(advertisement.id)"
         />
       </div>
@@ -141,10 +147,6 @@ watch(statusFilter, async (newVal, oldVal) => {
   flex-direction: row;
   width: 100%;
   height: calc(calc(100% - 80px) / 4);
-  border-radius: calc(var(--global-border-radius)/2);
-  border: var(--global-border-size) solid var(--color-gray-divider);
-  box-shadow: var(--global-box-shaddow);
-  cursor: pointer;
 }
 
 .advertisement:hover{

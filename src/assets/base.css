@@ -4,8 +4,8 @@
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
 
-  --vt-c-grey: #EDEDED;
-  --vt-c-dark-gray: #D9D9D9A3;
+  --vt-c-grey: #dedddd;
+  --vt-c-dark-gray: rgba(199, 198, 198, 0.64);
   --vt-c-light-lavendel: #dedee8;
   --vt-c-lavendel: #C6C7D2;
   --vt-c-dark-lavendel: #888DA7;
@@ -73,13 +73,13 @@
   --color-purple-button: var(--vt-c-dark-lavendel);
   --color-lavendel-button: var(--vt-c-lavendel);
   --color-dark-lavendel-button: var(--vt-c-dark-dark-lavendel);
-  --color-grey-button: var(--vt-c-grey);
   --color-orange-button: var(--vt-c-orange);
   --color-dark-orange-button: var(--vt-c-dark-orange);
   --color-light-blue-button: var(--vt-c-light-blue);
   --color-blue-button: var(--vt-c-blue);
   --color-transparent-button: var(--vt-c-transparent-white);
   --color-gray-button: var(--vt-c-grey);
+  --color-dark-gray-button: var(--vt-c-dark-gray);
   --color-yellow-button: var(--vt-c-yellow);
   --color-dark-yellow-button: var(--vt-c-dark-yellow);
   --color-light-red-button: var(--ct-c-light-red);
@@ -88,6 +88,7 @@
 
   --color-white-text: var(--vt-c-white);
   --color-black-text: var(--vt-c-black);
+  --color-gray-text: var(--vt-c-dark-gray);
   --color-error-text: var(--vt-c-red);
   --color-dark-orange-text: var(--vt-c-dark-orange);
 
@@ -103,6 +104,7 @@
   --spacing-lg: 1rem;
 
   /* Font Sizes */
+  --font-size-xs: 0.750rem;
   --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
   --font-size-lg: 1.5rem;
@@ -148,6 +150,30 @@
   }
 }
 
+html.manual-dark {
+  --color-background: var(--vt-c-black);
+  --color-background-soft: var(--vt-c-black-soft);
+  --color-background-mute: var(--vt-c-black-mute);
+
+  --color-border: var(--vt-c-divider-dark-2);
+  --color-border-hover: var(--vt-c-divider-dark-1);
+
+  --color-heading: var(--vt-c-text-dark-1);
+  --color-text: var(--vt-c-text-dark-2);
+}
+
+html.manual-light {
+  --color-background: var(--vt-c-white);
+  --color-background-soft: var(--vt-c-white-soft);
+  --color-background-mute: var(--vt-c-white-mute);
+
+  --color-border: var(--vt-c-divider-light-2);
+  --color-border-hover: var(--vt-c-divider-light-1);
+
+  --color-heading: var(--vt-c-text-light-1);
+  --color-text: var(--vt-c-text-light-1);
+}
+
 *,
 *::before,
 *::after {
@@ -184,7 +210,7 @@ body {
 }
 
 h1{
-  font-size: 35px;
+  font-size: var(--font-size-h1)
 }
 
 .error-message{

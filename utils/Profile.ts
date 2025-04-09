@@ -1,9 +1,12 @@
 import axios from 'axios';
 import type { Status } from '@/enums/enums.ts'
+import { useTokenStore } from '@/stores/tokenStore.ts'
 
 const baseURL = 'http://127.0.0.1:8080'
-const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGZhbnQub3JnIiwiaWF0IjoxNzQzNjgxNjQ1LCJleHAiOjE3NDM2ODM0NDV9.4KDBK2B4OlBfZFphfRkdZAVXGQibgsrPJR3xTiuy_DFBUN-2CV1yXsAh7xCQaBu7iEC04WTgjsF2k9BiLHF-jA"
+
 export async function fetchUserInformation(){
+  const tokenStore = useTokenStore();
+  const token = tokenStore.getToken;
   const url = baseURL + '/me'
   try{
     const response = await axios.get(url, {
@@ -23,6 +26,8 @@ export async function fetchUserInformation(){
 export async function fetchUserAdvertisements(size: number, page: number,
                                               date: number, status: Status|null){
   const url = baseURL + '/items/me'
+  const tokenStore = useTokenStore();
+  const token = tokenStore.getToken;
   let sortDir = 'desc'
   if(date == 2){ sortDir = 'asc' }
   try{
@@ -46,9 +51,9 @@ export async function fetchUserAdvertisements(size: number, page: number,
   }
 }
 
-
-
 export async function updateProfilePicture(base64Url: string){
+  const tokenStore = useTokenStore();
+  const token = tokenStore.getToken;
   const url = baseURL + '/profilePicture'
   console.log("BASE" + base64Url)
   try{
@@ -67,6 +72,8 @@ export async function updateProfilePicture(base64Url: string){
 
 export async function changePassword(oldPassword: string, newPassword: string){
   const url = baseURL + '/updatePassword'
+  const tokenStore = useTokenStore();
+  const token = tokenStore.getToken;
   try{
     const response = await axios.put(url,
       {
@@ -81,5 +88,23 @@ export async function changePassword(oldPassword: string, newPassword: string){
     return response.status
   } catch (error){
     throw new Error('Error! Cannot update password!')
+  }
+}
+
+export async function deleteUser(){
+  const url = baseURL + '/me'
+  const tokenStore = useTokenStore();
+  const token = tokenStore.getToken;
+  try{
+    const response = await axios.delete(url,{
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }, withCredentials: true,
+    })
+    return response.status
+  } catch (error){
+    console.error(error)
+    throw Error("Error! Could not fetch user information.")
   }
 }

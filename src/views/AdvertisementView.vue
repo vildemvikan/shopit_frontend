@@ -5,56 +5,12 @@ import { useRoute } from 'vue-router'
 import { fetchAdvertisement, fetchCategories } from '../../utils/Advertisement.ts'
 import Info from '@/components/Advertisement/Info.vue'
 import router from '@/router'
-
-interface Image {
-  url: string,
-  caption: string,
-  publicId: number | null
-}
-
-interface Category {
-  id: number,
-  name: string,
-  subcategories: any[]
-}
-
-enum PaymentMethod {
-  Direct = 'DIRECT',
-  Auction = 'BID',
-  None = 'CONTACT'
-}
-
-enum Condition {
-  New = 'NEW',
-  LikeNew = 'LIKE_NEW',
-  Good = 'GOOD',
-  Acceptable = 'ACCEPTABLE',
-  ForParts = 'FOR_PARTS'
-}
+import type { Advertisement } from '@/interfaces/interfaces.ts'
 
 const route = useRoute()
 const id = route.params.id as string
 
-// Create reactive refs for categories and advertisement
-const advertisement = ref<any>(null)
-
-// Local reactive variables for advertisement fields
-const title = ref<string>('')
-const description = ref<string>('')
-const condition = ref<string>('')
-const category = ref<[string, number] | number>(['', 0])
-const subCategory = ref<[string, number] | number>(['', 0])
-const tags = ref<string[] | null>(null)
-const images = ref<Image[]>([])
-const forSale = ref<boolean>(true)
-const payment = ref<string>('')
-const price = ref<number>(0)
-const postalNumber = ref<string>('')
-const city = ref<string>('')
-const seller = ref<string>('')
-const status = ref<Status>()
-
-const owner = ref<boolean>(true)
+const advertisement = ref<Advertisement|null>(null)
 
 onMounted(async () => {
   try {
@@ -65,71 +21,75 @@ onMounted(async () => {
   }
 })
 
-// Watch for changes in the fetched advertisement data and update local fields accordingly.
-watch(advertisement, (newAd) => {
-  if (newAd) {
-    title.value = newAd.name || ''
-    description.value = newAd.description || ''
-    condition.value = newAd.condition || ''
-    category.value = [newAd.categoryId, newAd.categoryName]
-    subCategory.value = [newAd.subCategoryId, newAd.subCategoryName]
-    tags.value = newAd.tags || null
-    images.value = newAd.images || []
-    forSale.value = newAd.forSale ?? true
-    payment.value =  newAd.listingType|| 'NONE';
-    price.value = newAd.price || 0
-    postalNumber.value = newAd.location?.postalCode || ''
-    city.value = newAd.location?.city || ''
-    seller.value = newAd.sellerFullName||''
-    status.value = newAd.status || ''
-  }
-})
-
-function toProfile(){
-  router.push('/profile')
+async function toProfile(){
+  await router.push('/profile')
 }
+
+async function goToCategory(){
+  await router.push({name: 'search', query: {category: advertisement.value?.categoryId}})
+}
+
+async function goToSubCategory(){
+  await router.push({name: 'search', query: {subCategory: advertisement.value?.subCategoryId}})
+}
+
+
 </script>
 
 <template>
-  <div class="item-path">
-    <label
-      v-if="owner"
-      class="route-label"
-      id="back-to"
-      @click="toProfile()">
-      <img class="label-icon" src="@/assets/icons/back.svg" alt="Back to profile">
-      {{$t('label-back-to-profile')}}
-      &nbsp;</label>
-    <label class="route-label" id="category">{{category[1]}}</label>
-    /
-    <label class="route-label" id="category">{{subCategory[1]}}</label>
+  <div class="advertisement" v-if="advertisement">
+    <div class="item-path">
+      <label
+        v-if="advertisement.isOwner"
+        class="route-label"
+        id="back-to"
+        @click="toProfile()">
+        <img class="label-icon" src="@/assets/icons/back.svg" alt="Back to profile">
+        {{$t('label-back-to-profile')}}
+        &nbsp;</label>
+      <label class="route-label" id="category" @click="goToCategory">{{advertisement.categoryName}}</label>
+      /
+      <label class="route-label" id="category" @click="goToSubCategory">{{advertisement.subCategoryName}}</label>
+    </div>
+
+    <div class="content">
+      <div class="image-carousel">
+        <image-box
+          :id="advertisement.id"
+          :images="advertisement.images"
+          :status="advertisement.status"
+          :is-bookmarked="advertisement.isBookmarked"
+          :is-owner="advertisement.isOwner"
+        />
+      </div>
+      <div class="info">
+        <Info
+          :owner="advertisement.isOwner"
+          :description="advertisement.description"
+          :title="advertisement.name"
+          :for-sale="forSale"
+          :postal-code="advertisement.location.postalCode"
+          :city="advertisement.location.city"
+          :price="advertisement.price"
+          :payment="advertisement.listingType"
+          :condition="advertisement.condition"
+          :tags="advertisement.tags"
+          :seller="advertisement.sellerFullName"
+          :advertisement-id="advertisement.id"
+          :status="advertisement.status"
+        />
+      </div>
+    </div>
   </div>
 
-  <div class="content">
-    <div class="image-carousel">
-      <image-box :images="images" :status="status"/>
-    </div>
-    <div class="info">
-      <Info
-        :owner="owner"
-        :description="description"
-        :title="title"
-        :for-sale="forSale"
-        :postal-code="postalNumber"
-        :city="city"
-        :price="price"
-        :payment="payment"
-        :condition="condition"
-        :tags="tags"
-        :seller="seller"
-        :advertisement-id="id"
-        :status="status"
-      />
-    </div>
-  </div>
 </template>
 
 <style scoped>
+
+.advertisement{
+  width: 100%;
+  height: 100%;
+}
 
 .item-path{
   display: flex;
@@ -194,6 +154,10 @@ function toProfile(){
 
 
 @media (max-width: 1000px){
+
+  .advertisement{
+    height: fit-content;
+  }
   .content{
     display: flex;
     flex-direction: column;

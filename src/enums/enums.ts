@@ -17,8 +17,24 @@ export enum Status{
   Sold = 'SOLD'
 }
 
-export enum Status{
-  Inactive = 'INACTIVE',
-  Active = 'ACTIVE',
-  Sold = 'SOLD'
+export enum County{
+  Agder = 'Agder',
+  Akershus = 'Akershus',
+  Buskerud ='Buskerud',
+  Finnmark = 'Finnmark',
+  Innlandet = 'Innladet',
+  MøreOgRomsdal = 'Møre og Romsdal',
+  Nordland = 'Nordland',
+  Oslo = 'Oslo',
+  Rogaland = 'Rogaland',
+  Svalbar = 'Svalbar',
+  Telemark = 'Telemark',
+  Troms = 'Troms',
+  Trøndelag = 'Trøndelag',
+  Vestland = 'Vestland',
+  Vestfold = 'Vestfold',
+  Østland = 'Østland'
 }
+
+
+
