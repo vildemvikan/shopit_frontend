@@ -47,19 +47,15 @@ watch(()=> bus.value.get('messageReceived'), async (val) => {
 });
 
 const displayMessages = async (chatRoomInfo: ChatRoomInfo) => {
-  // Fetch messages from backend
   const messages = await fetchChatMessages(chatRoomInfo.senderMail, chatRoomInfo.recipientMail, chatRoomInfo.itemId);
 
-  // Parse ISO timestamp strings from backend into JavaScript Date objects
   const messagesWithTime = messages.map(msg => {
     return {
       ...msg,
-      // Parse the timestamp string into a Date object
       timestamp: msg.timestamp ? new Date(msg.timestamp) : new Date()
     };
   });
 
-  // Process messages to determine which should show timestamps
   chatMessageInfo.value = processMessages(messagesWithTime);
 
   const messageList = document.querySelector("#message-list");
@@ -104,19 +100,15 @@ const sendMessage = (e: Event) => {
   emit('refreshList', message, currentChatRoomInfo.recipientMail, currentChatRoomInfo.itemId)
 }
 
-// Group messages by time intervals
 const processMessages = (messages: ExtendedChatMessage[]) => {
   const result = [...messages];
 
-  // Sort messages by timestamp if available
   result.sort((a, b) => {
     const timeA = a.timestamp ? a.timestamp.getTime() : 0;
     const timeB = b.timestamp ? b.timestamp.getTime() : 0;
     return timeA - timeB;
   });
 
-  // Determine which messages should show timestamps
-  // Show timestamp for first message and when time gap > 10 minutes
   for (let i = 0; i < result.length; i++) {
     if (i === 0) {
       result[i].showTimestamp = true;
@@ -126,7 +118,6 @@ const processMessages = (messages: ExtendedChatMessage[]) => {
     const prevTime = result[i-1].timestamp?.getTime() || 0;
     const currTime = result[i].timestamp?.getTime() || 0;
 
-    // Show timestamp if > 10 minutes passed since last message
     result[i].showTimestamp = (currTime - prevTime) > 10 * 60 * 1000;
   }
 
@@ -140,7 +131,6 @@ const handleInput = () => {
   charCount.value = text.length;
 
   if (text.length > MAX_CHARS) {
-    // Truncate text when over limit
     messageText.value.innerText = text.substring(0, MAX_CHARS);
     charCount.value = MAX_CHARS;
 
@@ -160,12 +150,10 @@ const handlePaste = (e: ClipboardEvent) => {
   const range = selection.getRangeAt(0);
   const currentText = messageText.value.innerText;
 
-  // Calculate new text after paste
   const start = range.startOffset;
   const end = range.endOffset;
   const newText = currentText.substring(0, start) + text + currentText.substring(end);
 
-  // Apply limit
   messageText.value.innerText = newText.substring(0, MAX_CHARS);
   charCount.value = messageText.value.innerText.length;
 

@@ -43,14 +43,21 @@ const sortedMessages: Ref<ExtendedChatCardInfo[]> = computed(() => {
     });
 });
 
-onMounted(async ()=> {
-  //todo: let currentUser = useTokenStore().email!;
+function isMobile() {
+  return window.matchMedia('(max-width: 800px)').matches;
+}
+
+
+onMounted(async () => {
+  // todo: responsive + her var det tomt gitt
+
   console.log("getting chat list")
   chatList.value = await fetchChatList(props.currentUser);
-})
 
-onMounted(() => {
-  // todo: responsive + her var det tomt gitt
+  if (isMobile()) {
+    return;
+  }
+
   setTimeout(() => {
     if (chatList.value.length > 0) {
       emit('selectChat', {
