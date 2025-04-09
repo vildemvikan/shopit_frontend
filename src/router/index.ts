@@ -92,7 +92,7 @@ const router = createRouter({
       name: 'auth',
       component: AuthenticationView,
       children: [
-        { path: '', redirect: '/auth/login' },
+        { path: '', redirect: '/auth/login',  name:'Redirect' },
         { path: 'login', component: LoginForm,  name: 'Login', },
         { path: 'signup', component: SignUpForm, name: 'Signup' },
         { path: 'forgot-password', component: ForgotPasswordForm, name: 'ForgotPassword' },
