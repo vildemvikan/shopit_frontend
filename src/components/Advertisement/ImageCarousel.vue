@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { Status } from '@/enums/enums.ts'
-import {Image} from '@/interfaces/interfaces.ts'
+import { type Status } from '@/enums/enums.ts'
+import { Image } from '@/interfaces/interfaces.ts'
 import { createBookmark, deleteBookmark } from '../../../utils/Bookmark.ts'
 import { useRouter } from 'vue-router'
 
@@ -89,7 +89,11 @@ async function removeBookmark(){
       alt="Displayed Image"
       @click="openModal">
 
-    <div v-if="status === 'SOLD'" class="sold-mark">
+    <div v-if="status === 'INACTIVE'" class="status-mark" id="inactive">
+      <label class="sold-label">{{$t('label-inactive')}}</label>
+    </div>
+
+    <div v-if="status === 'SOLD'" class="status-mark" id="sold">
       <label class="sold-label">{{$t('label-sold')}}</label>
     </div>
 
@@ -170,18 +174,25 @@ async function removeBookmark(){
   cursor: pointer;
 }
 
-.sold-mark {
+.status-mark {
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   top: 0;
   left: 0;
-  background: var(--color-yellow-button);
   width: 30%;
   aspect-ratio: 4/1;
   border-radius: calc(var(--global-border-radius)/2) 0 calc(var(--global-border-radius)/2) 0;
   z-index: 10;
+}
+
+#sold{
+  background: var(--color-yellow-button);
+}
+
+#inactive{
+  background-color: var(--color-gray-button);
 }
 
 .sold-label{

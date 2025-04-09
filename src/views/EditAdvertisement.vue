@@ -18,7 +18,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h2>{{ $t('edit-advertisement') }}</h2>
+  <h1 class="title">{{ $t('edit-advertisement') }}</h1>
   <schema
     :new="false"
     :preview="false"
@@ -29,5 +29,10 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+
+.title{
+  text-decoration: underline;
+  margin-bottom: 20px;
+}
 
 </style>

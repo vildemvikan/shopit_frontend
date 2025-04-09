@@ -9,6 +9,8 @@
   "title-advertisements": "Advertisements",
   "title-popular-categories": "Popular Categories",
   "title-new-advertisements": "New Advertisements",
+  "title-bookmarks": "Bookmarks",
+  "title-notifications": "Notifications",
 
   "label-type": "Advertisement type",
   "label-images": "Images",
@@ -89,6 +91,7 @@
 
   "drop-down-category": "Select category",
   "drop-down-sub-category": "Select sub category",
+  "drop-down-condition": "Select condition",
 
   "input-tag": "Tag",
   "input-title": "Title",
@@ -152,7 +155,9 @@
   "tooShortPassword": "Password must be at least 6 characters.",
   "passwordConfirmRequired": "Please confirm your password",
   "matchPassword": "Passwords must match.",
+
   "chat-message-placeholder": "Message...",
+  "chat-message-prefix": "you: ",
 
   "forgotPasswordTitle": "Reset Your Password",
   "forgotPasswordDescription": "Enter your email address and we'll send you a password reset link.",

@@ -7,10 +7,11 @@ import SectionC from '@/components/Schema/SectionC.vue'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
 import {
   createAdvertisement,
-  fetchAdvertisement,
   updateAdvertisement
 } from '../../utils/Advertisement.ts'
 import router from '@/router'
+import { Condition, PaymentMethod, Status } from '@/enums/enums.ts'
+import type { Advertisement, Image } from '@/interfaces/interfaces.ts'
 
 const advertisementStore = useAdvertisementStore()
 
@@ -18,67 +19,43 @@ const props = defineProps<{
   new: boolean;
   preview: boolean;
   id: string|null;
-  advertisement: any|null;
+  advertisement: Advertisement|null;
 }>()
 
-enum PaymentMethod {
-  Direct = 'DIRECT',
-  Auction = 'BID',
-  None = 'CONTACT'
-}
-
-enum Condition {
-  New = 'NEW',
-  LikeNew = 'LIKE_NEW',
-  Good = 'GOOD',
-  Acceptable = 'ACCEPTABLE',
-  ForParts = 'FOR_PARTS'
-}
-
-enum Status{
-  Inactive = 'INACTIVE',
-  Active = 'ACTIVE',
-  Sold = 'SOLD'
-}
-
-interface Image{
-  url: string,
-  caption: string
-  publicId: number|null
-}
+const isLoading = ref<boolean>(false)
 
 const title = ref<string>(
-  props.new ? advertisementStore.title : props.advertisement?.name || ''
+  props.new ? advertisementStore.title : props.advertisement.name || ''
 );
 const description = ref<string>(
-  props.new ? advertisementStore.description : props.advertisement?.description || ''
+  props.new ? advertisementStore.description : props.advertisement.description || ''
 );
 const condition = ref<Condition | string>(
-  props.new ? advertisementStore.condition : props.advertisement?.condition || ''
+  props.new ? advertisementStore.condition : props.advertisement.condition || ''
 );
 const category = ref<string | number>(
-  props.new ? advertisementStore.category : props.advertisement?.categoryId || ''
+  props.new ? advertisementStore.category : props.advertisement.categoryId || ''
 );
 const subCategory = ref<string | number>(
-  props.new ? advertisementStore.subCategory : props.advertisement?.subCategoryId || ''
+  props.new ? advertisementStore.subCategory : props.advertisement.subCategoryId || ''
 );
 const tags = ref<string[] | null>(
-  props.new ? advertisementStore.tags : props.advertisement?.tags || null
+  props.new ? advertisementStore.tags : props.advertisement.tags || null
 );
 const images = ref<Image[]>(
-  props.new ? advertisementStore.images : props.advertisement?.images || []
+  props.new ? advertisementStore.images : props.advertisement.images || []
 );
 const forSale = ref<boolean>(
-  props.new ? advertisementStore.forSale : props.advertisement?.forSale ?? true
+  props.new ? advertisementStore.forSale : props.advertisement.forSale ?? true
 );
 const payment = ref<PaymentMethod>(
-  props.new ? advertisementStore.payment : props.advertisement?.listingType|| PaymentMethod.None
+  props.new ? advertisementStore.payment : props.advertisement.listingType|| PaymentMethod.None
 );
 const price = ref<number>(
-  props.new ? advertisementStore.price : props.advertisement?.price || 0
+  props.new ? advertisementStore.price : props.advertisement.price || 0
 );
 const postalNumber = ref<string>(
-  props.new ? advertisementStore.postalNumber : props.advertisement?.location.postalCode|| ''
+  props.new ? advertisementStore.postalNumber : props.advertisement.location.postalCode|| ''
 );
 
 const titleError = ref<boolean>(false)
@@ -212,32 +189,49 @@ function discardChanges(){
 }
 
 async function saveDraft() {
+  if(isLoading.value) return
+  isLoading.value = true;
+
   const valid = validateInput()
-  if (valid) {
+  if (!valid) {
     const body = buildJSONBody(Status.Inactive)
     try {
       await createAdvertisement(body)
       await router.push('profile')
     } catch (error) {
       console.log(error)
+    }finally {
+      isLoading.value = false;
     }
+  } else {
+    isLoading.value = false;
   }
 }
 
 async function publish() {
+  if (isLoading.value) return;
+  isLoading.value = true;
   const invalid = validateInput();
   if (!invalid) {
-    const body = buildJSONBody(Status.Inactive)
+    const body = buildJSONBody(Status.Active)
+    await  console.log(body)
     try {
       await createAdvertisement(body)
       await router.push('profile')
     } catch (error) {
       console.log(error)
     }
+    finally {
+      isLoading.value = false;
+    }
+  } else {
+    isLoading.value = false;
   }
 }
 
 async function commitChanges(){
+  if (isLoading.value) return;
+  isLoading.value = true;
   const invalid = validateInput();
   console.log(invalid)
   if(!invalid){
@@ -247,14 +241,14 @@ async function commitChanges(){
       await router.push(`/advertisement/${props.id}`)
     } catch (error){
       console.log(error)
+    }finally {
+      isLoading.value = false;
     }
+  }else {
+    isLoading.value = false;
   }
 }
 
-function preview() {
-  if (validateInput()) {
-  }
-}
 
 function buildJSONBody(status: Status) {
   const body = {
@@ -277,6 +271,9 @@ function buildJSONBody(status: Status) {
 </script>
 
 <template>
+  <div v-if="isLoading" class="loading-cover">
+    <div class="spinner"></div>
+  </div>
 
   <div class="sections">
     <div class="section">
@@ -400,11 +397,39 @@ button{
   border-radius: calc(var(--global-border-radius)/2);
 }
 
+.loading-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-transparent-black-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.spinner {
+  border: 10px solid var(--vt-c-dark-gray); /* Light grey */
+  border-top: 10px solid var(--vt-c-dark-lavendel); /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 
 @media (max-width: 1000px){
   .sections{
     padding: 2vh;
   }
 }
+
 
 </style>

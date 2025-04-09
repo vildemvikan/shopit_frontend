@@ -8,7 +8,8 @@ export const useTokenStore = defineStore('tokenStore', {
     jwtToken: null as string|null,
     refreshToken: null as string|null,
     accessTokenExpiresAt: 0 as number,
-    tokenTimer: null as ReturnType<typeof setTimeout> | null
+    tokenTimer: null as ReturnType<typeof setTimeout> | null,
+    email: null as string | null,
   }),
 
   persist: {
@@ -21,6 +22,7 @@ export const useTokenStore = defineStore('tokenStore', {
       try{
         const response: { token:string} = await getToken(email, password);
         this.jwtToken = response.token
+        this.email = email;
         this.accessTokenExpiresAt = Date.now() + 30 * 60 * 1000 // 30 minutes
         this.startRefreshTimer()
 
@@ -40,6 +42,7 @@ export const useTokenStore = defineStore('tokenStore', {
       try {
         const response = await registerUser(firstName, lastName, email, password);
         this.jwtToken = response.data.token;
+        this.email = email;
         this.accessTokenExpiresAt = Date.now() + 30 * 60 * 1000
         console.log(response.data.token);
       } catch (error: any) {
@@ -95,6 +98,7 @@ export const useTokenStore = defineStore('tokenStore', {
 
     async emptyTokenStore() {
       this.jwtToken = null;
+      this.email = null;
       await router.push('/');
     },
 
@@ -121,5 +125,6 @@ export const useTokenStore = defineStore('tokenStore', {
       return !!state.jwtToken && Date.now() < state.accessTokenExpiresAt;
     },
     getToken: (state) => state.jwtToken,
+    getEmail: (state) => state.email,
   }
 })

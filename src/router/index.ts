@@ -67,11 +67,6 @@ const router = createRouter({
       component: MessagesView
     },
     {
-      path: '/notifications',
-      name: 'notifications',
-      component: NotificationsView
-    },
-    {
       path: '/bookmarks',
       name: 'bookmarks',
       component: BookmarksView

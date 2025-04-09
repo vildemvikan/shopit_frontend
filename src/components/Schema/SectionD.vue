@@ -84,6 +84,10 @@ watch(postNumber, (newVal) => {
 </template>
 
 <style scoped>
+
+H3, label{
+  color: var(--color-black-text);
+}
 .post-number-box{
   display: flex;
   flex-direction: row;
