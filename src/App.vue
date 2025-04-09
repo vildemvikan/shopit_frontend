@@ -24,9 +24,9 @@ onMounted(() => {
   </div>
   <div class="view">
     <router-view></router-view>
-    <footer class="footer">
+    <div class="footer">
       <Footer/>
-    </footer>
+    </div>
   </div>
 </template>
 

@@ -58,6 +58,7 @@ async function searchCategory(categoryId: number){
   height: 80%;
   width: 100%;
   overflow-y: scroll;
+  padding: 5px;
   gap: 20px;
 }
 
@@ -89,6 +90,7 @@ async function searchCategory(categoryId: number){
 
 .image-background:hover{
   transform: scale(1.02);
+  cursor: pointer;
 }
 
 .category-image{

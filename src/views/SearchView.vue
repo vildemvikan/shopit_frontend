@@ -294,10 +294,11 @@ function toggleDisplay(){
 <style scoped>
 
 .search-content{
+  position: relative;
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: fit-content;
+  height: 170%;
 
 }
 
@@ -314,13 +315,13 @@ function toggleDisplay(){
   display: flex;
   flex-direction: column;
   width: 75%;
-  max-height: 1068px;
+  height: 100%;
   gap: 10px;
 }
 
 .search-box{
   margin-top: 5px;
-  height: 5%;
+  height: 2%;
   min-height: 45px;
   width: 100%;
 }
@@ -338,7 +339,9 @@ function toggleDisplay(){
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 90%;
+  place-content: space-between;
+  justify-content: space-between;
 }
 
 .display-options{
@@ -365,7 +368,7 @@ function toggleDisplay(){
   flex-wrap: wrap;
   align-content: start;
 
-  height: 90%;
+  height: 80%;
   width: 100%;
   gap: 25px;
 }

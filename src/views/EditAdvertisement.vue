@@ -32,6 +32,7 @@ onMounted(async () => {
 
 .title{
   text-decoration: underline;
+  margin-bottom: 20px;
 }
 
 </style>

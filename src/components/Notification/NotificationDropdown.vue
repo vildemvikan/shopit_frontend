@@ -181,7 +181,7 @@ function loadMore() {
     <div class="dropdown-header">
       <h4>{{$t('title-notifications')}}</h4>
       <button @click="refreshNotifications" class="refresh-btn" aria-label="Refresh notifications">
-        <img :src="refreshIcon" alt="Refresh"  class="icon"/>
+        <img :src="refreshIcon" alt="Refresh"  class="invertible-icon"/>
       </button>
     </div>
 
@@ -232,12 +232,12 @@ function loadMore() {
   position: absolute;
   top: 120%;
   right: 0;
-  background: var(--color-white-background);
+  background: var(--color-background);
   width: 300px;
-  border: var(--global-border-size) solid var(--color-black-border);
+  border: var(--global-border-size) solid var(--color-text);
   border-radius: var(--global-border-radius);
   padding: var(--spacing-sm);
-  z-index: 1000;
+  z-index: 1;
   box-shadow: var(--global-box-shaddow);
   font-family: inherit;
   overflow-y: auto;
@@ -252,11 +252,7 @@ h4 {
   border-bottom: var(--global-border-size) solid var(--color-black-border);
   padding-bottom: var(--spacing-sm);
 }
-.items {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
+
 .item {
   text-align: left;
   margin-bottom: var(--spacing-sm);
@@ -331,7 +327,6 @@ h4 {
     position: static;
     bottom: 0;
     left: 0;
-    right: 0;
     width: 100%;
     max-height: 100%;
     padding: var(--spacing-md);
@@ -339,7 +334,7 @@ h4 {
     border: none;
     z-index: 100;
     animation: slideUp 0.3s ease-out;
-    background: white;
+    background: var(--color-background);
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
@@ -363,7 +358,6 @@ h4 {
     flex-shrink: 0;
   }
 
-  /* 👇 Wrap scrollable items inside a wrapper */
   .notification-list {
     overflow-y: auto;
     flex-grow: 1;
@@ -374,7 +368,7 @@ h4 {
   .mobile-drag-bar {
     width: 40px;
     height: 4px;
-    background-color: #ccc;
+    background-color: var(--color-background);
     border-radius: 4px;
     margin: 0 auto var(--spacing-sm);
   }

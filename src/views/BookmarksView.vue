@@ -32,14 +32,11 @@ async function pageChange(newPage: number){
 
 async function loadAdvertisements() {
   try {
-    let field = 'publishedAt'
-    let direction = 'asc'
-    if (orderBy.value == 1 || orderBy.value == 4) {
-      direction = 'desc'
-    }if (orderBy.value == 3 || orderBy.value == 4) {
-      field = 'price'
+    let direction = 'desc'
+    if (orderBy.value == 1) {
+      direction = 'asc'
     }
-    const result = await fetchUserBookmarks(pageSize.value, page.value, field, direction)
+    const result = await fetchUserBookmarks(pageSize.value, page.value, direction)
     totalPages.value = result.totalPages
     bookmarks.value = result.content
   } catch (error) {
@@ -83,8 +80,6 @@ watch(orderBy, async () => {
         <select class="display-button" id="filter-dropdown" v-model="orderBy">
           <option :value="1">{{$t('option-newest')}}</option>
           <option :value="2">{{ $t('option-oldest') }}</option>
-          <option :value="3">{{ $t('option-cheapest') }}</option>
-          <option :value="4">{{ $t('option-most-expensive') }}</option>
         </select>
       </div>
 

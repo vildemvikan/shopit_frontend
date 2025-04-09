@@ -19,7 +19,7 @@ onMounted(async () => {
     firstName.value = user.firstName || ''
     lastName.value = user.lastName || ''
     email.value = user.email || ''
-    profilePicture.value = user.profilePicture.url || ''
+    profilePicture.value = user.profilePicture?.url || ''
   } catch (error) {
     console.error('Error fetching user information:', error)
   }
@@ -75,6 +75,7 @@ async function changeProfilePicture(){
           v-else
           src="@/assets/icons/profile.svg"
           class="image"
+          id="inv-icon"
           alt="profile picture" >
       </div>
       <button class="edit-button" @click="uploadImage()">
@@ -147,6 +148,8 @@ async function changeProfilePicture(){
   display: flex;
   flex-direction: row;
   place-content: center;
+  border: var(--global-border-size) solid var(--color-text);
+  border-radius: 100%;
   height: 80%;
 }
 
@@ -154,7 +157,6 @@ async function changeProfilePicture(){
   height: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
-  border: var(--global-border-size) solid var(--color-gray-divider);
   border-radius: 100%;
 }
 

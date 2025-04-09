@@ -16,6 +16,7 @@ import Schema from '@/components/Schema.vue'
 
 .title{
   text-decoration: underline;
+  margin-bottom: 20px;
 }
 
 </style>

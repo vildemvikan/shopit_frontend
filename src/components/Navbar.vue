@@ -92,27 +92,26 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
 
     <div class="mobile-icons mobile-only">
       <button class="mobile-icon" @click="toggleMobileNotification">
-        <img class="icon" :src="iconPath('notifications.svg')" alt="notifications" />
+        <img class="invertible-icon" :src="iconPath('notifications.svg')" alt="notifications" />
       </button>
       <button class="mobile-icon" @click="toggleMenu">
-        <img class="icon" :src="status ? iconPath('exit.svg') : iconPath('burger.svg')" alt="menu" />
+        <img class="invertible-icon" :src="status ? iconPath('exit.svg') : iconPath('burger.svg')" alt="menu" />
       </button>
     </div>
 
     <div class="options" :class="{'open':status}">
       <div class="notification-wrapper desktop-only">
         <button class="notification-bell" @click="toggleNotifications">
-          <img class="icon" :src="iconPath('notifications.svg')" alt="notifications" />
+          <img class="invertible-icon" :src="iconPath('notifications.svg')" alt="notifications" />
           <span class="option-text">{{ $t('notifications') }}</span>
         </button>
 
-        <transition name="fade-slide">
-          <!-- dropdownRef must be here -->
           <div v-if="showDropdown" ref="dropdownRef" class="dropdown-position">
             <NotificationDropdown />
           </div>
-        </transition>
+
       </div>
+
       <button
         v-for="option in options"
         :key="option.label"
@@ -121,23 +120,19 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
         type="button"
         @click="option.label === 'notifications' ? toggleNotifications() : navigateTo(option.path)"
         >
-        <img class="icon" id="option-icon" :src="iconPath(option.icon)" :alt="$t(option.label)">
+        <img class="invertible-icon" id="option-icon" :src="iconPath(option.icon)" :alt="$t(option.label)">
         <span class="option-text"
               :class="{active: currentRoute.name == option.path}">
           {{ $t(option.label) }}
         </span>
               </button>
     </div>
-
-
-
   </nav>
   <div
     v-if="showMobileNotification"
     class="notification-backdrop"
     @click.self="closeMobileNotification"
   >
-    <!-- The sheet itself -->
     <div class="notification-sheet">
       <div class="sheet-content">
         <NotificationDropdown />
@@ -154,6 +149,7 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   flex-direction: row;
   height: 100%;
   width: 100%;
+
   box-shadow: var(--global-box-shaddow);
   place-content: space-between;
   place-items: center;
@@ -197,11 +193,14 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   text-decoration: underline var(--global-thicc-border-size) solid var(--color-dark-orange-text);
 }
 
+.option-text{
+  color: var(--color-text);
+}
 .option-text.active{
   border-bottom: var(--global-thicc-border-size) solid var(--color-dark-orange-text);
 }
 
-.icon{
+.invertible-icon{
   height: 100%;
 }
 .mobile-icons {
@@ -229,7 +228,7 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   position: relative;
   display: flex;
   align-items: center;
-  height: 100%; /* Match other options */
+  height: 100%;
   margin: 5px;
 }
 .notification-wrapper button {
@@ -240,7 +239,6 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   height: 100%;
   padding: 0;
 }
-
 
 .desktop-only {
   display: block;
@@ -262,34 +260,30 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
     gap: 12px; /* space between bell and burger */
   }
 
-  .icon {
+  .invertible-icon {
     height: 24px;
   }
 
-  .mobile-notification .icon{
+  .mobile-notification .invertible-icon{
     height: 60%;
   }
 
-  /* Hide options by default on mobile */
   .options {
-    display: none; /* Hidden unless toggled open */
+    display: none;
   }
 
-  /* When the menu is open, display the options */
   .options.open {
     display: flex;
     flex-direction: column;
     position: fixed;
     place-content: center;
-    background-color: white;
-
+    background-color: var(--color-background);
     top: 0;
     right: 0;
     left: 0;
-    height: 100 %;
+    height: 100%;
     width: 100%;
-
-    z-index: 1;
+    z-index: 20;
   }
 
   #button-option {
@@ -299,7 +293,6 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
     margin: 0;
   }
 
-
   .options.open #option-icon {
     display: none;
   }
@@ -307,8 +300,8 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
     display: flex;
     align-items: center;
     gap: 12px;
-    position: relative; /* Or use position: absolute if necessary */
-    z-index: 2; /* higher than .options */
+    position: relative;
+    z-index: 22;
   }
 
   .notification-sheet {
@@ -320,7 +313,7 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
     width: 100vw;
     background: white;
     border-radius: 12px 12px 0 0;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--global-box-shaddow);
     z-index: 9999;
     display: flex;
     flex-direction: column;

@@ -3,6 +3,7 @@ import { computed, ref, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n';
 import {fetchCategories} from '../../../utils/Advertisement.ts'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
+import { PaymentMethod } from '@/enums/enums.ts'
 
 const { t } = useI18n();
 const advertisementStore = useAdvertisementStore()
@@ -75,13 +76,14 @@ const subCategories = computed(() => {
   return cat ? cat.subcategories : []
 })
 
-const conditions = ref([
+
+const conditions = computed<Condition[]>(()=>[
   {text:t('condition-new'), value: Condition.New},
   {text:t('condition-like-new'), value: Condition.LikeNew},
   {text:t('condition-good'), value: Condition.Good},
   {text:t('condition-acceptable'), value: Condition.Acceptable},
   {text:t('condition-for-parts'), value: Condition.ForParts},
-])
+]);
 
 
 const tag = ref<string>('')
@@ -147,7 +149,7 @@ watch(subCategory, (newSubCategory)=>{
 
   <label>{{$t('label-condition')}}</label>
   <select id="dropdown" :class="{'error':conditionError}" v-model="condition">
-    <option disabled value="">{{ $t('drop-down-category') }}</option>>
+    <option disabled value="">{{ $t('drop-down-condition') }}</option>>
     <option v-for="condition in conditions" :key="condition.value" :value="condition.value">
       {{ condition.text }}
     </option>
@@ -192,7 +194,7 @@ watch(subCategory, (newSubCategory)=>{
       v-for="(tag, index) in tags"
       :key="index"
       class="tag">
-      <label>{{tag}}</label>
+      <label class="tag-label">{{tag}}</label>
       <img
         src="@/assets/icons/exit.svg"
         class="delete-tag"
@@ -204,6 +206,10 @@ watch(subCategory, (newSubCategory)=>{
 </template>
 
 <style scoped>
+
+H3, label{
+  color: var(--color-black-text);
+}
 
 .title-input{
   width: 100%;
@@ -255,6 +261,10 @@ watch(subCategory, (newSubCategory)=>{
   padding: 4px;
   gap: 2px;
   align-items: center;
+}
+
+.tag-label{
+  color: var(--color-white-text);
 }
 
 .delete-tag{

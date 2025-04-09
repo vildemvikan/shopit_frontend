@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useTokenStore } from '@/stores/tokenStore';
 const baseURL = 'http://127.0.0.1:8080/bookmark'
 
-export async function fetchUserBookmarks(size: number, page:number, field:string, direction:string){
+export async function fetchUserBookmarks(size: number, page:number,direction:string){
   const url = baseURL + '/me'
   const tokenStore = useTokenStore();
   const token = tokenStore.getToken;
@@ -12,7 +12,6 @@ export async function fetchUserBookmarks(size: number, page:number, field:string
         size: size,
         page: page,
         sortDir: direction,
-        sortField: field
       }, headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`

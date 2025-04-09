@@ -176,6 +176,8 @@ async function goToAdvertisement(){
   border-radius: calc(var(--global-border-radius)/2);
   padding-left: 5%;
   padding-right: 5%;
+  font-weight: bold;
+  color: var(--color-black-text);
 }
 
 #status-active{

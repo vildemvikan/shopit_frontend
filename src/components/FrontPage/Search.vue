@@ -60,11 +60,11 @@ async function search(){
   <div class="search-content">
     <div class="categories" @click="toggleCategories">
       <small class="categories-label">{{$t('label-shop-by-category')}}</small>
-      <img src="@/assets/icons/up.svg" alt="icon" class="icon" :class="{open: showDropDown}">
+      <img src="@/assets/icons/up.svg" alt="icon" class="invertible-icon" :class="{open: showDropDown}">
     </div>
 
     <div class="search-bar">
-      <img src="@/assets/icons/search.svg" class="search-icon" alt="search">
+      <img src="@/assets/icons/search.svg" class="inv-icon" alt="search">
       <input
         class="search-input"
         :placeholder="t('label-search')"
@@ -128,7 +128,7 @@ async function search(){
   width: 85%;
 }
 
-.icon{
+.invertible-icon{
   height: 1em;
   transform: rotate(180deg);
   cursor: pointer;
@@ -150,7 +150,7 @@ async function search(){
   border-radius: calc(var(--global-border-radius)/2);
 }
 
-.search-icon{
+.inv-icon{
   height: 60%;
   margin: 10px;
 }
@@ -159,6 +159,8 @@ async function search(){
   width: 80%;
   height: 100%;
   border: none;
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 .search-input:focus{
@@ -173,7 +175,8 @@ async function search(){
   min-width: 20%;
   height: 100%;
   border: none;
-  border-left: var(--global-border-size) solid;
+  border-left: var(--global-border-size) solid var(--color-text);
+  color: var(--color-text);
   background-color: transparent;
   padding: 10px;
 }
@@ -194,16 +197,16 @@ async function search(){
 
 .mega-menu-dropdown {
   position: absolute;
-  top: 110%; /* places dropdown immediately below the search bar */
-  left: 0;   /* aligns dropdown with the left edge of the search bar */
-  width: 100%;  /* make dropdown match the search bar's width */
-  background-color: var(--color-white-background);
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-background);
   border: var(--global-border-size) solid var(--color-gray-divider);
   border-radius: calc(var(--global-border-radius)/2);
   box-shadow: var(--global-box-shaddow);
   display: flex;
   flex-wrap: wrap;
-  z-index: 999;
+  z-index: 1;
   padding: 20px;
 }
 
