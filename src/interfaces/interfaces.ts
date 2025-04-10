@@ -1,5 +1,5 @@
 import type { PaymentMethod } from '@/enums/enums.ts'
-import { Condition, MessageType, Status } from '@/enums/enums.ts'
+import { BidStatus, Condition, MessageType, Status } from '@/enums/enums.ts'
 
 export interface ChatMessage {
   senderId: string,
@@ -134,4 +134,15 @@ export interface ChatRoomInfo {
   senderMail: string
   recipientMail: string
   itemId: number
+}
+
+export interface OrderInformation{
+  buyerName:string,
+  price:number
+}
+
+export interface BidInformation{
+  amount:price
+  status:BidStatus
+  bidderName:string
 }

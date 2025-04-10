@@ -11,6 +11,7 @@
   "title-new-advertisements": "New Advertisements",
   "title-bookmarks": "Bookmarks",
   "title-notifications": "Notifications",
+  "title-enter-bid": "How much would you like to offer?",
 
   "label-type": "Advertisement type",
   "label-images": "Images",
@@ -50,6 +51,7 @@
   "label-published": "Published",
   "label-filter-search": "Filter search",
   "label-results": "Results",
+  "label-enter-amount": "Enter amount",
 
   "filter-for-sale": "For sale",
   "filter-for-free": "For free",
@@ -87,6 +89,8 @@
   "button-search": "Search",
   "button-logout": "Log out",
   "button-delete-user": "Delete user",
+  "button-send-bid": "Send",
+  "button-cancel-bid": "Cancel",
 
 
   "drop-down-category": "Select category",
@@ -187,6 +191,12 @@
   "toast-advertisement-deleted": "Advertisement is deleted!",
   "toast-advertisement-deleted-error": "Error! Could not delete advertisement.",
 
+  "bid-text": "Wants to buy your advertisement for ",
+  "bid-changed-accepted-text": "Accepted your bid at",
+  "bid-changed-rejected-text": "Rejected your bid at",
+  "your-bid-text": "You have placed a bid at ",
+  "you-purchased-text": "You purchased the advertisement for ",
+  "purchased-text": "Purchased your advertisement for ",
 
   "notification": {
     "BID_PLACED": "{item} received a new bid",

@@ -37,9 +37,16 @@ export enum County{
 }
 
 export enum MessageType {
-  NORMAL="Normal",
-  BID="Bid",
-  PURCHASE="Purchase",
+  NORMAL="NORMAL",
+  BID="BID",
+  PURCHASE="PURCHASE",
+  CHANGED = 'STATUS_CHANGED'
+}
+
+export enum BidStatus{
+  Accepted = 'ACCEPTED',
+  Rejected = 'REJECTED',
+  Pending = 'PENDING',
 }
 
 

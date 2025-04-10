@@ -11,6 +11,7 @@
   "title-new-advertisements": "Nye annonser",
   "title-bookmarks": "Bokmerker",
   "title-notifications": "Notefikasjoner",
+  "title-enter-bid": "Hvor mye vil du by?",
 
   "label-type": "Type handel",
   "label-images": "Bilder",
@@ -50,6 +51,7 @@
   "label-published": "Publisert",
   "label-filter-search": "Filtrer søk",
   "label-results": "Resultater",
+  "label-enter-amount": "Fyll inn pris",
 
   "filter-for-sale": "Til salgs",
   "filter-for-free": "Gis bort",
@@ -86,6 +88,8 @@
   "button-search": "Søk",
   "button-logout": "Logg ut",
   "button-delete-user": "Slett bruker",
+  "button-send-bid": "Send",
+  "button-cancel-bid": "Kanseller",
 
   "drop-down-category": "Velg kategori",
   "drop-down-sub-category": "Velg underkategori",
@@ -160,6 +164,8 @@
   "resetFailed": "Klarte ikke å tilbakestille passordet.",
   "invalidOrExpiredTokenTitle": "Ugyldig eller utløpt lenke",
   "tryRequestingNewLink": "Forespør en ny lenke",
+
+  "bid-text": "Ønsker å kjøpe din annonse for ",
 
   "confirm-deletion-title": "Bekreft Sletting",
   "confirm-deletion-label": "Er du sikker på at du vil slette annonsen?",
