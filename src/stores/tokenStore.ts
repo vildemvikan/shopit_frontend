@@ -76,7 +76,8 @@ export const useTokenStore = defineStore('tokenStore', {
         this.startRefreshTimer()
       } catch (error) {
         await this.emptyTokenStore()
-        throw new Error('Failed to refresh access token')
+        throw error
+        //throw new Error('Failed to refresh access token')
       }
     },
 

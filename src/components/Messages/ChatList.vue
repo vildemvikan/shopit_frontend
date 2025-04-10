@@ -7,6 +7,7 @@ import { fetchChatList } from '../../../utils/Messages.ts'
 import { useTokenStore } from '@/stores/tokenStore.ts'
 import webSocket from '../../../utils/WebSocket.ts'
 import { a } from 'vitest/dist/chunks/suite.d.FvehnV49'
+import Pagination from '@/components/Pagination.vue'
 
 const selectedChatId = ref<string | null>(null);
 const chatList: Ref<ExtendedChatCardInfo[]> = ref([]);
@@ -28,27 +29,15 @@ watch(()=> bus.value.get('messageReceived'), async (val) => {
 
 watch(()=> bus.value.get('messageSent'), async () => {
   setTimeout(async () => {
-    chatList.value = await fetchChatList()
+    await fetchChatRooms()
   }, 100)
 });
-
-const sortedMessages: ref<ExtendedChatCardInfo[]> = computed(() => {
-    return [...chatList.value].sort((a, b) => {
-      return new Date(b.lastMessageTimestamp).getTime() - new Date(a.lastMessageTimestamp).getTime();
-    });
-});
-
-function isMobile() {
-  return window.matchMedia('(max-width: 800px)').matches;
-}
 
 onMounted(async () => {
   if (!webSocket.isConnected()) {
     webSocket.connect(useTokenStore().getEmail!)
   }
-  chatList.value = await fetchChatList()
-
-  await console.log(chatList.value)
+  await fetchChatRooms();
 
   setTimeout(() => {
     if (chatList.value.length > 0) {
@@ -56,6 +45,12 @@ onMounted(async () => {
     }
   }, 100)
 })
+
+const page = ref<number>(0)
+const SIZE:number = 4
+const pages = ref<number>(0)
+
+
 
 const sendSelectedChat = (data: ChatCardInfo) => {
   toggleNewMessage(data.senderId, data.itemId, false)
@@ -74,23 +69,45 @@ const toggleNewMessage = (recipientId: string, itemId: number, mode: boolean) =>
   if (chat) { chat.hasUnreadMessage = mode; }
 }
 
+async function changePage(newPage:number){
+  page.value = newPage
+  await fetchChatRooms()
+}
+
+async function fetchChatRooms(){
+  try{
+    const result = await fetchChatList(SIZE, page.value);
+    pages.value = result.totalPages
+    chatList.value = result.content
+  } catch (error){
+    console.error(error)
+  }
+}
+
 </script>
 
 <template>
   <div class="message-cards">
-    <div class="chat-list-box"
-         v-for="chat in sortedMessages"
-         :key="chat.recipientId + chat.itemId"
-         :id="chat.recipientId + chat.itemId"
-         :class="{ hasMessage : true, active: (chat.recipientId + chat.itemId) == selectedChatId }"
-         @click="sendSelectedChat(chat)">
-      <ChatCard
-        :chat-card-data="chat"
-      />
-    </div>
-    <div class="advertisement">
+    <div class="chats">
+      <div class="chat-list-box"
+           v-for="chat in chatList"
+           :key="chat.recipientId + chat.itemId"
+           :id="chat.recipientId + chat.itemId"
+           :class="{ hasMessage : true, active: (chat.recipientId + chat.itemId) == selectedChatId }"
+           @click="sendSelectedChat(chat)">
+        <ChatCard
+          :chat-card-data="chat"
+        />
       </div>
+    </div>
+    <div class="pages">
+      <Pagination
+        @page-change="changePage"
+        :total-pages="pages"
+        :current-page="page"/>
+    </div>
   </div>
+
 </template>
 
 <style scoped>
@@ -100,8 +117,18 @@ const toggleNewMessage = (recipientId: string, itemId: number, mode: boolean) =>
 
   height: 100%;
   width: 100%;
-  gap: 1rem;
+
   padding-right: 10px;
+  place-content: space-between;
+  align-items: center;
+}
+
+.chats{
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  width: 100%;
+  gap: 10px;
 }
 
 .active {
@@ -116,11 +143,15 @@ const toggleNewMessage = (recipientId: string, itemId: number, mode: boolean) =>
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: calc(100% / 4);
+  height: calc(calc(100% - 3*10px) / 4);
   border-radius: calc(var(--global-border-radius)/2);
   border: var(--global-border-size) solid var(--color-gray-divider);
   box-shadow: var(--global-box-shaddow);
   cursor: pointer;
+}
+
+.pagination{
+  width: 100%;
 }
 
 @media (max-width: 800px) {

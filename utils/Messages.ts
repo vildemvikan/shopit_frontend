@@ -15,7 +15,7 @@ export async function fetchChatMessages(recipientId: string, itemId: number): Pr
         'Authorization': `Bearer ${token}`
       }
     });
-    return await response.data
+    return await response.data.content
   } catch (error) {
     console.error("Error fetching chat messages: ", error)
     return [];
@@ -40,17 +40,24 @@ export async function fetchChatMessages(recipientId: string, itemId: number): Pr
     }
 }
 
-export async function fetchChatList() {
+export async function fetchChatList(size: number, page:number) {
   const url = `${baseUrl}/chats`;
   const tokenStore = useTokenStore();
   const token = tokenStore.getToken;
+
+  console.log('SIZE:' + size)
   try {
     const response = await axios.get(url, {
+      params:{
+        size:size,
+        page:page
+      },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     });
+    console.log(response)
     return await response.data;
   } catch(error) {
     console.error("Error fetching chat list: ", error)

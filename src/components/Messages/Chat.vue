@@ -63,6 +63,7 @@ watch(currentChatRoomInfo, async (newVal) => {
 watch(()=> bus.value.get('messageReceived'), async (val) => {
   const payload = JSON.parse(val[0].body)
   displayMessage(payload.senderId, payload.recipientId, payload.itemId, payload.content, new Date(payload.timestamp));
+
 });
 
 const displayMessages = async (chatRoomInfo: ChatRoomInfo) => {
@@ -76,6 +77,8 @@ const displayMessages = async (chatRoomInfo: ChatRoomInfo) => {
   });
 
   chatMessageInfo.value = processMessages(messagesWithTime);
+  console.log('MESSAGES')
+  console.log(chatMessageInfo.value)
 
   const messageList = document.querySelector("#message-list");
   if (messageList) {
@@ -194,6 +197,8 @@ function closeChat(){
           <div :class="['message', info.senderId !== currentChatRoomInfo.senderMail ? 'receiver' : 'sender']">
             <label>{{ info.content }}</label>
           </div>
+
+
         </template>
       </div>
       <div class="chat-info">

@@ -35,14 +35,14 @@ const isChatEmpty = computed (()=> {
 })
 
 
-
 onMounted(async ()=> {
   if (useTokenStore().getEmail && useTokenStore().getEmail !== null) {
     if (!webSocket.isConnected()) {
       webSocket.connect(useTokenStore().getEmail!)
     }
     currentChatRoomInfo.senderMail = useTokenStore().getEmail!;
-    chatList.value = await fetchChatList();
+    const result = await fetchChatList(4, 0);
+    chatList.value = result.content
   }
 })
 
@@ -55,11 +55,12 @@ onMounted(async ()=> {
       {{ $t('messages') }}</h1>
 
     <div class="container" :class="{select: hasSelectedMessage}">
-      <div v-if="!isChatEmpty" class="chat-list-wrapper"
+      <div class="chat-list-wrapper"
            :class="!hasSelectedMessage ? 'selected' : 'unselected'">
         <message-list
           :current-user="currentChatRoomInfo.senderMail"
         />
+
       </div>
 
       <div v-if="!isChatEmpty"
