@@ -4,7 +4,10 @@ import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import router from '@/router'
 import {changeStatus} from '../../../utils/Advertisement.ts'
-import DeletePopUp from '@/components/popups/DeletePopUp.vue'
+import DeletePopUp from '@/components/Popups/DeletePopUp.vue'
+import { placeOrder } from '../../../utils/Order.ts'
+import { placeBid } from '../../../utils/Bid.ts'
+import BidPopUp from '@/components/Popups/BidPopUp.vue'
 const { t } = useI18n();
 enum PaymentMethod {
   Direct = 'DIRECT',
@@ -55,6 +58,7 @@ const conditionLabel = computed(() =>{
 })
 
 const displayDeletePopUp = ref<boolean>(false)
+const displayBidPopUp = ref<boolean>(false)
 
 function contactSeller(){
   router.push('/messages')
@@ -73,6 +77,17 @@ async function handleStatusChange(status: Status){
   }
 }
 
+async function purchaseItem(){
+  try{
+    const result = await placeOrder(props.advertisementId)
+    if(result == 200){
+      await router.push('/messages')
+    } else return
+  }catch (error){
+    console.log(error)
+  }
+}
+
 
 </script>
 
@@ -84,6 +99,12 @@ async function handleStatusChange(status: Status){
     :id="advertisementId"
     :type-delete-advertisement="true"
     :type-delete-user="false"
+  />
+
+  <BidPopUp
+    v-if="displayBidPopUp"
+    @cancel-bid ="displayBidPopUp = false"
+    :id="advertisementId"
   />
 
   <H1 class="title" v-if="props.title">{{props.title}}</H1>
@@ -106,13 +127,15 @@ async function handleStatusChange(status: Status){
   <div class="button-box" v-if="!owner && props.status !== Status.Sold">
     <button
       v-if="props.payment == PaymentMethod.Auction"
-      class="button" id="blue-button" >
+      class="button" id="blue-button" @click="displayBidPopUp = true" >
       <label class="button-label">{{$t('button-auction')}}</label>
     </button>
     <button
       v-if="props.payment == PaymentMethod.Direct"
       class="button"
-      id="orange-button">
+      id="orange-button"
+      @click="purchaseItem"
+    >
       <label class="button-label" id="orange-button-label">{{$t('button-vipps')}}</label>
     </button>
     <button class="button" id="gray-button" @click="contactSeller">

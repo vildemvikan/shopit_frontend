@@ -21,12 +21,14 @@
   --vt-c-indigo: #2c3e50;
 
   --vt-c-red: #b70000;
+  --vt-c-light-light-red: #ffbbbb;
   --ct-c-light-red: #FF8383;
   --ct-c-light-dark-red: #f36e6e;
   --vt-c-orange: #FF8F06;
   --vt-c-dark-orange: #ff7300;
   --vt-c-yellow: #FFEDAE;
   --vt-c-dark-yellow: #ffe096;
+  --vt-c-green: #a9d3aa;
 
   --vt-c-transparent-white: rgba(255, 255, 255, 0.8);
   --vt-c-transparent-black: rgba(0, 0, 0, 0.6);
@@ -100,6 +102,9 @@
   --color-black-button-hover: var(--vt-c-black-hover);
 
   --color-active-chat:var(--vt-c-light-lavendel);
+
+  --color-bid-accepted: var(--vt-c-green);
+  --color-bid-rejected: var(--vt-c-light-light-red);
 
   --spacing-sm: 0.5rem;
   --spacing-md: 0.75rem;

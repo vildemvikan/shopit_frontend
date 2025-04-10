@@ -4,7 +4,7 @@ import MyAdvertisements from '@/components/profile/MyAdvertisements.vue'
 import ProfileInfo from '@/components/profile/ProfileInfo.vue'
 import ChangePassword from '@/components/profile/ChangePassword.vue'
 import { useTokenStore } from '@/stores/tokenStore.ts'
-import DeletePopUp from '@/components/popups/DeletePopUp.vue'
+import DeletePopUp from '@/components/Popups/DeletePopUp.vue'
 import { ref } from 'vue'
 
 const tokenStore = useTokenStore()

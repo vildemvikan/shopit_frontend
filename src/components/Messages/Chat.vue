@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, type Ref, ref, type UnwrapRef, watch } from 'vue'
+import { computed, reactive, type Ref, ref, watch } from 'vue'
 import { fetchChatMessages, fetchProfileInfo } from '../../../utils/Messages.ts'
 import useEventsBus from '../../../utils/EventBus.ts'
-import type{
-  Advertisement,
-  ChatMessage,
-  ChatRoomInfo,
-  DisplayAdvertisement,
-  Image
-} from '@/interfaces/interfaces.ts'
+import type { ChatMessage, ChatRoomInfo, DisplayAdvertisement } from '@/interfaces/interfaces.ts'
 import websocketService from '../../../utils/WebSocket.ts'
 import { fetchAdvertisement } from '../../../utils/Advertisement.ts'
 import AdvertisementPreviewList from '@/components/AdvertisementPreviewList.vue'
-import { tuple } from 'yup'
+import { MessageType } from '@/enums/enums.ts'
+import NewBid from '@/components/Messages/NewBidMessage.vue'
+import YourBid from '@/components/Messages/YourBidMessage.vue'
+import BidStatusChanged from '@/components/Messages/BidStatusChangedMessage.vue'
+import Purchased from '@/components/Messages/PurchasedMessage.vue'
 
 interface ExtendedChatMessage extends ChatMessage {
   showTimestamp?: boolean;
@@ -194,11 +192,43 @@ function closeChat(){
             <span>{{ formatTime(info.timestamp) }}</span>
           </div>
 
-          <div :class="['message', info.senderId !== currentChatRoomInfo.senderMail ? 'receiver' : 'sender']">
+          <div v-if="![MessageType.BID, MessageType.PURCHASE, MessageType.CHANGED].includes(info.type)"
+            :class="['message', info.senderId !== currentChatRoomInfo.senderMail ? 'receiver' : 'sender']">
             <label>{{ info.content }}</label>
           </div>
 
-
+          <div v-if="info.type == MessageType.BID && info.senderId !== currentChatRoomInfo.senderMail"
+               class="bid" id="new-bid">
+            <NewBid
+              :id="info.content"
+            />
+          </div>
+          <div v-if="info.type == MessageType.BID && info.senderId == currentChatRoomInfo.senderMail"
+               class="bid" id="your-bid">
+            <YourBid
+              :id="info.content"
+            />
+          </div>
+          <div v-if="info.type == MessageType.CHANGED && info.senderId !== currentChatRoomInfo.senderMail"
+               class="bid" id="new-bid">
+            <BidStatusChanged
+              :id="info.content"
+            />
+          </div>
+          <div v-if="info.type == MessageType.PURCHASE && info.senderId !== currentChatRoomInfo.senderMail"
+               class="bid" id="new-bid">
+            <Purchased
+              :id="info.content"
+              :buyer="false"
+            />
+          </div>
+          <div v-if="info.type == MessageType.PURCHASE && info.senderId == currentChatRoomInfo.senderMail"
+               class="bid" id="your-bid">
+            <Purchased
+              :id="info.content"
+              :buyer="true"
+            />
+          </div>
         </template>
       </div>
       <div class="chat-info">
@@ -436,6 +466,17 @@ function closeChat(){
   background: var(--color-gray-button);
 }
 
+.bid{
+  width: 70%;
+  min-width: fit-content;
+  min-height: 75px;
+  margin-bottom: 20px;
+}
+
+#your-bid{
+  align-self: flex-end;
+}
+
 #char-counter {
   position: absolute;
   bottom: 0.5rem;
@@ -464,6 +505,7 @@ function closeChat(){
   color: #65676B;
   border-radius: 12px;
 }
+
 
 @media (max-width: 800px) {
   .back-icon{
