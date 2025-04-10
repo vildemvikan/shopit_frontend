@@ -129,10 +129,6 @@ const toggleNewMessage = (recipientId: string, itemId: number, mode: boolean) =>
   padding-right: 5px;
 }
 
-.active {
-  background-color: lightgray;
-}
-
 .chat-list-box:hover {
   background-color: lightgray
 }
