@@ -29,7 +29,9 @@ export const useTokenStore = defineStore('tokenStore', {
         console.log("Expiration:" + this.accessTokenExpiresAt)
         await router.push('/')
       } catch (error: any) {
-        throw new Error('Error logging in')
+        console.log(error)
+        throw { message: error.message, status: error.status };
+
       }
 },
 
@@ -46,8 +48,8 @@ export const useTokenStore = defineStore('tokenStore', {
         this.accessTokenExpiresAt = Date.now() + 30 * 60 * 1000
         console.log(response.data.token);
       } catch (error: any) {
-        if (error.response?.status === 409) {
-          throw new Error('Email already in use');
+        if (error) {
+          throw { message: error.message, status: error.status };
         } else {
           throw new Error('Registration failed');
         }

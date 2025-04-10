@@ -13,8 +13,14 @@ export async function getToken(email: string, password: string) {
       }
     ); console.log(result)
     return result.data
-  } catch (error){
-    throw error
+  } catch (error: any) {
+    if (error.response) {
+      const statusCode = error.response.status;
+      const statusMessage = error.response.data;
+      throw { message: statusMessage, status: statusCode };
+    } else {
+      throw new Error('Network or unknown error');
+    }
   }
 }
 
@@ -29,8 +35,14 @@ export async function registerUser(email: string, firstName: string,
       }
     ); console.log(result)
     return result
-  } catch (error) {
-    throw error;
+  }  catch (error: any) {
+    if (error.response) {
+      const statusCode = error.response.status;
+      const statusMessage = error.response.data;
+      throw { message: statusMessage, status: statusCode };
+    } else {
+      throw new Error('Network or unknown error');
+    }
   }
 }
 
@@ -44,8 +56,14 @@ export async function logout(accessToken: string){
       }, withCredentials: true
     }); console.log(result)
     return result.status
-  } catch (error){
-    throw error
+  }  catch (error: any) {
+    if (error.response) {
+      const statusCode = error.response.status;
+      const statusMessage = error.response.data;
+      throw { message: statusMessage, status: statusCode };
+    } else {
+      throw new Error('Network or unknown error');
+    }
   }
 }
 

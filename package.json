@@ -8,6 +8,7 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
+    "coverage": "vitest run --coverage",
     "prepare": "cypress install",
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
@@ -18,6 +19,7 @@
   },
   "dependencies": {
     "@stomp/stompjs": "^7.1.0",
+    "@pinia/testing": "^1.0.0",
     "axios": "^1.8.4",
     "lz-string": "^1.5.0",
     "pinia": "^3.0.1",
@@ -27,8 +29,8 @@
     "vue": "^3.5.13",
     "vue-i18n": "^11.1.2",
     "vue-router": "^4.5.0",
-    "yup": "^1.6.1",
-    "vue-toastification": "^2.0.0-rc.5"
+    "vue-toastification": "^2.0.0-rc.5",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
@@ -36,6 +38,8 @@
     "@types/node": "^22.13.9",
     "@types/sockjs-client": "^1.5.4",
     "@vitejs/plugin-vue": "^5.2.1",
+    "@vitest/coverage-istanbul": "^3.1.1",
+    "@vitest/coverage-v8": "^3.1.1",
     "@vitest/eslint-plugin": "^1.1.36",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.5.0",
@@ -53,7 +57,7 @@
     "typescript": "~5.8.0",
     "vite": "^6.2.1",
     "vite-plugin-vue-devtools": "^7.7.2",
-    "vitest": "^3.0.8",
+    "vitest": "^3.1.1",
     "vue-tsc": "^2.2.8"
   }
 }

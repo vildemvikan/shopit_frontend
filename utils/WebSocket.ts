@@ -1,7 +1,6 @@
-import { ref, reactive } from 'vue';
+import { reactive } from 'vue';
 import { Client } from '@stomp/stompjs';
 import  useEventBus  from './EventBus'
-import { string } from 'yup'
 import useEventsBus from './EventBus'
 
 // Reactive state that can be imported by multiple components

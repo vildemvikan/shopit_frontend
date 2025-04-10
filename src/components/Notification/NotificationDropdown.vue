@@ -1,21 +1,84 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { ref, onBeforeUnmount, onMounted, watch } from 'vue'
 import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { getNotification } from '../../../utils/Notification.ts'
+import { getNotification, deleteNotification } from '../../../utils/Notification'
 const deleteIcon = new URL('@/assets/icons/x.svg', import.meta.url).href
 const refreshIcon = new URL('@/assets/icons/refresh2.svg', import.meta.url).href
-const perPage = 3
-const visibleCount = ref(perPage)
-dayjs.extend(relativeTime)
-dayjs.locale('nb')
 
-// Drag state refs
+// Configuration for pagination (set as you prefer)
+const perPage = 3
+const currentPage = ref(0)    // current page index to fetch from backend
+
+// notifications will accumulate all pages from backend
+const notifications = ref([] as any[])
+
+// Drag state refs (if you use touch-drag)
 const startY = ref(0)
 const currentY = ref(0)
 const isDragging = ref(false)
 
+dayjs.extend(relativeTime)
+dayjs.locale('nb')
+
+// Fetch notifications from backend for a given page.
+// reset flag will clear the notifications array (e.g. for a refresh)
+async function fetchNotifications(page: number, reset = false) {
+  const result = await getNotification(page, perPage)
+  if (Array.isArray(result)) {
+    if (reset) {
+      notifications.value = result
+      currentPage.value = page
+    } else {
+      // Append new notifications to the existing array
+      notifications.value = [...notifications.value, ...result]
+    }
+  }
+}
+
+// Refresh notifications: load the first page and reset data
+async function refreshNotifications() {
+  console.log("clicked")
+  await fetchNotifications(0, true)
+}
+
+// Load more notifications (fetch next page)
+async function loadMore() {
+  const nextPage = currentPage.value + 1
+  await fetchNotifications(nextPage)
+  currentPage.value = nextPage
+}
+
+// Remove a notification using the API and update local array
+const removeNotification = async (id: number) => {
+  try {
+    const res = await deleteNotification(id)
+    if (res === true) {
+      notifications.value = notifications.value.filter(n => n.id !== id)
+    }
+  } catch (e) {
+    console.error('Failed to delete notification', e)
+  }
+}
+
+onMounted(() => {
+  const dropdown = document.querySelector('.dropdown')
+  dropdown?.addEventListener('touchstart', onTouchStart)
+  dropdown?.addEventListener('touchmove', onTouchMove)
+  dropdown?.addEventListener('touchend', onTouchEnd)
+  // Fetch the first page of notifications when the dropdown mounts
+  refreshNotifications()
+})
+
+onBeforeUnmount(() => {
+  const dropdown = document.querySelector('.dropdown')
+  dropdown?.removeEventListener('touchstart', onTouchStart)
+  dropdown?.removeEventListener('touchmove', onTouchMove)
+  dropdown?.removeEventListener('touchend', onTouchEnd)
+})
+
+// Touch event handlers for mobile drag (if needed)
 function onTouchStart(e: TouchEvent) {
   startY.value = e.touches[0].clientY
   isDragging.value = true
@@ -25,8 +88,6 @@ function onTouchMove(e: TouchEvent) {
   if (!isDragging.value) return
   currentY.value = e.touches[0].clientY
   const deltaY = currentY.value - startY.value
-
-  // Optional: move the sheet down visually
   const dropdown = document.querySelector('.dropdown') as HTMLElement
   if (dropdown && deltaY > 0) {
     dropdown.style.transform = `translateY(${deltaY}px)`
@@ -36,124 +97,18 @@ function onTouchMove(e: TouchEvent) {
 function onTouchEnd() {
   const deltaY = currentY.value - startY.value
   const threshold = 80
-
   const dropdown = document.querySelector('.dropdown') as HTMLElement
   if (dropdown) {
     dropdown.style.transition = 'transform 0.2s ease'
   }
-
   if (deltaY > threshold) {
-    // emit event or call method to close it
     window.dispatchEvent(new CustomEvent('closeNotificationSheet'))
   } else {
-    // Reset position if not dragged far enough
     if (dropdown) {
       dropdown.style.transform = 'translateY(0)'
     }
   }
-
   isDragging.value = false
-}
-
-onMounted(() => {
-  const dropdown = document.querySelector('.dropdown')
-  dropdown?.addEventListener('touchstart', onTouchStart)
-  dropdown?.addEventListener('touchmove', onTouchMove)
-  dropdown?.addEventListener('touchend', onTouchEnd)
-})
-
-onBeforeUnmount(() => {
-  const dropdown = document.querySelector('.dropdown')
-  dropdown?.removeEventListener('touchstart', onTouchStart)
-  dropdown?.removeEventListener('touchmove', onTouchMove)
-  dropdown?.removeEventListener('touchend', onTouchEnd)
-})
-async function refreshNotifications() {
-  const result = await getNotification()
-  if (Array.isArray(result)) {
-    notifications.value = result
-    visibleCount.value = perPage // reset visible items
-  }
-}
-const notifications = ref([
-  {
-    id: 1,
-    type: 'BID_PLACED',
-    args: { user: 'John Doe', item: 'iPhone 13' },
-    createdAt: '2025-04-06T12:00:00Z',
-    link: '/items/1'
-  },
-  {
-    id: 2,
-    type: 'ITEM_BOUGHT',
-    args: { user: 'Alice Smith Smith Smith Smith Smith Smith', item: 'Stol' },
-    createdAt: '2025-04-05T08:00:00Z',
-    link: '/items/2'
-  },
-  {
-    id: 3,
-    type: 'BID_PLACED',
-    args: { user: 'Carlos Vega', item: 'MacBook Pro' },
-    createdAt: '2025-04-04T15:30:00Z',
-    link: '/items/3'
-  },
-  {
-    id: 4,
-    type: 'ITEM_BOUGHT',
-    args: { user: 'Emma Johnson', item: 'PS5' },
-    createdAt: '2025-04-03T11:00:00Z',
-    link: '/items/4'
-  },
-  {
-    id: 5,
-    type: 'BID_PLACED',
-    args: { user: 'Liam Chen', item: 'AirPods' },
-    createdAt: '2025-04-02T09:00:00Z',
-    link: '/items/5'
-  },
-  {
-    id: 6,
-    type: 'ITEM_BOUGHT',
-    args: { user: 'Sophia Lee', item: 'Samsung TV' },
-    createdAt: '2025-04-01T20:00:00Z',
-    link: '/items/6'
-  },
-  {
-    id: 7,
-    type: 'BID_PLACED',
-    args: { user: 'Noah Patel', item: 'Gaming Chair' },
-    createdAt: '2025-03-31T14:00:00Z',
-    link: '/items/7'
-  },
-  {
-    id: 8,
-    type: 'ITEM_BOUGHT',
-    args: { user: 'Ava Müller', item: 'Wireless Mouse' },
-    createdAt: '2025-03-30T10:00:00Z',
-    link: '/items/8'
-  },
-  {
-    id: 9,
-    type: 'BID_PLACED',
-    args: { user: 'Lucas Wang', item: 'GoPro Hero' },
-    createdAt: '2025-03-29T17:00:00Z',
-    link: '/items/9'
-  },
-  {
-    id: 10,
-    type: 'ITEM_BOUGHT',
-    args: { user: 'Mia Rossi', item: 'Smart Watch' },
-    createdAt: '2025-03-28T13:00:00Z',
-    link: '/items/10'
-  }
-])
-const deleteNotification = async (id: number) => {
-  try {
-    await deleteNotification(id)
-    notifications.value = notifications.value.filter(n => n.id !== id)
-  } catch (e) {
-    console.error('Failed to delete notification', e)
-  }
 }
 
 const { locale } = useI18n()
@@ -161,17 +116,9 @@ dayjs.locale(locale.value)
 watch(locale, (newLocale) => {
   dayjs.locale(newLocale)
 })
+
 function timeAgo(date: string): string {
   return dayjs(date).fromNow()
-}
-
-
-const visibleNotifications = computed(() =>
-  notifications.value.slice(0, visibleCount.value)
-)
-
-function loadMore() {
-  visibleCount.value += perPage
 }
 </script>
 
@@ -181,12 +128,11 @@ function loadMore() {
     <div class="dropdown-header">
       <h4>{{$t('title-notifications')}}</h4>
       <button @click="refreshNotifications" class="refresh-btn" aria-label="Refresh notifications">
-        <img :src="refreshIcon" alt="Refresh"  class="invertible-icon"/>
+        <img :src="refreshIcon" alt="Refresh" class="invertible-icon"/>
       </button>
     </div>
-
     <div class="notification-list">
-      <div v-for="notification in visibleNotifications" :key="notification.id" class="item">
+      <div v-for="notification in notifications" :key="notification.id" class="item">
         <div class="msg">
           {{ $t(`notification.${notification.type}`, notification.args) }}
         </div>
@@ -194,16 +140,17 @@ function loadMore() {
         <router-link v-if="notification.link" :to="notification.link" class="link">
           {{ $t('notification.readMore') }}
         </router-link>
-        <button class="delete-btn" @click="deleteNotification(notification.id)">
+        <button class="delete-btn" @click="removeNotification(notification.id)">
           <img :src="deleteIcon" alt="Delete" class="icon" />
         </button>
       </div>
     </div>
-    <div v-if="visibleCount < notifications.length" class="load-more-wrapper">
+    <div v-if="notifications.length > (currentPage.value + 1) * perPage" class="load-more-wrapper">
       <button class="load-more-btn" @click="loadMore">{{ $t(`notification.showMore`) }}</button>
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .dropdown-header {

@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
 import { useTokenStore } from '@/stores/tokenStore.ts'
+import { useRouter } from 'vue-router'
 /**
  * We can access translation keys via useI18n().
  */
@@ -26,23 +27,24 @@ const { value: password, errorMessage: passwordError } = useField('password', un
   validateOnValueUpdate: false,
 });
 const serverError = ref(''); // optional: for displaying global login errors
+const router = useRouter();
 
 const onSubmit = handleSubmit( async (values) => {
   serverError.value = ''; // clear previous error
   try {
 
     await tokenStore.login(values.email, values.password);
-
+    setTimeout(() => {
+      router.push('/');
+    }, 500);
   } catch (error: any) {
-    if (error.response?.status === 401) {
+    if (error.status===401) {
       serverError.value = t('invalidCredentials');
     } else {
-      console.log(error.response?.statusText);
       serverError.value = t('unexpectedError');
     }
   }
 });
-
 </script>
 
 <template>
