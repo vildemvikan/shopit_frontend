@@ -9,7 +9,7 @@
   --vt-c-light-lavendel: #dedee8;
   --vt-c-lavendel: #C6C7D2;
   --vt-c-dark-lavendel: #888DA7;
-  --vt-c-dark-dark-lavendel: #313056FF;
+  --vt-c-dark-dark-lavendel: #373744;
 
   --vt-c-light-blue: #AED2FF;
   --vt-c-blue: #a2beee;
@@ -99,6 +99,8 @@
 
   --color-black-button-hover: var(--vt-c-black-hover);
 
+  --color-active-chat:var(--vt-c-light-lavendel);
+
   --spacing-sm: 0.5rem;
   --spacing-md: 0.75rem;
   --spacing-lg: 1rem;
@@ -145,6 +147,7 @@
     --color-border-hover: var(--vt-c-divider-dark-1);
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-1);
+    --color-active-chat:var(--vt-c-dark-dark-lavendel);
   }
 }
 
@@ -158,6 +161,7 @@ html.manual-dark {
 
   --color-heading: var(--vt-c-text-dark-1);
   --color-text: var(--vt-c-text-dark-1);
+  --color-active-chat:var(--vt-c-dark-dark-lavendel);
 
   .invertible-icon, .inv-icon, #inv-icon, .inv-image {
     filter: invert(100%);

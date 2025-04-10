@@ -6,24 +6,22 @@ import useEventsBus from '../../../utils/EventBus.ts'
 import { fetchChatList } from '../../../utils/Messages.ts'
 import { useTokenStore } from '@/stores/tokenStore.ts'
 import webSocket from '../../../utils/WebSocket.ts'
+import { a } from 'vitest/dist/chunks/suite.d.FvehnV49'
+import Pagination from '@/components/Pagination.vue'
 
 const selectedChatId = ref<string | null>(null);
-
 const chatList: Ref<ExtendedChatCardInfo[]> = ref([]);
 
 const { emit } = useEventsBus();
+const { bus } = useEventsBus();
 
 export interface ExtendedChatCardInfo extends ChatCardInfo {
   hasUnreadMessage?: boolean;
 }
 
-const { bus } = useEventsBus();
-
 watch(()=> bus.value.get('messageReceived'), async (val) => {
   chatList.value = await fetchChatList()
-
   const payload = JSON.parse(val[0].body)
-
   if (selectedChatId.value && selectedChatId.value !== payload.senderId + payload.itemId) {
     toggleNewMessage(payload.recipientId, payload.itemId, true)
   }
@@ -31,60 +29,32 @@ watch(()=> bus.value.get('messageReceived'), async (val) => {
 
 watch(()=> bus.value.get('messageSent'), async () => {
   setTimeout(async () => {
-    chatList.value = await fetchChatList()
+    await fetchChatRooms()
   }, 100)
 });
 
-const sortedMessages: Ref<ExtendedChatCardInfo[]> = computed(() => {
-    return [...chatList.value].sort((a, b) => {
-      return new Date(b.lastMessageTimestamp).getTime() - new Date(a.lastMessageTimestamp).getTime();
-    });
-});
-
-function isMobile() {
-  return window.matchMedia('(max-width: 800px)').matches;
-}
-
-
 onMounted(async () => {
-  // todo: responsive + her var det tomt gitt
-
-  console.log("getting chat list")
-  if (useTokenStore().getEmail && useTokenStore().getEmail !== null) {
-    if (!webSocket.isConnected()) {
-      webSocket.connect(useTokenStore().getEmail!)
-    }
-    chatList.value = await fetchChatList();
+  if (!webSocket.isConnected()) {
+    webSocket.connect(useTokenStore().getEmail!)
   }
-
-  if (isMobile()) {
-    return;
-  }
+  await fetchChatRooms();
 
   setTimeout(() => {
     if (chatList.value.length > 0) {
-      emit('selectChat', {
-        senderMail: sortedMessages.value[0].senderId,
-        recipientMail: sortedMessages.value[0].recipientId,
-        itemId: sortedMessages.value[0].itemId,
-      });
-      document.getElementById(sortedMessages.value[0].recipientId+sortedMessages.value[0].itemId)?.classList.add('active');
+      sendSelectedChat(chatList.value[0])
     }
   }, 100)
 })
 
+const page = ref<number>(0)
+const SIZE:number = 4
+const pages = ref<number>(0)
+
+
 
 const sendSelectedChat = (data: ChatCardInfo) => {
-  document.querySelectorAll('.chat-list-box').forEach(item => {
-    item.classList.remove('active');
-  });
-
   toggleNewMessage(data.senderId, data.itemId, false)
-
-  document.getElementById(data.recipientId+data.itemId)?.classList.add('active');
-
   selectedChatId.value = data.recipientId + data.itemId;
-
   emit('selectChat', {
     senderMail: data.senderId,
     recipientMail: data.recipientId,
@@ -96,8 +66,21 @@ const toggleNewMessage = (recipientId: string, itemId: number, mode: boolean) =>
   const chat = chatList.value.find(
     c => c.senderId === recipientId && c.itemId === itemId
   );
-  if (chat) {
-      chat.hasUnreadMessage = mode;
+  if (chat) { chat.hasUnreadMessage = mode; }
+}
+
+async function changePage(newPage:number){
+  page.value = newPage
+  await fetchChatRooms()
+}
+
+async function fetchChatRooms(){
+  try{
+    const result = await fetchChatList(SIZE, page.value);
+    pages.value = result.totalPages
+    chatList.value = result.content
+  } catch (error){
+    console.error(error)
   }
 }
 
@@ -105,46 +88,77 @@ const toggleNewMessage = (recipientId: string, itemId: number, mode: boolean) =>
 
 <template>
   <div class="message-cards">
-    <div class="chat-list-box" :id="chat.recipientId + chat.itemId" @click="sendSelectedChat(chat)" :class="{ hasMessage : true}"
-         v-for="chat in sortedMessages" :key="chat.recipientId + chat.itemId">
-      <ChatCard
-        :chat-card-data="chat"
-      >
-      </ChatCard>
-    </div>
-    <div class="advertisement">
+    <div class="chats">
+      <div class="chat-list-box"
+           v-for="chat in chatList"
+           :key="chat.recipientId + chat.itemId"
+           :id="chat.recipientId + chat.itemId"
+           :class="{ hasMessage : true, active: (chat.recipientId + chat.itemId) == selectedChatId }"
+           @click="sendSelectedChat(chat)">
+        <ChatCard
+          :chat-card-data="chat"
+        />
       </div>
+    </div>
+    <div class="pages">
+      <Pagination
+        @page-change="changePage"
+        :total-pages="pages"
+        :current-page="page"/>
+    </div>
   </div>
+
 </template>
 
 <style scoped>
 .message-cards {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin-right: 10px;
-  padding-right: 5px;
+
+  height: 100%;
+  width: 100%;
+
+  padding-right: 10px;
+  place-content: space-between;
+  align-items: center;
+}
+
+.chats{
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  width: 100%;
+  gap: 10px;
 }
 
 .active {
-  background-color: lightgray;
+  background-color: var(--color-active-chat);
 }
 
 .chat-list-box:hover {
-  background-color: lightgray
+  transform: scale(1.01);
 }
 
 .chat-list-box {
   display: flex;
   flex-direction: row;
   width: 100%;
+  height: calc(calc(100% - 3*10px) / 4);
   border-radius: calc(var(--global-border-radius)/2);
   border: var(--global-border-size) solid var(--color-gray-divider);
   box-shadow: var(--global-box-shaddow);
   cursor: pointer;
+}
+
+.pagination{
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+
+  .active{
+    background-color: transparent;
+  }
 }
 
 </style>
