@@ -124,7 +124,7 @@ export interface ChatCardInfo {
   recipientId: string,
   itemId: number,
   status: Status
-  itemImage: string,
+  image: string,
   itemTitle: string,
   recipientProfilePic: string,
 }
