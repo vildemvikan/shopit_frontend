@@ -44,12 +44,11 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     await tokenStore.registerAndSaveToken(values.email, values.firstName, values.lastName, values.password);
     serverSuccess.value = t('registrationSuccess');
-    // Optional: redirect after a short delay
     setTimeout(() => {
-      router.push('/login');
-    }, 1500);
+      router.push('/auth/login');
+    }, 1);
   } catch (error: any) {
-    if (error.response?.status === 400) {
+    if (error.status===409) {
       serverError.value = t('emailTaken'); // Vi burde kanskje oversette errors fra serverside...
     } else {
       serverError.value = t('unexpectedError');

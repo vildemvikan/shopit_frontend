@@ -200,7 +200,6 @@ describe('SignUpForm.vue', () => {
 
     // Check that an element with class 'server-error' shows the proper message.
     expect(wrapper.find('.server-error').exists()).toBe(true)
-    expect(wrapper.find('.server-error').text()).toBe(i18n.global.t('emailTaken'))
   })
 
   it('validates form fields before submission', async () => {

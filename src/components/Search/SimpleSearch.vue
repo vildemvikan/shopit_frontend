@@ -23,7 +23,7 @@ function emitKeyWord(){
         type="text"
         v-model="searchString">
     </div>
-    <button class="search-button" @click="emitKeyWord">
+    <button class="search-button" @click="emitKeyWord" data-cy="simple-search-button">
       <label>{{$t('button-search')}}</label>
     </button>
   </div>

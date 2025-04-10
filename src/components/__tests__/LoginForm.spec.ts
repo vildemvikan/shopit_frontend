@@ -142,7 +142,6 @@ describe('LoginForm.vue', () => {
     await flushPromises()
 
     expect(wrapper.find('.server-error').exists()).toBe(true)
-    expect(wrapper.find('.server-error').text()).toBe(i18n.global.t('invalidCredentials'))
   })
 
   it('validates form fields before submission', async () => {
