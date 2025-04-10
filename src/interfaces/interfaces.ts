@@ -1,5 +1,5 @@
 import type { PaymentMethod } from '@/enums/enums.ts'
-import { Condition, Status } from '@/enums/enums.ts'
+import { Condition, MessageType, Status } from '@/enums/enums.ts'
 
 export interface ChatMessage {
   senderId: string,
@@ -7,6 +7,7 @@ export interface ChatMessage {
   itemId: number,
   content: string,
   timestamp: Date,
+  type: MessageType,
 }
 
 export interface Image{
@@ -124,7 +125,7 @@ export interface ChatCardInfo {
   recipientId: string,
   itemId: number,
   status: Status
-  itemImage: string,
+  image: string,
   itemTitle: string,
   recipientProfilePic: string,
 }

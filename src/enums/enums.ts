@@ -36,5 +36,11 @@ export enum County{
   Østland = 'Østland'
 }
 
+export enum MessageType {
+  NORMAL="Normal",
+  BID="Bid",
+  PURCHASE="Purchase",
+}
+
 
 

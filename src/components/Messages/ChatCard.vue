@@ -34,9 +34,10 @@ const displayMessage = computed(()=> {
 <template>
   <div class="card">
     <div class="image-box">
-      <img :src="props.chatCardData.itemImage || 'src/assets/icons/no_image.svg'" class="display-image" alt="display image">
+      <img :src="props.chatCardData.image|| 'src/assets/icons/no_image.svg'" class="display-image" alt="display image">
       <img :src="props.chatCardData.recipientProfilePic || 'src/assets/icons/profile.svg'" class="avatar" alt="avatar">
     </div>
+
     <div class="text-info">
       <div class="date-info">
         <label id="date">{{timeAgo}}</label>
@@ -89,25 +90,27 @@ const displayMessage = computed(()=> {
 }
 
 .avatar {
-  vertical-align: middle;
-  max-width: 2rem;
-  border-radius: 50%;
-  border: solid;
-  grid-area: 1/1;
-  align-self: end;
-  justify-self: end;
-  background-color: lightgray;
+  position: absolute;
+  height: 50%;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
+  border: var(--global-border-size) solid var(--color-text);
+  top: 50%;
+  left: 50%;
+  background-color: var(--color-white-background);
+  object-fit: cover;
 }
 
 .image-box{
-  max-height: 100%;
+  position: relative;
   height: 100%;
+  aspect-ratio: 1/1;
   align-self: center;
-  display: grid;
+  place-content: center;
 }
 
 .display-image{
-  max-width: 5rem;
+  width: 90%;
   aspect-ratio: 1/1;
   object-fit: cover;
   border-radius: calc(var(--global-border-radius)/2);

@@ -78,7 +78,8 @@ export const useTokenStore = defineStore('tokenStore', {
         this.startRefreshTimer()
       } catch (error) {
         await this.emptyTokenStore()
-        throw new Error('Failed to refresh access token')
+        throw error
+        //throw new Error('Failed to refresh access token')
       }
     },
 
@@ -86,9 +87,9 @@ export const useTokenStore = defineStore('tokenStore', {
       if (this.tokenTimer) clearTimeout(this.tokenTimer)
 
       const remainingTime = this.accessTokenExpiresAt - Date.now();
-      console.log('Remaining time:' + remainingTime)
+      console.log('Remaining time:' + (remainingTime / (1000 * 60)))
 
-      const refreshMargin = 5 * 60 * 1000; // 5 minutes
+      const refreshMargin = 10 * 60 * 1000; // 5 minutes
       const refreshDelay = Math.max(remainingTime - refreshMargin, 0);
 
       this.tokenTimer = setTimeout(async () => {
