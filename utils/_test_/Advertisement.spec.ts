@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import axios from 'axios';
-import { useTokenStore } from '@/stores/tokenStore';
+import { useTokenStore } from '../../src/stores/tokenStore';
 import {
   fetchCategories,
   fetchAdvertisement,

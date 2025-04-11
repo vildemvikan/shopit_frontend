@@ -1,11 +1,11 @@
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { createI18n } from 'vue-i18n'
-import Info from '@/components/Advertisement/Info.vue' // Adjust path as needed
+import Info from '../Advertisement/Info.vue' // Adjust path as needed
 import en from '../../assets/transcripts/en.json'
 import router from '../../router/index.ts'
 import { changeStatus } from '../../../utils/Advertisement.ts'
-import DeletePopUp from '@/components/popups/DeletePopUp.vue'
+import DeletePopUp from '../Popups/DeletePopUp.vue'
 import { createTestingPinia } from '@pinia/testing'
 import { createRouter, createMemoryHistory } from 'vue-router'
 
