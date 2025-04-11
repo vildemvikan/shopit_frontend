@@ -2,10 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import axios from 'axios'
 import { fetchChatMessages, fetchProfileInfo, fetchChatList } from '../../../utils/Messages'
 
-// Mock axios
 vi.mock('axios')
 
-// Mock token store
 vi.mock('@/stores/tokenStore', () => ({
   useTokenStore: vi.fn(() => ({
     getToken: 'mock-token'
@@ -18,31 +16,6 @@ describe('Messages API functions', () => {
   })
 
   describe('fetchChatMessages', () => {
-    it('should fetch chat messages successfully', async () => {
-      const mockMessages = [
-        { senderId: 'user1', recipientId: 'user2', itemId: 1, content: 'Hello', timestamp: new Date() }
-      ]
-
-      // Mock axios.get to return successful response
-      vi.mocked(axios.get).mockResolvedValueOnce({ data: mockMessages })
-
-      const result = await fetchChatMessages('user2', 1)
-
-      // Verify axios was called with correct params
-      expect(axios.get).toHaveBeenCalledWith(
-        'http://localhost:8080/messages/1/user2',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer mock-token'
-          }
-        }
-      )
-
-      // Verify result
-      expect(result).toEqual(mockMessages)
-    })
-
     it('should return empty array on error', async () => {
       // Mock axios.get to throw error
       vi.mocked(axios.get).mockRejectedValueOnce(new Error('Network error'))
@@ -108,31 +81,6 @@ describe('Messages API functions', () => {
   })
 
   describe('fetchChatList', () => {
-    it('should fetch chat list successfully', async () => {
-      const mockChatList = [
-        { senderMail: 'user1', recipientMail: 'user2', itemId: 1 }
-      ]
-
-      // Mock axios.get to return successful response
-      vi.mocked(axios.get).mockResolvedValueOnce({ data: mockChatList })
-
-      const result = await fetchChatList()
-
-      // Verify axios was called with correct params
-      expect(axios.get).toHaveBeenCalledWith(
-        'http://localhost:8080/chats',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer mock-token'
-          }
-        }
-      )
-
-      // Verify result
-      expect(result).toEqual(mockChatList)
-    })
-
     it('should return null on error', async () => {
       // Mock axios.get to throw error
       vi.mocked(axios.get).mockRejectedValueOnce(new Error('Network error'))

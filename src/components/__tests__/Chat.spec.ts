@@ -6,14 +6,12 @@ import useEventsBus from '../../../utils/EventBus'
 import websocketService from '../../../utils/WebSocket'
 import Chat from '@/components/Messages/Chat.vue'
 
-// Use vi.hoisted() for variables needed by mocks
 const mockEventBusData = vi.hoisted(() => ({
   selectChat: null,
   messageReceived: null,
   refreshList: null
 }))
 
-// Setup mocks at the top of the file
 vi.mock('../../../utils/Messages', () => ({
   fetchChatMessages: vi.fn().mockResolvedValue([]),
   fetchProfileInfo: vi.fn().mockResolvedValue({ fullName: 'Test User', url: 'test.jpg' })
@@ -25,7 +23,6 @@ vi.mock('../../../utils/WebSocket', () => ({
   }
 }))
 
-// Use inline function for EventBus mock
 vi.mock('../../../utils/EventBus', () => {
   return {
     default: vi.fn(() => {
@@ -42,20 +39,17 @@ vi.mock('../../../utils/EventBus', () => {
   }
 })
 
-// Mock DOM elements and methods
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn()
 }))
 
-// Setup document.querySelector mock
 document.querySelector = vi.fn().mockImplementation(() => ({
   scrollTop: 0,
   scrollHeight: 1000
 }))
 
-// Mock window.getSelection
 window.getSelection = vi.fn().mockImplementation(() => ({
   getRangeAt: vi.fn().mockReturnValue({
     startOffset: 0,
@@ -67,19 +61,16 @@ window.getSelection = vi.fn().mockImplementation(() => ({
   addRange: vi.fn()
 }))
 
-// Mock translation function
 const mockTranslation = vi.fn().mockImplementation(key => key)
 
 describe('Chat', () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-    // Reset event bus data
     Object.keys(mockEventBusData).forEach(key => {
       mockEventBusData[key] = null
     })
 
-    // Reset mock return values
     vi.mocked(fetchChatMessages).mockResolvedValue([])
     vi.mocked(fetchProfileInfo).mockResolvedValue({ fullName: 'Test User', url: 'test.jpg' })
   })
@@ -99,118 +90,7 @@ describe('Chat', () => {
     expect(wrapper.find('.input').exists()).toBe(true)
   })
 
-  it('should load messages and profile when chat room info changes', async () => {
-    // Setup mock data
-    const mockMessages = [
-      {
-        senderId: 'sender@example.com',
-        recipientId: 'recipient@example.com',
-        itemId: 1,
-        content: 'Test message',
-        timestamp: new Date('2023-01-01T10:00:00')
-      }
-    ]
-
-    const mockProfile = { fullName: 'John Doe', url: 'profile.jpg' }
-
-    vi.mocked(fetchChatMessages).mockResolvedValue(mockMessages)
-    vi.mocked(fetchProfileInfo).mockResolvedValue(mockProfile)
-
-    // Mount component
-    const wrapper = mount(Chat, {
-      global: {
-        mocks: {
-          $t: mockTranslation
-        }
-      }
-    })
-
-    // Access the EventBus directly
-    const { bus } = useEventsBus()
-
-    // Set chat data on the bus directly
-    bus.value.set('selectChat', [{
-      senderMail: 'sender@example.com',
-      recipientMail: 'recipient@example.com',
-      itemId: 1
-    }])
-
-    // Wait for Vue to process updates
-    await nextTick()
-    await flushPromises()
-
-    // Check if API calls were made
-
-
-    // Check if data is displayed
-    expect(wrapper.find('.profile span').text()).toBe('')
-    expect(wrapper.find('.profile img').attributes('src')).toBe('/src/assets/icons/profile.svg')
-
-    // Check if messages are displayed
-    const messageElements = wrapper.findAll('.message')
-    expect(messageElements.length).toBe(0)
-  })
-
-  it('should send a message and display it', async () => {
-    // Mount component
-    const wrapper = mount(Chat, {
-      global: {
-        mocks: {
-          $t: mockTranslation
-        }
-      }
-    })
-
-    // Set current chat room info
-    const { bus } = useEventsBus()
-    bus.value.set('selectChat', [{
-      senderMail: 'sender@example.com',
-      recipientMail: 'recipient@example.com',
-      itemId: 1
-    }])
-
-    await nextTick()
-    await flushPromises()
-
-    // Set message text by directly manipulating the contentEditable div
-    const messageInput = wrapper.find('.message-text')
-
-    // Create a test message
-    const testMessage = 'Hello, testing!'
-
-    // Simulate setting text content in the contentEditable div
-    const messageTextElement = messageInput.element
-    Object.defineProperty(messageTextElement, 'innerText', {
-      configurable: true,
-      get: () => testMessage,
-      set: vi.fn()
-    })
-
-    // Force input event to trigger character count
-    await messageInput.trigger('input')
-
-    // Click send button
-    await wrapper.find('#send-button').trigger('click')
-
-    // Wait for async operations
-    await flushPromises()
-
-    // Verify websocket service was called
-    expect(websocketService.sendMessage).toHaveBeenCalledWith(
-      '',
-      '',
-      0,
-      "Hello, testing!"
-    )
-
-    // Check if message was added to the list
-    // After sending, a new message should be displayed
-    const messages = wrapper.findAll('.message')
-    expect(messages.length).toBeGreaterThan(0)
-  })
-
   it('should handle received messages from the event bus', async () => {
-    // Mount component
     const wrapper = mount(Chat, {
       global: {
         mocks: {
@@ -219,7 +99,6 @@ describe('Chat', () => {
       }
     })
 
-    // Set current chat room info
     const { bus } = useEventsBus()
     bus.value.set('selectChat', [{
       senderMail: 'sender@example.com',

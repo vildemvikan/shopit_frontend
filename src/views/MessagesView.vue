@@ -8,7 +8,6 @@ import type { ChatCardInfo, ChatRoomInfo } from '@/interfaces/interfaces.ts'
 import useEventsBus from '../../utils/EventBus.ts'
 import { useTokenStore } from '@/stores/tokenStore.ts'
 import webSocket from '../../utils/WebSocket.ts'
-import { a } from 'vitest/dist/chunks/suite.d.FvehnV49'
 
 const chatList = ref<ChatCardInfo[]>([]);
 const currentChatRoomInfo = reactive<ChatRoomInfo>({

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import axios from 'axios';
-import * as userAPI from '../Profile'; // Update path if needed
+import * as userAPI from '../Profile';
 import { Status } from '@/enums/enums';
 
 vi.mock('axios');

@@ -6,7 +6,6 @@ import useEventsBus from '../../../utils/EventBus.ts'
 import { fetchChatList } from '../../../utils/Messages.ts'
 import { useTokenStore } from '@/stores/tokenStore.ts'
 import webSocket from '../../../utils/WebSocket.ts'
-import { a } from 'vitest/dist/chunks/suite.d.FvehnV49'
 import Pagination from '@/components/Pagination.vue'
 
 const selectedChatId = ref<string | null>(null);

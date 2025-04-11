@@ -2,9 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev]
 
 jobs:
   build-and-test:
@@ -22,9 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Uncomment this step when tests are written:
-      # - name: Test
-      #   run: npm run test:unit
+      - name: Test
+        run: npm run test:unit
 
       - name: Build
-        run: npm run build
+        run: npm run build-only

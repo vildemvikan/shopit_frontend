@@ -223,6 +223,7 @@
     "ITEM_SOLD": "Your advertisement has been sold",
     "MESSAGE_RECEIVED": "You received a new message",
     "showMore": "Load more",
-    "readMore": "Go to message"
+    "readMore": "Go to message",
+    "empty": "No notifications"
   }
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import axios from 'axios';
-import * as categoriesAPI from '../categories'; // adjust path as needed
+import * as categoriesAPI from '../Categories'; // adjust path as needed
 
 vi.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
