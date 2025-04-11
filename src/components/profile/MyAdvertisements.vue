@@ -17,7 +17,7 @@ const currentPage = ref<number>(0)
 const totalPages = ref<number>(0)
 
 const dateFilter = ref<number>(1)
-const statusFilter = ref<Status|number>(null)
+const statusFilter = ref<Status|null>(null)
 
 onMounted(async () => {
   await loadAdvertisements()
@@ -39,7 +39,7 @@ async function loadAdvertisements(){
       SIZE,
       currentPage.value,
       dateFilter.value,
-      statusFilter.value)
+      statusFilter?.value)
 
     totalPages.value = result.totalPages
     advertisements.value = result.content
