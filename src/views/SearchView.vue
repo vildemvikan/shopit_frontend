@@ -264,7 +264,7 @@ function toggleDisplay(){
           </div>
 
           <div class="results" id="no-results" v-if="advertisements.length <= 0">
-            <label>Ops! No advertisements matches your search.</label>
+            <label>{{$t('placeholder-no-advertisement-match')}}</label>
           </div>
 
         </div>
