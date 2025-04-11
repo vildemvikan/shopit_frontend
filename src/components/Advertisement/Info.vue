@@ -28,6 +28,7 @@ const props = defineProps<{
   seller: string
   advertisementId: string
   status: Status
+  sellerPicture:string
 }>()
 
 
@@ -216,7 +217,12 @@ async function sendBid(){
   </div>
   <div class="seller" v-if="!owner">
     <div class="profile-picture">
-      <img src="@/assets/icons/profile.svg" alt="profile-picture" class="inv-image">
+      <img
+        v-if="props.sellerPicture"
+        :src="props.sellerPicture" alt="profile-picture" class="profile-picture">
+      <img
+        v-else
+        src="@/assets/icons/profile.svg" alt="profile-picture" class="inv-image" >
     </div>
     <div class="seller-info">
       <label class="seller-name">{{seller}}</label>
@@ -405,9 +411,9 @@ async function sendBid(){
   border-radius: 100%;
 }
 
-.inv-image{
+.profile-picture, .inv-image{
   width: 100%;
-  aspect-ratio: 1/1;
+  height: 100%;
   object-fit: cover;
 }
 

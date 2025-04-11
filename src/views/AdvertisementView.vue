@@ -77,6 +77,7 @@ async function goToSubCategory(){
           :seller="advertisement.sellerFullName"
           :advertisement-id="advertisement.id"
           :status="advertisement.status"
+          :seller-picture="advertisement.sellerPicture"
         />
       </div>
     </div>

@@ -81,6 +81,7 @@ export interface Advertisement{
   subCategoryId: number
   listingType: PaymentMethod
   forSale: boolean
+  sellerPicture:string
 }
 
 export interface MenuFilter{
