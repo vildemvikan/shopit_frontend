@@ -105,6 +105,7 @@
 
   --color-bid-accepted: var(--vt-c-green);
   --color-bid-rejected: var(--vt-c-light-light-red);
+  --color-purchased-message: var(--vt-c-yellow);
 
   --spacing-sm: 0.5rem;
   --spacing-md: 0.75rem;

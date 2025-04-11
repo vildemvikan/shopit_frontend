@@ -107,7 +107,9 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
         </button>
 
           <div v-if="showDropdown" ref="dropdownRef" class="dropdown-position">
-            <NotificationDropdown />
+            <NotificationDropdown
+            @close-dropdown="showDropdown = false"
+            />
           </div>
 
       </div>

@@ -10,8 +10,9 @@
   "title-popular-categories": "Populære kategorier",
   "title-new-advertisements": "Nye annonser",
   "title-bookmarks": "Bokmerker",
-  "title-notifications": "Notefikasjoner",
+  "title-notifications": "Varslinger",
   "title-enter-bid": "Hvor mye vil du by?",
+  "title-enter-message": "Skriv en melding:",
 
   "label-type": "Type handel",
   "label-images": "Bilder",
@@ -52,6 +53,7 @@
   "label-filter-search": "Filtrer søk",
   "label-results": "Resultater",
   "label-enter-amount": "Fyll inn pris",
+  "label-enter-message": "Melding ...",
 
   "filter-for-sale": "Til salgs",
   "filter-for-free": "Gis bort",
@@ -166,13 +168,30 @@
   "tryRequestingNewLink": "Forespør en ny lenke",
 
   "bid-text": "Ønsker å kjøpe din annonse for ",
+  "bid-changed-accepted-text": "Aksepterte budet ditt på ",
+  "bid-changed-rejected-text": "Avslo budet ditt på ",
+  "your-bid-text": "Du har lagt inn bud på ",
+  "you-purchased-text": "Du kjøpte annonsen for ",
+  "purchased-text": "Kjøpte annonsen din for ",
 
   "confirm-deletion-title": "Bekreft Sletting",
   "confirm-deletion-label": "Er du sikker på at du vil slette annonsen?",
+
+  "placeholder-no-bookmarks": "Ops! Du har ingen bokmerker enda.",
+  "placeholder-no-advertisement-match": "Ops! Ingen annonser matcher søket.",
+  "placeholder-no-chatrooms": "Ops! Du har ingen tilgjengelige samtaler.",
+  "placeholder-no-created-advertisements": "Ops! Du har ingen tilgjengelige annonser.",
+  "placeholder-no-notifications": "Du har ingen varslinger.",
+
+  "message-changed": "Et bud har endret status!",
+  "message-bid": "Nytt bud!",
+  "message-purchase": "Annonsen er solgt!",
+
   "notification": {
     "BID_PLACED": "{item} har fått et nytt bud",
     "ITEM_BOUGHT": "{user} har kjøpt {item}",
     "BID_ACCEPTED": "{user} godtok budet ditt på {item}",
+    "ITEM_SOLD": "Annonsen din har blitt solgt",
     "NEW_BID": "{user} la inn et nytt bud på {item}",
     "OUTBID": "Du ble overbydd på {item}",
     "MESSAGE_RECEIVED": "{user} har sendt deg en ny melding"
