@@ -155,7 +155,7 @@ async function goToAdvertisement(){
   top: 5px;
   right: 0;
   height: 20%;
-  z-index: 10;
+  z-index: 0;
 }
 
 .info{
