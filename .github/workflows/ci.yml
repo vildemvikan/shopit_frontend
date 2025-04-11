@@ -57,5 +57,5 @@ jobs:
             fi
             sleep 5
           done
-      - run: npm build-only   
+      - run: npm run build-only   
       - run: npm run test:e2e
