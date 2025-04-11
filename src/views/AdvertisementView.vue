@@ -69,7 +69,7 @@ async function goToSubCategory(){
           :title="advertisement.name"
           :for-sale="advertisement.forSale"
           :postal-code="advertisement.location.postalCode"
-          :city="advertisement.location.city"
+          :location="advertisement.location"
           :price="advertisement.price"
           :payment="advertisement.listingType"
           :condition="advertisement.condition"
