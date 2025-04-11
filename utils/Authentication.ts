@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useTokenStore } from '@/stores/tokenStore.ts'
 
 const baseUrl = 'http://localhost:8080/auth'
 
@@ -116,3 +117,21 @@ export async function refreshToken() {
     throw error;
   }
 }
+
+  export async function fetchUsername() {
+    const url = baseUrl + "/username";
+    const tokenStore = useTokenStore();
+    const token = tokenStore.getToken;
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      return await response.data
+    } catch (error) {
+      console.error("Error fetching chat messages: ", error)
+      return null;
+    }
+  }

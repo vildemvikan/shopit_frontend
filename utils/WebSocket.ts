@@ -3,6 +3,8 @@ import { Client } from '@stomp/stompjs';
 import  useEventBus  from './EventBus'
 import { string } from 'yup'
 import useEventsBus from './EventBus'
+import { useTokenStore } from '@/stores/tokenStore.ts'
+import { fetchUsername } from './Authentication.ts'
 
 // Reactive state that can be imported by multiple components
 const state = reactive({
@@ -30,12 +32,15 @@ const websocketService = {
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
-      onConnect: () => {
-        state.connected = true;
-        console.log('Connected to WebSocket as user:', userId);
+      onConnect: async () => {
 
         // Subscribe to personal queue
-        client.subscribe(`/user/${userId}/queue/messages`, (message) => {
+        const username = await fetchUsername();
+        if (!username) return;
+
+        state.connected = true;
+        console.log('Connected to WebSocket as user:', username);
+        client.subscribe(`/user/${username}/queue/messages`, (message) => {
           try {
 
             // on message received method
@@ -88,7 +93,7 @@ const websocketService = {
 
       stompClient.publish({
         destination: '/app/chat',
-        body: JSON.stringify(message)
+        body: JSON.stringify(message),
       });
 
       const { emit } = useEventsBus();
