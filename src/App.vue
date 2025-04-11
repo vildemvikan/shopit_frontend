@@ -20,26 +20,25 @@ onMounted(() => {
 
 <template>
   <div class="header">
-      <navbar></navbar>
+    <navbar></navbar>
   </div>
   <div class="view">
     <router-view></router-view>
     <div class="footer">
-      <Footer/>
+      <Footer />
     </div>
   </div>
 </template>
 
 <style scoped>
-
-.header{
+.header {
   width: 100%;
   min-width: 350px;
   height: 7%;
   min-height: 50px;
 }
 
-.view{
+.view {
   position: relative;
   width: 100%;
   min-width: 350px;
@@ -49,7 +48,7 @@ onMounted(() => {
   overflow: scroll;
 }
 
-.footer{
+.footer {
   position: absolute;
   left: 0;
   margin-top: 15px;
@@ -57,5 +56,4 @@ onMounted(() => {
   min-height: 50px;
   width: 100%;
 }
-
 </style>

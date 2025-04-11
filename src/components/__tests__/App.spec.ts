@@ -17,7 +17,7 @@ vi.mock('vue-router', async () => {
       name: 'RouterView',
       setup: () => {},
       render: () => {},
-    }
+    },
   }
 })
 
@@ -26,14 +26,14 @@ vi.mock('@/components/Navbar.vue', () => ({
   default: {
     name: 'Navbar',
     render: () => {},
-  }
+  },
 }))
 
 vi.mock('@/components/Footer.vue', () => ({
   default: {
     name: 'Footer',
     render: () => {},
-  }
+  },
 }))
 
 describe('App.vue', () => {
@@ -52,7 +52,7 @@ describe('App.vue', () => {
     // Create router
     router = createRouter({
       history: createWebHistory(),
-      routes: [{ path: '/', component: { template: '<div>Home</div>' } }]
+      routes: [{ path: '/', component: { template: '<div>Home</div>' } }],
     })
 
     // Create i18n
@@ -61,8 +61,8 @@ describe('App.vue', () => {
       locale: 'en',
       messages: {
         en: {},
-        fr: {}
-      }
+        fr: {},
+      },
     })
   })
 
@@ -73,9 +73,9 @@ describe('App.vue', () => {
         stubs: {
           Navbar: true,
           RouterView: true,
-          Footer: true
-        }
-      }
+          Footer: true,
+        },
+      },
     })
 
     await flushPromises()
@@ -97,9 +97,9 @@ describe('App.vue', () => {
         stubs: {
           Navbar: true,
           RouterView: true,
-          Footer: true
-        }
-      }
+          Footer: true,
+        },
+      },
     })
 
     await flushPromises()
@@ -118,9 +118,9 @@ describe('App.vue', () => {
         stubs: {
           Navbar: true,
           RouterView: true,
-          Footer: true
-        }
-      }
+          Footer: true,
+        },
+      },
     })
 
     await flushPromises()
@@ -141,9 +141,9 @@ describe('App.vue', () => {
         stubs: {
           Navbar: true,
           RouterView: true,
-          Footer: true
-        }
-      }
+          Footer: true,
+        },
+      },
     })
 
     await flushPromises()
@@ -162,9 +162,9 @@ describe('App.vue', () => {
         stubs: {
           Navbar: true,
           RouterView: true,
-          Footer: true
-        }
-      }
+          Footer: true,
+        },
+      },
     })
 
     await flushPromises()

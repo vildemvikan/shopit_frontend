@@ -6,26 +6,26 @@ import App from '@/App.vue'
 vi.mock('vue', () => ({
   createApp: vi.fn(() => ({
     use: vi.fn().mockReturnThis(),
-    mount: vi.fn()
-  }))
+    mount: vi.fn(),
+  })),
 }))
 
 vi.mock('pinia', () => ({
   createPinia: vi.fn(() => ({
-    use: vi.fn()
-  }))
+    use: vi.fn(),
+  })),
 }))
 
 vi.mock('pinia-plugin-persistedstate', () => ({
-  default: vi.fn()
+  default: vi.fn(),
 }))
 
 vi.mock('vue-i18n', () => ({
-  createI18n: vi.fn(() => ({}))
+  createI18n: vi.fn(() => ({})),
 }))
 
 vi.mock('vue-toastification', () => ({
-  default: vi.fn()
+  default: vi.fn(),
 }))
 
 // Add default export to router mock
@@ -33,19 +33,19 @@ vi.mock('@/router', () => {
   return {
     default: {
       // Mock router properties if needed
-      routerMockProperty: 'mock-value'
-    }
+      routerMockProperty: 'mock-value',
+    },
   }
 })
 
 vi.mock('@/App.vue', () => ({
-  default: {}
+  default: {},
 }))
 
 vi.mock('@/stores/tokenStore', () => ({
   useTokenStore: vi.fn(() => ({
-    initializeTimer: vi.fn()
-  }))
+    initializeTimer: vi.fn(),
+  })),
 }))
 
 // Mock the CSS imports
@@ -54,11 +54,11 @@ vi.mock('vue-toastification/dist/index.css', () => ({}))
 
 // Mock the JSON imports
 vi.mock('./assets/transcripts/en.json', () => ({
-  default: { hello: 'Hello' }
+  default: { hello: 'Hello' },
 }))
 
 vi.mock('./assets/transcripts/no.json', () => ({
-  default: { hello: 'Hallo' }
+  default: { hello: 'Hallo' },
 }))
 
 describe('main.ts', () => {

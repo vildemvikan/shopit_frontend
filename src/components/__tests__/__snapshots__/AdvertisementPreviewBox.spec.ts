@@ -10,8 +10,8 @@ vi.mock('vue-router', async () => {
   return {
     ...actual,
     useRouter: () => ({
-      push: pushMock
-    })
+      push: pushMock,
+    }),
   }
 })
 
@@ -19,14 +19,14 @@ vi.mock('vue-router', async () => {
 const mockLocale = { value: 'en' }
 vi.mock('vue-i18n', () => ({
   useI18n: () => ({
-    locale: mockLocale
-  })
+    locale: mockLocale,
+  }),
 }))
 
 // Mock bookmark utils
 vi.mock('@/utils/Bookmark', () => ({
   createBookmark: vi.fn(),
-  deleteBookmark: vi.fn()
+  deleteBookmark: vi.fn(),
 }))
 
 describe('AdvertisementPreviewBox', () => {
@@ -38,7 +38,7 @@ describe('AdvertisementPreviewBox', () => {
     date: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
     image: '/some/image.jpg',
     city: 'Bergen',
-    isBookmarked: false
+    isBookmarked: false,
   }
 
   beforeEach(() => {
@@ -48,7 +48,7 @@ describe('AdvertisementPreviewBox', () => {
 
   it('renders props correctly', () => {
     const wrapper = mount(AdvertisementPreviewBox, {
-      props: baseProps
+      props: baseProps,
     })
 
     expect(wrapper.text()).toContain('Sample Ad')
@@ -61,7 +61,7 @@ describe('AdvertisementPreviewBox', () => {
 
   it('shows not-bookmarked icon initially', () => {
     const wrapper = mount(AdvertisementPreviewBox, {
-      props: baseProps
+      props: baseProps,
     })
     const icon = wrapper.find('img[alt="bookmark"]')
     expect(icon.attributes('src')).toContain('bookmarkNotMarked')
@@ -70,7 +70,7 @@ describe('AdvertisementPreviewBox', () => {
   it('formats time ago with correct locale (nb)', async () => {
     mockLocale.value = 'no' // triggers remapping to nb
     const wrapper = mount(AdvertisementPreviewBox, {
-      props: baseProps
+      props: baseProps,
     })
 
     expect(wrapper.text().toLowerCase()).toContain('1500,- nokbergen2 timer sidensample ad') // crude check

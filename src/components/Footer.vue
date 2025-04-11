@@ -27,44 +27,45 @@ watch(theme, (newTheme) => {
 
 <template>
   <div class="content">
-
     <div class="modes">
       <div class="mode" id="dark-mode">
-        <img src="@/assets/icons/dark.svg"
-             alt="dark mode"
-             class="icon"
-             @click="toggleTheme('manual-dark')"
-        >
+        <img
+          src="@/assets/icons/dark.svg"
+          alt="dark mode"
+          class="icon"
+          @click="toggleTheme('manual-dark')"
+        />
       </div>
       <div class="mode" id="light">
-        <img src="@/assets/icons/light.svg"
-             alt="light mode"
-             class="icon"
-             @click="toggleTheme('manual-light')"
-        >
+        <img
+          src="@/assets/icons/light.svg"
+          alt="light mode"
+          class="icon"
+          @click="toggleTheme('manual-light')"
+        />
       </div>
     </div>
     <div class="languages">
-      <img src="@/assets/icons/norwegian.svg.webp"
-           v-if="locale == 'no'"
-           alt="norwegian"
-           class="icon"
-           @click="changeLanguage('en')"
-      >
-      <img src="@/assets/icons/english.svg.webp"
-           v-if="locale == 'en'"
-           alt="english"
-           class="icon"
-           @click="changeLanguage('no')"
-      >
+      <img
+        src="@/assets/icons/norwegian.svg.webp"
+        v-if="locale == 'no'"
+        alt="norwegian"
+        class="icon"
+        @click="changeLanguage('en')"
+      />
+      <img
+        src="@/assets/icons/english.svg.webp"
+        v-if="locale == 'en'"
+        alt="english"
+        class="icon"
+        @click="changeLanguage('no')"
+      />
     </div>
-
   </div>
-
 </template>
 
 <style scoped>
-.content{
+.content {
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -76,35 +77,34 @@ watch(theme, (newTheme) => {
   padding: 0 20px;
 }
 
-.languages{
+.languages {
   display: flex;
   flex-direction: row;
   height: 50%;
 }
 
-.modes{
+.modes {
   display: flex;
   flex-direction: row;
   height: 80%;
 }
 
-.mode{
+.mode {
   height: 100%;
   aspect-ratio: 1/1;
   padding: 5px;
 }
 
-#dark-mode{
+#dark-mode {
   border-right: 2px solid black;
 }
 
-.icon{
+.icon {
   height: 100%;
 }
 
-.icon:hover{
+.icon:hover {
   transform: scale(1.05);
   cursor: pointer;
 }
-
 </style>

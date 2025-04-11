@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
 import { useTokenStore } from '@/stores/tokenStore.ts'
@@ -8,43 +8,42 @@ import { useRouter } from 'vue-router'
 /**
  * We can access translation keys via useI18n().
  */
-const { t } = useI18n();
+const { t } = useI18n()
 const schema = yup.object({
   email: yup.string().email(t('invalidEmail')).required(t('emailRequired')),
-  password: yup.string().required(t('passwordRequired'))
+  password: yup.string().required(t('passwordRequired')),
 })
 const tokenStore = useTokenStore()
 defineEmits(['forgot-password'])
 
 const { handleSubmit } = useForm({
   validationSchema: schema,
-});
+})
 const { value: email, errorMessage: emailError } = useField('email', undefined, {
   validateOnValueUpdate: false,
-});
+})
 
 const { value: password, errorMessage: passwordError } = useField('password', undefined, {
   validateOnValueUpdate: false,
-});
-const serverError = ref(''); // optional: for displaying global login errors
-const router = useRouter();
+})
+const serverError = ref('') // optional: for displaying global login errors
+const router = useRouter()
 
-const onSubmit = handleSubmit( async (values) => {
-  serverError.value = ''; // clear previous error
+const onSubmit = handleSubmit(async (values) => {
+  serverError.value = '' // clear previous error
   try {
-
-    await tokenStore.login(values.email, values.password);
+    await tokenStore.login(values.email, values.password)
     setTimeout(() => {
-      router.push('/');
-    }, 500);
+      router.push('/')
+    }, 500)
   } catch (error: any) {
-    if (error.status===401) {
-      serverError.value = t('invalidCredentials');
+    if (error.status === 401) {
+      serverError.value = t('invalidCredentials')
     } else {
-      serverError.value = t('unexpectedError');
+      serverError.value = t('unexpectedError')
     }
   }
-});
+})
 </script>
 
 <template>
@@ -52,27 +51,19 @@ const onSubmit = handleSubmit( async (values) => {
     <h2 class="form-title">{{ t('loginFormHeader') }}</h2>
     <div class="form-group">
       <label for="email">{{ t('email') }}</label>
-      <input
-        id="email"
-        type="email"
-        v-model="email"
-        :placeholder="t('email')"
-      />
+      <input id="email" type="email" v-model="email" :placeholder="t('email')" />
       <p class="input-error" :class="{ visible: emailError }">
         {{ emailError || '\u00A0' }}
-      </p>    </div>
+      </p>
+    </div>
 
     <div class="form-group">
       <label for="password">{{ t('password') }}</label>
-      <input
-        id="password"
-        type="password"
-        v-model="password"
-        :placeholder="t('password')"
-      />
+      <input id="password" type="password" v-model="password" :placeholder="t('password')" />
       <p class="input-error" :class="{ visible: passwordError }">
         {{ passwordError || '\u00A0' }}
-      </p>    </div>
+      </p>
+    </div>
     <p v-if="serverError" class="server-error">{{ serverError }}</p>
     <button type="submit">
       {{ t('loginBtn') }}
@@ -91,10 +82,8 @@ const onSubmit = handleSubmit( async (values) => {
   display: flex;
   flex-direction: column;
 
-
   gap: var(--spacing-md);
 }
-
 
 .form-title {
   font-size: var(--font-size-h2);
@@ -112,7 +101,6 @@ label {
   margin-bottom: var(--spacing-sm);
   font-size: var(--font-size-md);
   color: var(--color-text);
-
 }
 
 input:focus {
@@ -129,7 +117,7 @@ input {
   padding: var(--spacing-md) var(--spacing-lg);
   font-size: var(--font-size-md);
   border: var(--global-border-size) solid var(--color-border);
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   box-sizing: border-box;
 }
 
@@ -145,7 +133,9 @@ button {
   cursor: pointer;
   width: 100%;
   margin-top: var(--spacing-md);
-  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease-in-out;
 }
 
 button:hover {
@@ -194,7 +184,6 @@ button:hover {
 }
 
 @media (max-width: 600px) {
-
   .form-title {
     font-size: 1.5rem;
   }

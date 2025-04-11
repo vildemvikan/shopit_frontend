@@ -5,20 +5,20 @@ import { deleteUser } from '../../../utils/Profile.ts'
 import { useTokenStore } from '@/stores/tokenStore.ts'
 
 const emit = defineEmits<{
-  (e: 'close:delete-pop-up', value: boolean): void;
+  (e: 'close:delete-pop-up', value: boolean): void
 }>()
 
 const tokenStore = useTokenStore()
 
 const props = defineProps<{
-  id: string|null
+  id: string | null
   typeDeleteUser: boolean
-  typeDeleteAdvertisement:boolean
+  typeDeleteAdvertisement: boolean
 }>()
 
 async function confirmDeleteAdvertisement() {
   try {
-    if(!props.id) return
+    if (!props.id) return
     await deleteAdAPI(props.id)
     await router.push('/profile')
     // Emit event to close the popup after deletion
@@ -31,7 +31,7 @@ async function confirmDeleteAdvertisement() {
 async function confirmDeleteUser() {
   try {
     const result = await deleteUser()
-    if(result){
+    if (result) {
       await tokenStore.emptyTokenStore()
       await router.push('/')
     }
@@ -55,14 +55,17 @@ function cancelDelete() {
       <label v-if="typeDeleteUser">{{ $t('confirm-deletion-label-user') }}</label>
       <label v-if="typeDeleteAdvertisement">{{ $t('confirm-deletion-label') }}</label>
       <div class="buttons">
-        <button class="delete-btn"
-                v-if="typeDeleteAdvertisement"
-                id="button"
-                @click="confirmDeleteAdvertisement">Delete</button>
-        <button class="delete-btn"
-                v-if="typeDeleteUser"
-                id="button"
-                @click="confirmDeleteUser">Delete</button>
+        <button
+          class="delete-btn"
+          v-if="typeDeleteAdvertisement"
+          id="button"
+          @click="confirmDeleteAdvertisement"
+        >
+          Delete
+        </button>
+        <button class="delete-btn" v-if="typeDeleteUser" id="button" @click="confirmDeleteUser">
+          Delete
+        </button>
         <button class="cancel-btn" id="button" @click="cancelDelete">Cancel</button>
       </div>
     </div>
@@ -101,10 +104,10 @@ function cancelDelete() {
   gap: 20px;
 }
 
-#button{
+#button {
   border: none;
   padding: 10px 20px;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   color: var(--color-black-text);
 }
 

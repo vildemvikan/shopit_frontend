@@ -9,18 +9,18 @@ import Chat from '@/components/Messages/Chat.vue'
 const mockEventBusData = vi.hoisted(() => ({
   selectChat: null,
   messageReceived: null,
-  refreshList: null
+  refreshList: null,
 }))
 
 vi.mock('../../../utils/Messages', () => ({
   fetchChatMessages: vi.fn().mockResolvedValue([]),
-  fetchProfileInfo: vi.fn().mockResolvedValue({ fullName: 'Test User', url: 'test.jpg' })
+  fetchProfileInfo: vi.fn().mockResolvedValue({ fullName: 'Test User', url: 'test.jpg' }),
 }))
 
 vi.mock('../../../utils/WebSocket', () => ({
   default: {
-    sendMessage: vi.fn().mockReturnValue(true)
-  }
+    sendMessage: vi.fn().mockReturnValue(true),
+  },
 }))
 
 vi.mock('../../../utils/EventBus', () => {
@@ -33,21 +33,21 @@ vi.mock('../../../utils/EventBus', () => {
         emit: vi.fn((event, ...args) => {
           busMap.set(event, args)
           mockEventBusData[event] = args
-        })
+        }),
       }
-    })
+    }),
   }
 })
 
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
-  disconnect: vi.fn()
+  disconnect: vi.fn(),
 }))
 
 document.querySelector = vi.fn().mockImplementation(() => ({
   scrollTop: 0,
-  scrollHeight: 1000
+  scrollHeight: 1000,
 }))
 
 window.getSelection = vi.fn().mockImplementation(() => ({
@@ -55,19 +55,19 @@ window.getSelection = vi.fn().mockImplementation(() => ({
     startOffset: 0,
     endOffset: 0,
     selectNodeContents: vi.fn(),
-    collapse: vi.fn()
+    collapse: vi.fn(),
   }),
   removeAllRanges: vi.fn(),
-  addRange: vi.fn()
+  addRange: vi.fn(),
 }))
 
-const mockTranslation = vi.fn().mockImplementation(key => key)
+const mockTranslation = vi.fn().mockImplementation((key) => key)
 
 describe('Chat', () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-    Object.keys(mockEventBusData).forEach(key => {
+    Object.keys(mockEventBusData).forEach((key) => {
       mockEventBusData[key] = null
     })
 
@@ -79,9 +79,9 @@ describe('Chat', () => {
     const wrapper = mount(Chat, {
       global: {
         mocks: {
-          $t: mockTranslation
-        }
-      }
+          $t: mockTranslation,
+        },
+      },
     })
 
     expect(wrapper.find('.chat-container').exists()).toBe(true)
@@ -94,17 +94,19 @@ describe('Chat', () => {
     const wrapper = mount(Chat, {
       global: {
         mocks: {
-          $t: mockTranslation
-        }
-      }
+          $t: mockTranslation,
+        },
+      },
     })
 
     const { bus } = useEventsBus()
-    bus.value.set('selectChat', [{
-      senderMail: 'sender@example.com',
-      recipientMail: 'recipient@example.com',
-      itemId: 1
-    }])
+    bus.value.set('selectChat', [
+      {
+        senderMail: 'sender@example.com',
+        recipientMail: 'recipient@example.com',
+        itemId: 1,
+      },
+    ])
 
     await nextTick()
     await flushPromises()
@@ -119,8 +121,8 @@ describe('Chat', () => {
         recipientId: 'sender@example.com',
         itemId: 1,
         content: 'New received message',
-        timestamp: new Date().toISOString()
-      })
+        timestamp: new Date().toISOString(),
+      }),
     }
 
     // Set the message on the bus
@@ -140,9 +142,9 @@ describe('Chat', () => {
     const wrapper = mount(Chat, {
       global: {
         mocks: {
-          $t: mockTranslation
-        }
-      }
+          $t: mockTranslation,
+        },
+      },
     })
 
     // Find message input
@@ -155,7 +157,7 @@ describe('Chat', () => {
     Object.defineProperty(messageInput.element, 'innerText', {
       configurable: true,
       get: () => longText,
-      set: vi.fn()
+      set: vi.fn(),
     })
 
     // Trigger input event

@@ -10,7 +10,7 @@ import type { Advertisement } from '@/interfaces/interfaces.ts'
 const route = useRoute()
 const id = route.params.id as string
 
-const advertisement = ref<Advertisement|null>(null)
+const advertisement = ref<Advertisement | null>(null)
 
 onMounted(async () => {
   try {
@@ -21,35 +21,34 @@ onMounted(async () => {
   }
 })
 
-async function toProfile(){
+async function toProfile() {
   await router.push('/profile')
 }
 
-async function goToCategory(){
-  await router.push({name: 'search', query: {category: advertisement.value?.categoryId}})
+async function goToCategory() {
+  await router.push({ name: 'search', query: { category: advertisement.value?.categoryId } })
 }
 
-async function goToSubCategory(){
-  await router.push({name: 'search', query: {subCategory: advertisement.value?.subCategoryId}})
+async function goToSubCategory() {
+  await router.push({ name: 'search', query: { subCategory: advertisement.value?.subCategoryId } })
 }
-
-
 </script>
 
 <template>
   <div class="advertisement" v-if="advertisement">
     <div class="item-path">
-      <label
-        v-if="advertisement.isOwner"
-        class="route-label"
-        id="back-to"
-        @click="toProfile()">
-        <img class="inv-icon" src="@/assets/icons/back.svg" alt="Back to profile">
-        {{$t('label-back-to-profile')}}
-        &nbsp;</label>
-      <label class="route-label" id="category" @click="goToCategory">{{advertisement.categoryName}}</label>
+      <label v-if="advertisement.isOwner" class="route-label" id="back-to" @click="toProfile()">
+        <img class="inv-icon" src="@/assets/icons/back.svg" alt="Back to profile" />
+        {{ $t('label-back-to-profile') }}
+        &nbsp;</label
+      >
+      <label class="route-label" id="category" @click="goToCategory">{{
+        advertisement.categoryName
+      }}</label>
       /
-      <label class="route-label" id="category" @click="goToSubCategory">{{advertisement.subCategoryName}}</label>
+      <label class="route-label" id="category" @click="goToSubCategory">{{
+        advertisement.subCategoryName
+      }}</label>
     </div>
 
     <div class="content">
@@ -81,17 +80,15 @@ async function goToSubCategory(){
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
-
-.advertisement{
+.advertisement {
   width: 100%;
   height: 100%;
 }
 
-.item-path{
+.item-path {
   display: flex;
   flex-direction: row;
   height: 5%;
@@ -99,31 +96,30 @@ async function goToSubCategory(){
   place-items: center;
 }
 
-.route-label{
+.route-label {
   cursor: pointer;
 }
 
-.route-label:hover{
+.route-label:hover {
   text-decoration: underline;
 }
 
-.inv-icon{
+.inv-icon {
   height: 1em;
 }
 
-#back-to{
+#back-to {
   display: flex;
   flex-direction: row;
   font-weight: bold;
   place-items: center;
-
 }
 
-#category{
+#category {
   color: var(--color-dark-orange-text);
 }
 
-.content{
+.content {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -131,7 +127,7 @@ async function goToSubCategory(){
   gap: 10px;
 }
 
-.image-carousel{
+.image-carousel {
   display: flex;
   flex-direction: row;
   width: 60%;
@@ -140,7 +136,7 @@ async function goToSubCategory(){
   gap: 10px;
 }
 
-.info{
+.info {
   display: flex;
   flex-direction: column;
   width: 40%;
@@ -150,28 +146,26 @@ async function goToSubCategory(){
   padding-right: 10px;
 }
 
-
-@media (max-width: 1000px){
-
-  .advertisement{
+@media (max-width: 1000px) {
+  .advertisement {
     height: fit-content;
   }
-  .content{
+  .content {
     display: flex;
     flex-direction: column;
     height: fit-content;
   }
 
-  .image-carousel{
-   display: flex;
-   flex-direction: column-reverse;
-   align-items: center;
-   height: fit-content;
-   overflow: visible;
-   width: 100%;
- }
+  .image-carousel {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    height: fit-content;
+    overflow: visible;
+    width: 100%;
+  }
 
-  .info{
+  .info {
     width: 100%;
     height: fit-content;
     overflow: visible;

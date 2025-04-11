@@ -1,24 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import LoginForm from '@/components/Authentication/LoginForm.vue';
-import SignupForm from '@/components/Authentication/SignUpForm.vue';
-import { useI18n } from 'vue-i18n';
+import { ref } from 'vue'
+import LoginForm from '@/components/Authentication/LoginForm.vue'
+import SignupForm from '@/components/Authentication/SignUpForm.vue'
+import { useI18n } from 'vue-i18n'
 import ForgotPasswordForm from '@/components/Authentication/ForgotPasswordForm.vue'
 
-const { t } = useI18n();
+const { t } = useI18n()
 
 // Track which tab is active
-
 </script>
 
 <template>
   <div class="auth-container">
     <div class="auth-card">
       <div class="auth-tabs" v-if="$route.name === 'Login' || $route.name === 'Signup'">
-        <RouterLink :to="'/auth/login'" class="tab" :class="{ active: $route.path === '/auth/login' }">
+        <RouterLink
+          :to="'/auth/login'"
+          class="tab"
+          :class="{ active: $route.path === '/auth/login' }"
+        >
           {{ t('loginTab') }}
         </RouterLink>
-        <RouterLink :to="'/auth/signup'" class="tab" :class="{ active: $route.path === '/auth/signup' }">
+        <RouterLink
+          :to="'/auth/signup'"
+          class="tab"
+          :class="{ active: $route.path === '/auth/signup' }"
+        >
           {{ t('signupTab') }}
         </RouterLink>
       </div>
@@ -73,7 +80,7 @@ const { t } = useI18n();
   color: var(--color-purple-button);
 }
 .auth-divider {
-  border-bottom: none
+  border-bottom: none;
 }
 .auth-body {
   padding: 1.5rem;
@@ -97,8 +104,6 @@ const { t } = useI18n();
     font-size: 1rem;
     font-weight: 700;
   }
-
-
 
   .form-group input {
     font-size: 1rem;

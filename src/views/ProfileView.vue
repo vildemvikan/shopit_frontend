@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import MyAdvertisements from '@/components/profile/MyAdvertisements.vue'
 import ProfileInfo from '@/components/profile/ProfileInfo.vue'
 import ChangePassword from '@/components/profile/ChangePassword.vue'
@@ -11,22 +10,21 @@ const tokenStore = useTokenStore()
 
 const displayDeletePopUp = ref<boolean>(false)
 
-async function logout(){
-  try{
+async function logout() {
+  try {
     await tokenStore.logOut()
-  }catch (error){
+  } catch (error) {
     console.error(error)
   }
 }
 
-async function deleteUser(){
-  try{
+async function deleteUser() {
+  try {
     await tokenStore.logOut()
-  }catch (error){
+  } catch (error) {
     console.error(error)
   }
 }
-
 </script>
 
 <template>
@@ -41,35 +39,32 @@ async function deleteUser(){
   <div class="profile">
     <div class="button-options">
       <button class="option-button" id="delete-button" @click="displayDeletePopUp = true">
-        {{$t('button-delete-user')}}</button>
+        {{ $t('button-delete-user') }}
+      </button>
       <button class="option-button" id="logout-button" @click="logout">
-        {{$t('button-logout')}}</button>
+        {{ $t('button-logout') }}
+      </button>
     </div>
     <div class="content">
       <div id="left-side">
         <div class="component" id="profile-info">
-          <ProfileInfo/>
+          <ProfileInfo />
         </div>
         <div class="component" id="change-password">
-          <ChangePassword/>
+          <ChangePassword />
         </div>
-
       </div>
       <div id="right-side">
         <div class="component" id="my-advertisements">
-          <my-advertisements/>
+          <my-advertisements />
         </div>
-
       </div>
     </div>
-
   </div>
-
 </template>
 
 <style scoped>
-
-.profile{
+.profile {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -78,20 +73,20 @@ async function deleteUser(){
   gap: 10px;
 }
 
-.button-options{
+.button-options {
   display: flex;
   flex-direction: row;
   gap: 10px;
   height: 5%;
 }
 
-.option-button{
+.option-button {
   height: 100%;
   width: fit-content;
   padding: 0 20px;
 }
 
-.content{
+.content {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -99,59 +94,59 @@ async function deleteUser(){
   gap: 20px;
 }
 
-#left-side, #right-side{
+#left-side,
+#right-side {
   width: 50%;
   height: 100%;
 }
 
-#left-side{
+#left-side {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.component{
+.component {
   box-shadow: var(--global-box-shaddow);
   border-radius: var(--global-border-radius);
   border: var(--global-border-size) solid var(--color-gray-divider);
   padding: 15px;
 }
 
-#profile-info{
+#profile-info {
   width: 100%;
   height: 60%;
   box-shadow: var(--global-box-shaddow);
   border-radius: var(--global-border-radius);
 }
 
-#change-password{
+#change-password {
   width: 100%;
   height: 40%;
 }
 
-#my-advertisements{
+#my-advertisements {
   height: 100%;
   width: 100%;
 }
 @media (max-width: 1000px) {
-
-  .profile{
+  .profile {
     height: 200%;
   }
 
-  .button-options{
+  .button-options {
     height: 2.5%;
   }
 
-  .content{
+  .content {
     display: flex;
     flex-direction: column;
   }
 
-  #left-side, #right-side{
+  #left-side,
+  #right-side {
     width: 100%;
     height: 50%;
   }
 }
-
 </style>

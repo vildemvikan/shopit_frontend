@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { useRouter } from 'vue-router'
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import NotificationDropdown from '../components/Notification/NotificationDropdown.vue'
@@ -13,10 +12,10 @@ onBeforeUnmount(() => {
 const dropdownRef = ref<HTMLElement | null>(null)
 
 const options = [
-  { icon: 'create.svg', label: 'create-advertisement', path: 'create-advertisement'},
-  { icon: 'messages.svg', label: 'messages', path: 'messages'},
+  { icon: 'create.svg', label: 'create-advertisement', path: 'create-advertisement' },
+  { icon: 'messages.svg', label: 'messages', path: 'messages' },
   { icon: 'bookmark.svg', label: 'bookmarks', path: 'bookmarks' },
-  { icon: 'profile.svg', label: 'profile' , path: 'profile'},
+  { icon: 'profile.svg', label: 'profile', path: 'profile' },
 ]
 const showDropdown = ref(false)
 let lastToggledEvent: Event | null = null
@@ -69,7 +68,7 @@ const currentRoute = router.currentRoute
 const status = ref(false)
 
 async function navigateTo(path: string) {
-  if(path == '/'){
+  if (path == '/') {
     await router.push('/')
   } else router.push('/' + path)
   status.value = false
@@ -81,7 +80,6 @@ function toggleMenu() {
 }
 
 const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.meta.url).href
-
 </script>
 
 <template>
@@ -95,23 +93,24 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
         <img class="invertible-icon" :src="iconPath('notifications.svg')" alt="notifications" />
       </button>
       <button class="mobile-icon" @click="toggleMenu">
-        <img class="invertible-icon" :src="status ? iconPath('exit.svg') : iconPath('burger.svg')" alt="menu" />
+        <img
+          class="invertible-icon"
+          :src="status ? iconPath('exit.svg') : iconPath('burger.svg')"
+          alt="menu"
+        />
       </button>
     </div>
 
-    <div class="options" :class="{'open':status}">
+    <div class="options" :class="{ open: status }">
       <div class="notification-wrapper desktop-only">
         <button class="notification-bell" @click="toggleNotifications">
           <img class="invertible-icon" :src="iconPath('notifications.svg')" alt="notifications" />
           <span class="option-text">{{ $t('notifications') }}</span>
         </button>
 
-          <div v-if="showDropdown" ref="dropdownRef" class="dropdown-position">
-            <NotificationDropdown
-            @close-dropdown="showDropdown = false"
-            />
-          </div>
-
+        <div v-if="showDropdown" ref="dropdownRef" class="dropdown-position">
+          <NotificationDropdown @close-dropdown="showDropdown = false" />
+        </div>
       </div>
 
       <button
@@ -121,13 +120,17 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
         id="button-option"
         type="button"
         @click="option.label === 'notifications' ? toggleNotifications() : navigateTo(option.path)"
-        >
-        <img class="invertible-icon" id="option-icon" :src="iconPath(option.icon)" :alt="$t(option.label)">
-        <span class="option-text"
-              :class="{active: currentRoute.name == option.path}">
+      >
+        <img
+          class="invertible-icon"
+          id="option-icon"
+          :src="iconPath(option.icon)"
+          :alt="$t(option.label)"
+        />
+        <span class="option-text" :class="{ active: currentRoute.name == option.path }">
           {{ $t(option.label) }}
         </span>
-              </button>
+      </button>
     </div>
   </nav>
   <div
@@ -141,12 +144,10 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
-
-.navbar{
+.navbar {
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -160,7 +161,7 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   padding-right: 2.5%;
 }
 
-.logo{
+.logo {
   height: 100%;
   place-content: center;
   cursor: pointer;
@@ -169,17 +170,17 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   border: none;
 }
 
-.logo:hover{
+.logo:hover {
   transform: scale(1.05);
 }
 
-.options{
+.options {
   height: 60%;
   display: flex;
   flex-direction: row;
 }
 
-.option{
+.option {
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -190,19 +191,19 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   border: none;
 }
 
-.option:hover{
+.option:hover {
   transform: scale(1.05);
   text-decoration: underline var(--global-thicc-border-size) solid var(--color-dark-orange-text);
 }
 
-.option-text{
+.option-text {
   color: var(--color-text);
 }
-.option-text.active{
+.option-text.active {
   border-bottom: var(--global-thicc-border-size) solid var(--color-dark-orange-text);
 }
 
-.invertible-icon{
+.invertible-icon {
   height: 100%;
 }
 .mobile-icons {
@@ -266,7 +267,7 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
     height: 24px;
   }
 
-  .mobile-notification .invertible-icon{
+  .mobile-notification .invertible-icon {
     height: 60%;
   }
 
@@ -328,7 +329,7 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
     flex-direction: column;
     flex: 1;
     overflow: hidden;
-    height:100%;
+    height: 100%;
   }
   .notification-backdrop {
     position: fixed;
@@ -354,7 +355,9 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
 }
 .fade-slide-enter-active,
 .fade-slide-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .fade-slide-enter-from,
@@ -369,4 +372,3 @@ const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.met
   transform: translateY(0);
 }
 </style>
-

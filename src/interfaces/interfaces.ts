@@ -2,80 +2,80 @@ import type { PaymentMethod } from '@/enums/enums.ts'
 import { BidStatus, Condition, MessageType, Status } from '@/enums/enums.ts'
 
 export interface ChatMessage {
-  senderId: string,
-  recipientId: string,
-  itemId: number,
-  content: string,
-  timestamp: Date,
-  type: MessageType,
+  senderId: string
+  recipientId: string
+  itemId: number
+  content: string
+  timestamp: Date
+  type: MessageType
 }
 
-export interface Image{
-  url: string,
+export interface Image {
+  url: string
   caption: string
 }
 
-export interface CategoryImage{
+export interface CategoryImage {
   url: string
   publicId: string
 }
 
-export interface PostalCodeInfo{
-  result: string,
-  valid: boolean,
+export interface PostalCodeInfo {
+  result: string
+  valid: boolean
   postalCodeType: string
 }
 
 export interface Option {
-  text: string;
-  value: PaymentMethod;
+  text: string
+  value: PaymentMethod
 }
 
-export interface Location{
-  postalCode: number,
+export interface Location {
+  postalCode: number
   city: string
-  county: string,
-  latitude: number,
-  longitude: number,
+  county: string
+  latitude: number
+  longitude: number
 }
 
-export interface SubCategory{
+export interface SubCategory {
   id: number
   name: string
 }
-export interface Category{
+export interface Category {
   id: number
   name: string
   image: CategoryImage
-  subcategories: SubCategory[] |null
+  subcategories: SubCategory[] | null
 }
 
-export interface DisplayAdvertisement{
-  id: number,
-  name: string,
-  price: number,
-  location: Location,
-  status: Status,
-  images: Image[],
-  publishedAt: string,
+export interface DisplayAdvertisement {
+  id: number
+  name: string
+  price: number
+  location: Location
+  status: Status
+  images: Image[]
+  publishedAt: string
   isBookmarked: boolean
 }
 
-export interface Advertisement{
-  id: number,
-  name: string,
+export interface Advertisement {
+  id: number
+  name: string
   description: string
   condition: Condition
-  price: number,
-  location: Location,
+  price: number
+  location: Location
   publishedAt: string
-  status: Status,
-  images: Image[],
-  tags: string[],
-  isOwner: boolean,
-  isBookmarked: boolean,
-  sellerFullName: string,
-  categoryName: string,
+  status: Status
+  images: Image[]
+  tags: string[]
+  isOwner: boolean
+  isBookmarked: boolean
+  sellerFullName: string
+  categoryName: string
   categoryId: number
   subCategoryName: string
   subCategoryId: number
@@ -83,19 +83,19 @@ export interface Advertisement{
   forSale: boolean
 }
 
-export interface MenuFilter{
-  categoryId: number | null,
-  subCategoryId: number | null,
-  minPrice: number | null,
-  maxPrice: number | null,
-  conditions: Condition[] | null,
-  counties: string[] | null,
-  forSale: boolean | null,
-  forFree: boolean| null
+export interface MenuFilter {
+  categoryId: number | null
+  subCategoryId: number | null
+  minPrice: number | null
+  maxPrice: number | null
+  conditions: Condition[] | null
+  counties: string[] | null
+  forSale: boolean | null
+  forFree: boolean | null
   published: boolean | null
 }
 
-export interface Search{
+export interface Search {
   categoryFacet: any
   conditionFacet: any
   countyFacet: any
@@ -105,30 +105,30 @@ export interface Search{
   items: SearchItems
 }
 
-export interface SearchItems{
+export interface SearchItems {
   content: Advertisement[]
-  totalElements:number
+  totalElements: number
   totalPages: number
   pageable: Pageable
 }
 
-export interface Pageable{
-  pageNumber: number,
-  pageSize: number,
+export interface Pageable {
+  pageNumber: number
+  pageSize: number
 }
 
 export interface ChatCardInfo {
-  lastMessageType: MessageType,
-  lastMessageContent: string,
-  lastMessageTimestamp: string,
-  lastSenderId: string,
-  senderId: string,
-  recipientId: string,
-  itemId: number,
+  lastMessageType: MessageType
+  lastMessageContent: string
+  lastMessageTimestamp: string
+  lastSenderId: string
+  senderId: string
+  recipientId: string
+  itemId: number
   status: Status
-  image: string,
-  itemTitle: string,
-  recipientProfilePic: string,
+  image: string
+  itemTitle: string
+  recipientProfilePic: string
 }
 
 export interface ChatRoomInfo {
@@ -137,13 +137,13 @@ export interface ChatRoomInfo {
   itemId: number
 }
 
-export interface OrderInformation{
-  buyerName:string,
-  price:number
+export interface OrderInformation {
+  buyerName: string
+  price: number
 }
 
-export interface BidInformation{
-  amount:price
-  status:BidStatus
-  bidderName:string
+export interface BidInformation {
+  amount: price
+  status: BidStatus
+  bidderName: string
 }

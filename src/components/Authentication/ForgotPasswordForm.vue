@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useForm, useField } from 'vee-validate';
-import * as yup from 'yup';
-import { useI18n } from 'vue-i18n';
-import { sendResetEmail } from '../../../utils/Authentication.ts';
+import { ref } from 'vue'
+import { useForm, useField } from 'vee-validate'
+import * as yup from 'yup'
+import { useI18n } from 'vue-i18n'
+import { sendResetEmail } from '../../../utils/Authentication.ts'
 
-const { t } = useI18n();
+const { t } = useI18n()
 
 const schema = yup.object({
-  email: yup.string().email(t('invalidEmail')).required(t('emailRequired'))
-});
+  email: yup.string().email(t('invalidEmail')).required(t('emailRequired')),
+})
 
-const { handleSubmit } = useForm({ validationSchema: schema });
+const { handleSubmit } = useForm({ validationSchema: schema })
 const { value: email, errorMessage: emailError } = useField('email', undefined, {
   validateOnValueUpdate: false,
-});
+})
 
-const serverError = ref('');
-const serverSuccess = ref('');
+const serverError = ref('')
+const serverSuccess = ref('')
 const isSubmitting = ref(false)
 const onSubmit = handleSubmit(async (values) => {
-  serverError.value = '';
-  serverSuccess.value = '';
-  isSubmitting.value = true;
+  serverError.value = ''
+  serverSuccess.value = ''
+  isSubmitting.value = true
 
   try {
-    await sendResetEmail(values.email);
+    await sendResetEmail(values.email)
     console.log(values.email)
-    serverSuccess.value = t('resetLinkSent');
+    serverSuccess.value = t('resetLinkSent')
   } catch (error: any) {
-    serverError.value = t('resetRequestFailed');
+    serverError.value = t('resetRequestFailed')
   } finally {
-    isSubmitting.value = false;
+    isSubmitting.value = false
   }
-});
+})
 </script>
 
 <template>
@@ -43,12 +43,7 @@ const onSubmit = handleSubmit(async (values) => {
 
     <div class="form-group">
       <label for="email">{{ t('email') }}</label>
-      <input
-        id="email"
-        type="email"
-        v-model="email"
-        :placeholder="t('email')"
-      />
+      <input id="email" type="email" v-model="email" :placeholder="t('email')" />
       <p class="input-error" :class="{ visible: emailError }">
         {{ emailError || '\u00A0' }}
       </p>
@@ -107,7 +102,7 @@ input {
   padding: var(--spacing-md) var(--spacing-lg);
   font-size: var(--font-size-md);
   border: var(--global-border-size) solid var(--color-border);
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   box-sizing: border-box;
 }
 
@@ -128,7 +123,9 @@ button {
   cursor: pointer;
   width: 100%;
   margin-top: var(--spacing-md);
-  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease-in-out;
 }
 
 button:hover {
@@ -198,7 +195,6 @@ button:disabled {
 }
 
 @media (max-width: 600px) {
-
   .form-title {
     font-size: 1.5rem;
   }

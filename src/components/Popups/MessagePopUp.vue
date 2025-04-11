@@ -10,7 +10,7 @@ const { t } = useI18n()
 const router = useRouter()
 
 const emit = defineEmits<{
-  (e: 'cancel-message'): void;
+  (e: 'cancel-message'): void
 }>()
 
 const props = defineProps<{
@@ -23,7 +23,7 @@ async function sendMessage() {
   if (messageContent.value.trim() !== '') {
     try {
       const response = await contactSeller(props.id, messageContent.value)
-      if(response == 200){
+      if (response == 200) {
         await router.push('/messages')
       }
     } catch (error) {
@@ -88,7 +88,7 @@ function cancelMessage() {
 
 .message-input {
   padding: 10px;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   border: 1px solid var(--color-border);
   font-size: 16px;
   width: 100%;
@@ -106,7 +106,7 @@ function cancelMessage() {
 #button {
   border: none;
   padding: 10px 20px;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   color: var(--color-black-text);
   font-weight: bold;
   width: 50%;

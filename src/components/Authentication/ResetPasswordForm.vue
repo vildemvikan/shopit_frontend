@@ -1,70 +1,71 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
-import { useI18n } from 'vue-i18n';
-import { useForm, useField } from 'vee-validate';
-import * as yup from 'yup';
+import { useI18n } from 'vue-i18n'
+import { useForm, useField } from 'vee-validate'
+import * as yup from 'yup'
 import { resetPasswordWithToken, validateResetToken } from '../../../utils/Authentication.ts'
 //import { resetPasswordWithToken } from '@/utils/Authentication.ts';
 
-const { t } = useI18n();
-const route = useRoute();
-const router = useRouter();
+const { t } = useI18n()
+const route = useRoute()
+const router = useRouter()
 
-const token = route.query.token as string || '';
-const email = route.query.email as string || '';
-const isTokenValid = ref(false);
-const validationError = ref('');
+const token = (route.query.token as string) || ''
+const email = (route.query.email as string) || ''
+const isTokenValid = ref(false)
+const validationError = ref('')
 
-const serverError = ref('');
-const serverSuccess = ref('');
-const isSubmitting = ref(false);
+const serverError = ref('')
+const serverSuccess = ref('')
+const isSubmitting = ref(false)
 
 onMounted(async () => {
   try {
-    const response = await validateResetToken(token, email);
+    const response = await validateResetToken(token, email)
     console.log(response)
-    isTokenValid.value = response.valid;
+    isTokenValid.value = response.valid
   } catch (err: any) {
-    isTokenValid.value = false;
-    validationError.value = err.message;
+    isTokenValid.value = false
+    validationError.value = err.message
   }
-});
+})
 const schema = yup.object({
-  password: yup
-    .string()
-    .min(6, t('tooShortPassword'))
-    .required(t('passwordRequired')),
+  password: yup.string().min(6, t('tooShortPassword')).required(t('passwordRequired')),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password')], t('matchPassword'))
-    .required(t('passwordConfirmRequired'))
-});
+    .required(t('passwordConfirmRequired')),
+})
 
-const { handleSubmit } = useForm({ validationSchema: schema });
+const { handleSubmit } = useForm({ validationSchema: schema })
 
 const { value: password, errorMessage: passwordError } = useField('password', undefined, {
-  validateOnValueUpdate: false
-});
-const { value: confirmPassword, errorMessage: confirmPasswordError } = useField('confirmPassword', undefined, {
-  validateOnValueUpdate: false
-});
+  validateOnValueUpdate: false,
+})
+const { value: confirmPassword, errorMessage: confirmPasswordError } = useField(
+  'confirmPassword',
+  undefined,
+  {
+    validateOnValueUpdate: false,
+  },
+)
 
 const onSubmit = handleSubmit(async (values) => {
-  serverError.value = '';
-  serverSuccess.value = '';
-  isSubmitting.value = true;
+  serverError.value = ''
+  serverSuccess.value = ''
+  isSubmitting.value = true
   try {
     console.log(values.password)
-    await resetPasswordWithToken(token, email, values.password);
-    serverSuccess.value = t('resetSuccess');
-    setTimeout(() => router.push('/login'), 2500);
+    await resetPasswordWithToken(token, email, values.password)
+    serverSuccess.value = t('resetSuccess')
+    setTimeout(() => router.push('/login'), 2500)
   } catch (err) {
-    serverError.value = t('resetFailed');
+    serverError.value = t('resetFailed')
   } finally {
-    isSubmitting.value = false;
+    isSubmitting.value = false
   }
-});
+})
 </script>
 
 <template>
@@ -73,12 +74,7 @@ const onSubmit = handleSubmit(async (values) => {
 
     <div class="form-group">
       <label for="password">{{ t('password') }}</label>
-      <input
-        id="password"
-        type="password"
-        v-model="password"
-        :placeholder="t('password')"
-      />
+      <input id="password" type="password" v-model="password" :placeholder="t('password')" />
       <p class="input-error" :class="{ visible: passwordError }">
         {{ passwordError || '\u00A0' }}
       </p>
@@ -145,7 +141,7 @@ input {
   padding: var(--spacing-md) var(--spacing-lg);
   font-size: var(--font-size-md);
   border: var(--global-border-size) solid var(--color-border);
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   box-sizing: border-box;
 }
 
@@ -192,7 +188,9 @@ button {
   cursor: pointer;
   width: 100%;
   margin-top: var(--spacing-md);
-  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease-in-out;
 }
 
 button:hover {

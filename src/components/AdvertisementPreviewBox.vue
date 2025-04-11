@@ -11,16 +11,19 @@ import { useI18n } from 'vue-i18n'
 
 const { locale } = useI18n()
 
-watch(locale, (newLocale) => {
-  dayjs.locale(newLocale)
-}, { immediate: true })
+watch(
+  locale,
+  (newLocale) => {
+    dayjs.locale(newLocale)
+  },
+  { immediate: true },
+)
 
 dayjs.extend(relativeTime)
 const router = useRouter()
 
-
 const emit = defineEmits<{
-  (e: 'remove-bookmark'): void;
+  (e: 'remove-bookmark'): void
 }>()
 
 const props = defineProps<{
@@ -34,44 +37,41 @@ const props = defineProps<{
   isBookmarked: boolean
 }>()
 
-
 const bookmarked = ref<boolean>(props.isBookmarked)
 
 const timeAgo = computed(() => {
   // Remap "no" to "nb" for Day.js compatibility
-  const lang = locale.value === 'no' ? 'nb' : locale.value;
+  const lang = locale.value === 'no' ? 'nb' : locale.value
   // Ensure that Day.js uses the updated locale for each computation
-  return dayjs(props.date).locale(lang).fromNow();
-});
+  return dayjs(props.date).locale(lang).fromNow()
+})
 
-async function bookmarkItem(){
-  try{
+async function bookmarkItem() {
+  try {
     const result = await createBookmark(props.id.toString())
-    if(result == 401){
+    if (result == 401) {
       await router.push('/auth')
     }
     bookmarked.value = result === 200
-
-  } catch (error){
+  } catch (error) {
     bookmarked.value = false
   }
 }
 
-async function removeBookmark(){
-  try{
+async function removeBookmark() {
+  try {
     const result = await deleteBookmark(props.id.toString())
-    if(result == 401){
+    if (result == 401) {
       await router.push('/auth')
     }
     bookmarked.value = !(result == 204)
     await emit('remove-bookmark')
-
-  } catch (error){
+  } catch (error) {
     bookmarked.value = true
   }
 }
 
-async function goToAdvertisement(){
+async function goToAdvertisement() {
   await router.push('/advertisement/' + props.id)
 }
 </script>
@@ -81,18 +81,28 @@ async function goToAdvertisement(){
     <div class="image-container">
       <img :src="props.image" alt="image" class="display-image" />
       <label class="price-label" v-if="props.price > 0">{{ props.price }},- NOK</label>
-      <label class="price-label" v-else>{{$t('label-free') }}</label>
-      <img src="../assets/icons/bookmarkNotMarked.svg"
-           alt="bookmark" class="bookmark" v-if="!bookmarked" @click.stop="bookmarkItem"/>
-      <img src="../assets/icons/bookmarkMarked.svg"
-           alt="bookmark" class="bookmark" v-else @click.stop="removeBookmark"/>
+      <label class="price-label" v-else>{{ $t('label-free') }}</label>
+      <img
+        src="../assets/icons/bookmarkNotMarked.svg"
+        alt="bookmark"
+        class="bookmark"
+        v-if="!bookmarked"
+        @click.stop="bookmarkItem"
+      />
+      <img
+        src="../assets/icons/bookmarkMarked.svg"
+        alt="bookmark"
+        class="bookmark"
+        v-else
+        @click.stop="removeBookmark"
+      />
     </div>
     <div class="info">
       <div class="small-info">
-        <label>{{city}}</label>
-        <label>{{timeAgo}}</label>
+        <label>{{ city }}</label>
+        <label>{{ timeAgo }}</label>
       </div>
-      <h3 class="title">{{title}}</h3>
+      <h3 class="title">{{ title }}</h3>
     </div>
   </div>
 </template>
@@ -127,7 +137,7 @@ async function goToAdvertisement(){
 }
 
 .image-container::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -150,7 +160,7 @@ async function goToAdvertisement(){
   z-index: 1;
 }
 
-.bookmark{
+.bookmark {
   position: absolute;
   top: 5px;
   right: 0;
@@ -158,22 +168,21 @@ async function goToAdvertisement(){
   z-index: 0;
 }
 
-.info{
+.info {
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 10px;
 }
 
-.small-info{
+.small-info {
   display: flex;
   flex-direction: row;
   width: 100%;
   place-content: space-between;
 }
 
-.title{
+.title {
   font-weight: bold;
 }
-
 </style>

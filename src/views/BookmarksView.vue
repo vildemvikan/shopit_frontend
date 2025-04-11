@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import Pagination from '@/components/Pagination.vue'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { fetchUserBookmarks } from '../../utils/Bookmark.ts'
@@ -11,7 +10,7 @@ const pageSize = ref<number>(0)
 const page = ref<number>(0)
 const totalPages = ref<number>(0)
 
-const orderBy= ref<number>(1)
+const orderBy = ref<number>(1)
 
 const bookmarks = ref<DisplayAdvertisement[]>([])
 
@@ -24,8 +23,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', updatePageSize)
 })
 
-
-async function pageChange(newPage: number){
+async function pageChange(newPage: number) {
   page.value = newPage
   await loadAdvertisements()
 }
@@ -49,42 +47,41 @@ async function updatePageSize() {
   let newSize: number
   if (width < 650) {
     newSize = 5
-  } else if(width < 950){
+  } else if (width < 950) {
     newSize = 6
   } else if (width < 1150) {
     newSize = 8
   } else {
     newSize = 10
-  } if (pageSize.value !== newSize) {
+  }
+  if (pageSize.value !== newSize) {
     pageSize.value = newSize
     await loadAdvertisements()
   }
 }
 
 async function removeBookmark(id: number) {
-  bookmarks.value = bookmarks.value.filter(bookmark => bookmark.id !== id)
+  bookmarks.value = bookmarks.value.filter((bookmark) => bookmark.id !== id)
 }
 
 watch(orderBy, async () => {
   page.value = 0
   await loadAdvertisements()
 })
-
 </script>
 
 <template>
   <div class="bookmarks">
-    <h1 class="title">{{$t('title-bookmarks')}}</h1>
+    <h1 class="title">{{ $t('title-bookmarks') }}</h1>
     <div class="container">
       <div class="options">
         <select class="display-button" id="filter-dropdown" v-model="orderBy">
-          <option :value="1">{{$t('option-newest')}}</option>
+          <option :value="1">{{ $t('option-newest') }}</option>
           <option :value="2">{{ $t('option-oldest') }}</option>
         </select>
       </div>
 
       <div class="display" v-if="bookmarks.length > 0">
-
         <div class="bookmark" id="box" v-for="bookmark in bookmarks">
           <AdvertisementPreviewBox
             @remove-bookmark="removeBookmark(bookmark.id)"
@@ -112,37 +109,31 @@ watch(orderBy, async () => {
             :price="bookmark.price"
             :location="bookmark.location.city"
             :display-status="false"
-            :status="bookmark.status"/>
+            :status="bookmark.status"
+          />
         </div>
       </div>
       <div v-else>
-        <label>{{$t('placeholder-no-bookmarks')}}</label>
+        <label>{{ $t('placeholder-no-bookmarks') }}</label>
       </div>
 
-      <Pagination
-        @page-change="pageChange"
-        :total-pages="totalPages"
-        :current-page="page"
-      />
-
+      <Pagination @page-change="pageChange" :total-pages="totalPages" :current-page="page" />
     </div>
-
   </div>
-
 </template>
 
 <style scoped>
-.bookmarks{
+.bookmarks {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   gap: 10px;
 }
-.title{
+.title {
   text-decoration: underline;
 }
-.container{
+.container {
   display: flex;
   flex-direction: column;
   height: 90%;
@@ -156,7 +147,7 @@ watch(orderBy, async () => {
   align-items: center;
 }
 
-.options{
+.options {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -168,14 +159,14 @@ watch(orderBy, async () => {
   justify-content: end;
 }
 
-.display-button{
+.display-button {
   height: 4vh;
   min-height: 30px;
   width: fit-content;
   padding: 0 20px;
 }
 
-.display{
+.display {
   display: flex;
   flex-wrap: wrap;
   place-content: start;
@@ -186,41 +177,36 @@ watch(orderBy, async () => {
   gap: 10px;
 }
 
-.bookmark{
-  height: calc(calc(100% - 20px) /2);
-  width: calc(calc(100% - 4*10px) /5);
+.bookmark {
+  height: calc(calc(100% - 20px) / 2);
+  width: calc(calc(100% - 4 * 10px) / 5);
 }
 
-#list{
+#list {
   display: none;
 }
 
 @media (max-width: 1150px) {
-
-  .bookmark{
-    width: calc(calc(100% - 3*10px) /4);
+  .bookmark {
+    width: calc(calc(100% - 3 * 10px) / 4);
   }
 }
 
 @media (max-width: 950px) {
-
-  .bookmark{
-    width: calc(calc(100% - 2*10px) /3);
+  .bookmark {
+    width: calc(calc(100% - 2 * 10px) / 3);
   }
 }
 
-
 @media (max-width: 650px) {
-
-  #box{
+  #box {
     display: none;
   }
 
-  #list{
+  #list {
     display: flex;
-    height: calc(calc(100% - 4*10px) /5);
+    height: calc(calc(100% - 4 * 10px) / 5);
     width: 100%;
   }
 }
-
 </style>

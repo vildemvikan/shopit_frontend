@@ -1,10 +1,9 @@
-
 import { defineStore } from 'pinia'
 
 enum PaymentMethod {
   Direct = 'DIRECT',
   Auction = 'BID',
-  None = 'CONTACT'
+  None = 'CONTACT',
 }
 
 export enum Condition {
@@ -12,13 +11,13 @@ export enum Condition {
   LikeNew = 'LIKE_NEW',
   Good = 'GOOD',
   Acceptable = 'ACCEPTABLE',
-  ForParts = 'FOR_PARTS'
+  ForParts = 'FOR_PARTS',
 }
 
 interface Image {
-  url: string,
+  url: string
   caption: string
-  publicId: number|null
+  publicId: number | null
 }
 
 export const useAdvertisementStore = defineStore('advertisement', {
@@ -26,8 +25,8 @@ export const useAdvertisementStore = defineStore('advertisement', {
     title: '' as string,
     description: '' as string,
     condition: '' as Condition | string,
-    category: '' as number|string,
-    subCategory: '' as number|string,
+    category: '' as number | string,
+    subCategory: '' as number | string,
     tags: [] as string[],
     images: [] as Image[],
     forSale: true as boolean,
@@ -46,10 +45,10 @@ export const useAdvertisementStore = defineStore('advertisement', {
     updateCondition(newCondition: Condition) {
       this.condition = newCondition
     },
-    updateCategory(newCategory: number|string) {
+    updateCategory(newCategory: number | string) {
       this.category = newCategory
     },
-    updateSubCategory(newSubCategory: number|string) {
+    updateSubCategory(newSubCategory: number | string) {
       this.subCategory = newSubCategory
     },
     updateTags(newTags: string[]) {
@@ -73,9 +72,8 @@ export const useAdvertisementStore = defineStore('advertisement', {
 
     resetStore() {
       this.$reset()
-    }
+    },
   },
 
-  persist: true
-
+  persist: true,
 })

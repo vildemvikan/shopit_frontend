@@ -1,7 +1,7 @@
 <h1 align="center">
             ShopIT
 </h1>
-ShopIT is an application designed for gathering sellers and buyers into a common marketplace. Use ShopIT to explore what other people around Norway are selling, or find buyers for your niche merchandise. This repository serves as the client for the application
+ShopIT is an application designed for gathering sellers and buyers into a common marketplace. Use ShopIT to find intriguing goods, or find buyers for your niche merchandise. This repository serves as the client for the application.
 
 ## 🚀Getting started
 
@@ -11,7 +11,6 @@ ShopIT is an application designed for gathering sellers and buyers into a common
 To run the client you need the following installed:
 
 - Vue
-- Docker
 - Node
 
 ### ⚙️Setup
@@ -77,7 +76,8 @@ npm run coverage
 ```
 
 To run end-to-end tests:
+> **_NOTE_**: The server must always be running during e2e tests!
 
 ```
-npm run test:e2e
+npm run test:e2e:dev
 ```

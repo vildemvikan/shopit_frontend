@@ -5,7 +5,7 @@ import Pagination from '@/components/Pagination.vue'
 describe('Pagination.vue', () => {
   const factory = (props = { totalPages: 10, currentPage: 0 }) => {
     return mount(Pagination, {
-      props
+      props,
     })
   }
 
@@ -22,7 +22,7 @@ describe('Pagination.vue', () => {
 
   it('emits page-change with 0-indexed value when a page is clicked', async () => {
     const wrapper = factory({ totalPages: 10, currentPage: 0 })
-    const pageBtn = wrapper.findAll('.pagination-button').find(btn => btn.text() === '3')
+    const pageBtn = wrapper.findAll('.pagination-button').find((btn) => btn.text() === '3')
     await pageBtn?.trigger('click')
     expect(wrapper.emitted('page-change')).toBeTruthy()
     expect(wrapper.emitted('page-change')![0]).toEqual([2]) // index 2 for page 3

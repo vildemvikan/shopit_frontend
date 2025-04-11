@@ -7,8 +7,6 @@ import LoginForm from '@/components/Authentication/LoginForm.vue'
 import en from '../../assets/transcripts/en.json'
 import { ref } from 'vue'
 
-
-
 const fieldValues: Record<string, any> = {}
 const fieldErrors: Record<string, any> = {}
 
@@ -21,7 +19,7 @@ vi.mock('vee-validate', () => {
         return () => {
           const emailVal = fieldValues.email ? fieldValues.email.value : ''
           const passwordVal = fieldValues.password ? fieldValues.password.value : ''
-          let valid = true;
+          let valid = true
           // Validate email
           if (!emailVal) {
             if (fieldErrors.email) {
@@ -50,7 +48,7 @@ vi.mock('vee-validate', () => {
           }
           // If not valid, do not call fn
           if (!valid) {
-            return;
+            return
           }
           return fn({ email: emailVal, password: passwordVal })
         }
@@ -74,14 +72,14 @@ vi.mock('vee-validate', () => {
 const i18n = createI18n({
   legacy: false,
   locale: 'en',
-  messages: { en }
+  messages: { en },
 })
 
 describe('LoginForm.vue', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    fieldValues.email = ref('');
-    fieldValues.password = ref('');
+    fieldValues.email = ref('')
+    fieldValues.password = ref('')
   })
 
   it('logs in successfully when credentials are valid', async () => {
@@ -96,8 +94,8 @@ describe('LoginForm.vue', () => {
     const wrapper = mount(LoginForm, {
       global: {
         plugins: [i18n, pinia],
-        stubs: { RouterLink: true }
-      }
+        stubs: { RouterLink: true },
+      },
     })
 
     const emailInput = wrapper.find('input[type="email"]')
@@ -121,14 +119,14 @@ describe('LoginForm.vue', () => {
     })
     const tokenStore = useTokenStore(pinia)
     tokenStore.login = vi.fn().mockRejectedValue({
-      response: { status: 401 }
+      response: { status: 401 },
     })
 
     const wrapper = mount(LoginForm, {
       global: {
         plugins: [i18n, pinia],
-        stubs: { RouterLink: true }
-      }
+        stubs: { RouterLink: true },
+      },
     })
 
     const emailInput = wrapper.find('input[type="email"]')
@@ -155,8 +153,8 @@ describe('LoginForm.vue', () => {
     const wrapper = mount(LoginForm, {
       global: {
         plugins: [i18n, pinia],
-        stubs: { RouterLink: true }
-      }
+        stubs: { RouterLink: true },
+      },
     })
 
     // Submit form without filling any fields

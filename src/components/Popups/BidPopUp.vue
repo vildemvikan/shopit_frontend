@@ -8,23 +8,23 @@ const { t } = useI18n()
 const router = useRouter()
 
 const emit = defineEmits<{
-  (e: 'cancel-bid'): void;
+  (e: 'cancel-bid'): void
 }>()
 
 const props = defineProps<{
-  id: string|null
+  id: string | null
 }>()
 
 const bidAmount = ref<number | null>(null)
 
 async function sendBid() {
   if (bidAmount.value !== null && bidAmount.value >= 0) {
-    try{
+    try {
       const result = await placeBid(props.id, bidAmount.value)
-      if(result == 200){
+      if (result == 200) {
         await router.push('/messages')
       }
-    }catch (error){
+    } catch (error) {
       console.error(error)
       emit('cancel-bid')
     }
@@ -43,7 +43,6 @@ function preventNonNumeric(event: KeyboardEvent) {
     event.preventDefault()
   }
 }
-
 </script>
 
 <template>
@@ -59,8 +58,10 @@ function preventNonNumeric(event: KeyboardEvent) {
         @keydown="preventNonNumeric"
       />
       <div class="buttons">
-        <button class="cancel-btn" id="button" @click="cancelBid">{{$t('button-cancel-bid')}}</button>
-        <button class="send-btn" id="button" @click="sendBid">{{$t('button-send-bid')}}</button>
+        <button class="cancel-btn" id="button" @click="cancelBid">
+          {{ $t('button-cancel-bid') }}
+        </button>
+        <button class="send-btn" id="button" @click="sendBid">{{ $t('button-send-bid') }}</button>
       </div>
     </div>
   </div>
@@ -94,7 +95,7 @@ function preventNonNumeric(event: KeyboardEvent) {
 
 .bid-input {
   padding: 10px;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   border: 1px solid var(--color-border);
   font-size: 16px;
   width: 100%;
@@ -110,7 +111,7 @@ function preventNonNumeric(event: KeyboardEvent) {
 #button {
   border: none;
   padding: 10px 20px;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   color: var(--color-black-text);
   font-weight: bold;
   width: 50%;

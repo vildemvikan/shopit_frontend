@@ -10,12 +10,11 @@ const deleteIcon = new URL('@/assets/icons/x.svg', import.meta.url).href
 const refreshIcon = new URL('@/assets/icons/refresh2.svg', import.meta.url).href
 
 const emit = defineEmits<{
-  (e: 'close-dropdown'): void;
+  (e: 'close-dropdown'): void
 }>()
 
-
 const perPage = 3
-const currentPage = ref(0)    // current page index to fetch from backend
+const currentPage = ref(0) // current page index to fetch from backend
 
 const notifications = ref([] as any[])
 
@@ -27,7 +26,6 @@ const totalPages = ref(0)
 
 dayjs.extend(relativeTime)
 dayjs.locale('nb')
-
 
 async function fetchNotifications(page: number, reset = false) {
   const res = await getNotification(page, perPage)
@@ -63,14 +61,14 @@ const removeNotification = async (id: number) => {
   try {
     const res = await deleteNotification(id)
     if (res === true) {
-      notifications.value = notifications.value.filter(n => n.id !== id)
+      notifications.value = notifications.value.filter((n) => n.id !== id)
     }
   } catch (e) {
     console.error('Failed to delete notification', e)
   }
 }
 
-onMounted(async() => {
+onMounted(async () => {
   const tokenStore = useTokenStore()
   if (!tokenStore.isAuthenticated) {
     await router.push('/auth/login')
@@ -138,7 +136,7 @@ function timeAgo(date: string): string {
   <div class="dropdown">
     <div class="mobile-drag-bar" />
     <div class="dropdown-header">
-      <h4>{{$t('title-notifications')}}</h4>
+      <h4>{{ $t('title-notifications') }}</h4>
       <button @click="refreshNotifications" class="refresh-btn" aria-label="Refresh notifications">
         <img :src="refreshIcon" alt="Refresh" class="invertible-icon" />
       </button>
@@ -169,7 +167,6 @@ function timeAgo(date: string): string {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .dropdown-header {

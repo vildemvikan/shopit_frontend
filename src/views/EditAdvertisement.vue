@@ -29,10 +29,8 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
-.title{
+.title {
   text-decoration: underline;
   margin-bottom: 20px;
 }
-
 </style>

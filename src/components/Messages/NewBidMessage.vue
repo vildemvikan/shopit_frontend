@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { onMounted, ref } from 'vue'
 import { BidStatus, Status } from '@/enums/enums.ts'
 import type { BidInformation, OrderInformation } from '@/interfaces/interfaces.ts'
@@ -16,68 +15,81 @@ const props = defineProps<{
   id: string
 }>()
 
-async function acceptTheBid(){
-  try{
+async function acceptTheBid() {
+  try {
     const result = await acceptBid(props.id)
-    if(result == 200){
+    if (result == 200) {
       status.value = BidStatus.Accepted
-    } else{
+    } else {
       toast.error('Error! Could not accept the bid.')
     }
-  } catch (error){
+  } catch (error) {
     toast.error('Error! Could not accept the bid.')
   }
 }
 
-async function rejectTheBid(){
-  try{
+async function rejectTheBid() {
+  try {
     const result = await rejectBid(props.id)
-    if(result == 200){
+    if (result == 200) {
       status.value = BidStatus.Rejected
-    } else{
+    } else {
       toast.error('Error! Could not reject the bid.')
     }
-  } catch (error){
+  } catch (error) {
     toast.error('Error! Could not reject the bid.')
   }
 }
 
 onMounted(async () => {
-  if(props.id !== ''){
-    const result:BidInformation = await getBidFromId(props.id)
+  if (props.id !== '') {
+    const result: BidInformation = await getBidFromId(props.id)
     name.value = result.bidderName
     amount.value = result.amount
     status.value = result.status
   }
 })
-
 </script>
 
 <template>
-  <div class="bid-box"
-       :class="{rejected: status == BidStatus.Rejected, accepted: status == BidStatus.Accepted}">
+  <div
+    class="bid-box"
+    :class="{ rejected: status == BidStatus.Rejected, accepted: status == BidStatus.Accepted }"
+  >
     <div class="text-content">
-      <label class="variable">{{name}}</label>
-      <label>{{$t('bid-text')}} <label class="variable">{{ amount }} NOK,-</label></label>
-      <label v-if="status !== BidStatus.Pending">Status: <label class="variable">{{status}}</label></label>
-
+      <label class="variable">{{ name }}</label>
+      <label
+        >{{ $t('bid-text') }} <label class="variable">{{ amount }} NOK,-</label></label
+      >
+      <label v-if="status !== BidStatus.Pending"
+        >Status: <label class="variable">{{ status }}</label></label
+      >
     </div>
     <div class="options" v-if="status == BidStatus.Pending">
-      <img src="@/assets/icons/check.svg"
-           class="answer-icon" id="accept" alt="accept" @click="acceptTheBid">
-      <img src="@/assets/icons/x.svg"
-           class="answer-icon" id="reject" alt="reject" @click="rejectTheBid">
+      <img
+        src="@/assets/icons/check.svg"
+        class="answer-icon"
+        id="accept"
+        alt="accept"
+        @click="acceptTheBid"
+      />
+      <img
+        src="@/assets/icons/x.svg"
+        class="answer-icon"
+        id="reject"
+        alt="reject"
+        @click="rejectTheBid"
+      />
     </div>
   </div>
 </template>
 
 <style scoped>
-
-label{
+label {
   color: var(--color-black-text);
 }
 
-.bid-box{
+.bid-box {
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -90,42 +102,39 @@ label{
   background-color: var(--color-background);
 }
 
-.accepted{
+.accepted {
   background-color: var(--color-bid-accepted);
 }
 
-.rejected{
+.rejected {
   background-color: var(--color-bid-rejected);
 }
 
-.text-content{
+.text-content {
   display: flex;
   flex-direction: column;
 }
 
-.variable{
+.variable {
   font-weight: bold;
 }
 
-.options{
+.options {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
 
-.answer-icon:hover{
+.answer-icon:hover {
   transform: scale(1.1);
   cursor: pointer;
 }
 
-
-#reject{
+#reject {
   height: 2em;
 }
 
-#accept{
+#accept {
   height: 2em;
 }
-
-
 </style>
