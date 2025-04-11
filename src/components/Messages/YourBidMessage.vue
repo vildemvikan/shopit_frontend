@@ -1,7 +1,6 @@
 <script setup lang="ts">
-
 import { onMounted, ref } from 'vue'
-import { BidStatus} from '@/enums/enums.ts'
+import { BidStatus } from '@/enums/enums.ts'
 import type { BidInformation } from '@/interfaces/interfaces.ts'
 import { getBidFromId } from '../../../utils/Bid.ts'
 
@@ -14,37 +13,40 @@ const props = defineProps<{
 }>()
 
 onMounted(async () => {
-  if(props.id !== ''){
-    const result:BidInformation = await getBidFromId(props.id)
+  if (props.id !== '') {
+    const result: BidInformation = await getBidFromId(props.id)
     name.value = result.bidderName
     amount.value = result.amount
     status.value = result.status
   }
 })
-
 </script>
 
 <template>
-  <div class="bid-box"
-       :class="{rejected: status == BidStatus.Rejected, accepted: status == BidStatus.Accepted}">
+  <div
+    class="bid-box"
+    :class="{ rejected: status == BidStatus.Rejected, accepted: status == BidStatus.Accepted }"
+  >
     <div class="text-content">
       <label>
-        {{$t('your-bid-text')}}
+        {{ $t('your-bid-text') }}
         <label class="variable">{{ amount }} NOK,-</label>
       </label>
     </div>
     <div class="status">
-      <label>Status: <label class="variable">{{status}}</label></label>
+      <label
+        >Status: <label class="variable">{{ status }}</label></label
+      >
     </div>
   </div>
 </template>
 
 <style scoped>
-label{
+label {
   color: var(--color-black-text);
 }
 
-.bid-box{
+.bid-box {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -57,22 +59,20 @@ label{
   background-color: var(--color-background);
 }
 
-.accepted{
+.accepted {
   background-color: var(--color-bid-accepted);
 }
 
-.rejected{
+.rejected {
   background-color: var(--color-bid-rejected);
 }
 
-.text-content{
+.text-content {
   display: flex;
   flex-wrap: wrap;
 }
 
-.variable{
+.variable {
   font-weight: bold;
 }
-
-
 </style>

@@ -21,7 +21,7 @@ vi.mock('leaflet', () => {
       map: vi.fn(() => mapMock),
       tileLayer: vi.fn(() => tileLayerMock),
       marker: vi.fn(() => markerMock),
-    }
+    },
   }
 })
 
@@ -41,8 +41,8 @@ describe('MapComponent', () => {
     const wrapper = mount(MapComponent, {
       props: {
         lat: '51.505',
-        lng: '-0.09'
-      }
+        lng: '-0.09',
+      },
     })
 
     expect(wrapper.find('.map-container').exists()).toBe(true)

@@ -9,13 +9,13 @@ vi.mock('@/utils/Authentication', () => ({
   getToken: vi.fn(),
   logout: vi.fn(),
   refreshToken: vi.fn(),
-  registerUser: vi.fn()
+  registerUser: vi.fn(),
 }))
 
 vi.mock('@/router', () => ({
   default: {
-    push: vi.fn()
-  }
+    push: vi.fn(),
+  },
 }))
 
 describe('tokenStore', () => {

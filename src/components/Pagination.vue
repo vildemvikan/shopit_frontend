@@ -3,7 +3,7 @@ import { computed } from 'vue'
 
 // Define props interface: note that currentPage is 0-indexed
 interface Props {
-  totalPages: number,
+  totalPages: number
   currentPage: number
 }
 
@@ -36,30 +36,27 @@ const pages = computed(() => {
 // When a page button is clicked, convert the display page (1-indexed)
 // back to a 0-indexed page number before emitting
 function goToPage(page: number) {
-  const index = page - 1;
-  if (index < 0 || index >= props.totalPages) return;
-  emit('page-change', index);
+  const index = page - 1
+  if (index < 0 || index >= props.totalPages) return
+  emit('page-change', index)
 }
 
 function previousPage() {
   if (props.currentPage > 0) {
-    emit('page-change', props.currentPage - 1);
+    emit('page-change', props.currentPage - 1)
   }
 }
 
 function nextPage() {
   if (props.currentPage < props.totalPages - 1) {
-    emit('page-change', props.currentPage + 1);
+    emit('page-change', props.currentPage + 1)
   }
 }
 </script>
 
 <template>
   <div class="pagination">
-    <button
-      class="pagination-button"
-      :disabled="props.currentPage === 0"
-      @click="previousPage">
+    <button class="pagination-button" :disabled="props.currentPage === 0" @click="previousPage">
       Prev
     </button>
 
@@ -69,8 +66,9 @@ function nextPage() {
       v-for="page in pages"
       :key="page"
       class="pagination-button"
-      :class="{ active: (page - 1) === props.currentPage }"
-      @click="goToPage(page)">
+      :class="{ active: page - 1 === props.currentPage }"
+      @click="goToPage(page)"
+    >
       {{ page }}
     </button>
 
@@ -78,8 +76,11 @@ function nextPage() {
 
     <button
       class="pagination-button"
-      :disabled="props.currentPage === props.totalPages - 1 || props.currentPage === props.totalPages"
-      @click="nextPage">
+      :disabled="
+        props.currentPage === props.totalPages - 1 || props.currentPage === props.totalPages
+      "
+      @click="nextPage"
+    >
       Next
     </button>
   </div>

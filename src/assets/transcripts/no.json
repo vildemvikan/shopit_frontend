@@ -97,7 +97,7 @@
   "drop-down-sub-category": "Velg underkategori",
   "drop-down-condition": "Velg tilstand",
 
-  "input-tag":"Emneknagg",
+  "input-tag": "Emneknagg",
   "input-title": "Tittel",
   "input-description": "Beskrivelse",
   "input-postal-number": "Postnummer",
@@ -111,11 +111,11 @@
   "condition-acceptable": "Godt brukt - synlig brukt",
   "condition-for-parts": "Må fikses - noen mangler/ødelagte deler",
 
-  "title-error" : "Mangler tittel!",
+  "title-error": "Mangler tittel!",
   "description-error": "Mangler beskrivelse!",
   "condition-error": "Mangler tilstand!",
   "category-error": "Mangler kategori!",
-  "sub-category-error":"Mangler underkategori!",
+  "sub-category-error": "Mangler underkategori!",
   "images-error": "Last opp minst ett bilde!",
   "price-error": "Prisen må være større enn null, om ikke velg en annen annonsetype!",
   "postal-number-error": "Ugjyldig postnummer!",
@@ -129,7 +129,6 @@
   "loginBtn": "Logg inn",
   "forgotPassword": "Glemt passord?",
   "loginFormHeader": "Logg inn på din konto",
-
 
   "invalidCredentials": "E-postadresse eller passord er ikke korrekt",
   "unexpectedError": "Noe gikk galt. Vennligst prøv igjen.",

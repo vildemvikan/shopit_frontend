@@ -6,8 +6,8 @@ vi.mock('axios')
 
 vi.mock('@/stores/tokenStore', () => ({
   useTokenStore: vi.fn(() => ({
-    getToken: 'mock-token'
-  }))
+    getToken: 'mock-token',
+  })),
 }))
 
 describe('Messages API functions', () => {
@@ -26,10 +26,7 @@ describe('Messages API functions', () => {
       const result = await fetchChatMessages('user2', 1)
 
       // Verify error was logged
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'Error fetching chat messages: ',
-        expect.any(Error)
-      )
+      expect(consoleSpy).toHaveBeenCalledWith('Error fetching chat messages: ', expect.any(Error))
 
       // Verify empty array is returned
       expect(result).toEqual([])
@@ -51,9 +48,9 @@ describe('Messages API functions', () => {
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer mock-token'
-          }
-        }
+            Authorization: 'Bearer mock-token',
+          },
+        },
       )
 
       // Verify result
@@ -72,7 +69,7 @@ describe('Messages API functions', () => {
       // Verify error was logged
       expect(consoleSpy).toHaveBeenCalledWith(
         'Error fetching chat recipient profile: ',
-        expect.any(Error)
+        expect.any(Error),
       )
 
       // Verify null is returned
@@ -91,10 +88,7 @@ describe('Messages API functions', () => {
       const result = await fetchChatList()
 
       // Verify error was logged
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'Error fetching chat list: ',
-        expect.any(Error)
-      )
+      expect(consoleSpy).toHaveBeenCalledWith('Error fetching chat list: ', expect.any(Error))
 
       // Verify null is returned
       expect(result).toBeNull()

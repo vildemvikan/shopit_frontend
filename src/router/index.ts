@@ -22,7 +22,7 @@ const restrictedRoutes = [
   'messages',
   'bookmarks',
   'edit-advertisement',
-  'create-advertisement'
+  'create-advertisement',
 ]
 
 const router = createRouter({
@@ -31,13 +31,13 @@ const router = createRouter({
     {
       path: '',
       name: 'front-page',
-      component: FrontView
+      component: FrontView,
     },
     {
       path: '/search',
       name: 'search',
       component: SearchView,
-      props: route => ({
+      props: (route) => ({
         search: route.query.search || null,
         category: route.query.category || null,
         subCategory: route.query.subCategory || null,
@@ -48,78 +48,77 @@ const router = createRouter({
         publishedToday: route.query.publishedToday || null,
         type: route.query.type || null,
         sortBy: route.query.sortBy || null,
-        displayType: route.query.displayType || null
-      })
+        displayType: route.query.displayType || null,
+      }),
     },
     {
       path: '/messages',
       name: 'messages',
       component: MessagesView,
-      props: route => ({
+      props: (route) => ({
         itemId: route.query.itemId || null,
-        recipientId: route.query.recipientId ||null
-      })
+        recipientId: route.query.recipientId || null,
+      }),
     },
     {
       path: '/profile',
       name: 'profile',
-      component: ProfileView
+      component: ProfileView,
     },
     {
       path: '/messages',
       name: 'messages',
-      component: MessagesView
+      component: MessagesView,
     },
     {
       path: '/bookmarks',
       name: 'bookmarks',
-      component: BookmarksView
+      component: BookmarksView,
     },
     {
       path: '/create-advertisement',
       name: 'create-advertisement',
-      component: CreateAdvertisementView
+      component: CreateAdvertisementView,
     },
     {
-      path:'/edit-advertisement/:id',
-      name:'edit-advertisement',
+      path: '/edit-advertisement/:id',
+      name: 'edit-advertisement',
       component: EditAdvertisement,
-      props: true
+      props: true,
     },
     {
       path: '/auth',
       name: 'auth',
       component: AuthenticationView,
       children: [
-        { path: '', redirect: '/auth/login',  name:'Redirect' },
-        { path: 'login', component: LoginForm,  name: 'Login', },
+        { path: '', redirect: '/auth/login', name: 'Redirect' },
+        { path: 'login', component: LoginForm, name: 'Login' },
         { path: 'signup', component: SignUpForm, name: 'Signup' },
         { path: 'forgot-password', component: ForgotPasswordForm, name: 'ForgotPassword' },
         { path: 'reset-password', component: ResetPasswordForm, name: 'ResetPassword' },
-      ]
+      ],
     },
     {
       path: '/advertisement/:id',
-      name:'advertisement',
+      name: 'advertisement',
       component: AdvertisementView,
-      props: true
-    }
+      props: true,
+    },
   ],
 })
 
 router.beforeEach((to, from, next) => {
   if (restrictedRoutes.includes(to.name as string)) {
-    const tokenStore = useTokenStore();
+    const tokenStore = useTokenStore()
     if (!tokenStore.isAuthenticated) {
-      return next({ path: '/auth/login' });
+      return next({ path: '/auth/login' })
     }
   }
   if (from.name === 'create-advertisement' && to.name !== 'create-advertisement') {
-    const advertisementStore = useAdvertisementStore();
-    advertisementStore.$reset();
+    const advertisementStore = useAdvertisementStore()
+    advertisementStore.$reset()
   }
-  next();
-});
-
+  next()
+})
 
 export default router

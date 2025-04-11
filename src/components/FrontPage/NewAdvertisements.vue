@@ -1,18 +1,17 @@
 <script setup lang="ts">
-
 import { onMounted, ref } from 'vue'
-import {DisplayAdvertisement} from '@/interfaces/interfaces.ts'
+import { DisplayAdvertisement } from '@/interfaces/interfaces.ts'
 import { fetchNewestAdvertisements } from '../../../utils/Advertisement.ts'
 import AdvertisementPreview from '@/components/AdvertisementPreviewBox.vue'
 
 const SIZE = 6
 const advertisements = ref<DisplayAdvertisement[]>([])
 
-async function loadAdvertisements(){
-  try{
+async function loadAdvertisements() {
+  try {
     const result = await fetchNewestAdvertisements(SIZE)
     advertisements.value = result.content
-  }catch (error){
+  } catch (error) {
     console.error(error)
   }
 }
@@ -20,12 +19,11 @@ async function loadAdvertisements(){
 onMounted(async () => {
   await loadAdvertisements()
 })
-
 </script>
 
 <template>
   <div class="content">
-    <h2 class="title">{{$t('title-new-advertisements')}}</h2>
+    <h2 class="title">{{ $t('title-new-advertisements') }}</h2>
     <div class="advertisements">
       <div class="new-advertisement" v-for="advertisement in advertisements">
         <AdvertisementPreview
@@ -41,12 +39,10 @@ onMounted(async () => {
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
-
-.content{
+.content {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -55,7 +51,7 @@ onMounted(async () => {
   place-content: space-between;
 }
 
-.advertisements{
+.advertisements {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -65,9 +61,8 @@ onMounted(async () => {
   overflow-x: scroll;
 }
 
-.new-advertisement{
+.new-advertisement {
   height: 90%;
   aspect-ratio: 8/9;
 }
-
 </style>

@@ -8,8 +8,8 @@ vi.mock('@/stores/displayStore.ts', () => {
   return {
     displayStore: () => ({
       updateMode: vi.fn(),
-      updateLanguage: vi.fn()
-    })
+      updateLanguage: vi.fn(),
+    }),
   }
 })
 
@@ -18,8 +18,8 @@ const mockLocale = { value: 'en' }
 vi.mock('vue-i18n', () => ({
   useI18n: () => ({
     t: (key: string) => key,
-    locale: mockLocale
-  })
+    locale: mockLocale,
+  }),
 }))
 
 describe('Footer.vue', () => {

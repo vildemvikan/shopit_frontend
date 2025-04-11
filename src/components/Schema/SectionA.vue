@@ -1,22 +1,21 @@
 <script setup lang="ts">
-
 import { onMounted, ref, watch } from 'vue'
-import {Image} from '@/interfaces/interfaces.ts'
+import { Image } from '@/interfaces/interfaces.ts'
 
 onMounted(() => {
   forSale.value = props.forSale
   images.value = props.images
-});
+})
 
 const emit = defineEmits<{
-  (e: 'update:forSale', value: boolean): void;
-  (e: 'update:images', value: Image[]): void;
+  (e: 'update:forSale', value: boolean): void
+  (e: 'update:images', value: Image[]): void
 }>()
 
 const props = defineProps<{
   forSale: boolean
   images: Image[]
-  imagesError: boolean;
+  imagesError: boolean
 }>()
 
 const forSale = ref(true)
@@ -24,28 +23,28 @@ const images = ref<Image[]>([])
 
 const fileInput = ref<HTMLInputElement | null>(null)
 
-function activateInput(){
+function activateInput() {
   fileInput.value?.click()
 }
 
-function moveImageUp(index: number){
-  if(index <= 0) return;
-  [images.value[index - 1], images.value[index]] = [images.value[index], images.value[index - 1]];
-  emit('update:images', images.value);
+function moveImageUp(index: number) {
+  if (index <= 0) return
+  ;[images.value[index - 1], images.value[index]] = [images.value[index], images.value[index - 1]]
+  emit('update:images', images.value)
 }
 
-function moveImageDown(index: number){
-  if(index >= images.value.length - 1) return;
-  [images.value[index + 1], images.value[index]] = [images.value[index], images.value[index + 1]];
-  emit('update:images', images.value);
+function moveImageDown(index: number) {
+  if (index >= images.value.length - 1) return
+  ;[images.value[index + 1], images.value[index]] = [images.value[index], images.value[index + 1]]
+  emit('update:images', images.value)
 }
 
-function deleteImage(index: number){
-  images.value.splice(index, 1);
-  emit('update:images', images.value);
+function deleteImage(index: number) {
+  images.value.splice(index, 1)
+  emit('update:images', images.value)
 }
 
-function addImage(event: Event){
+function addImage(event: Event) {
   const target = event.target as HTMLInputElement
   if (target.files && target.files[0]) {
     const file = target.files[0]
@@ -54,9 +53,9 @@ function addImage(event: Event){
       images.value.push({
         url: e.target?.result as string,
         caption: '',
-        publicId: null
+        publicId: null,
       })
-      emit('update:images', images.value);
+      emit('update:images', images.value)
     }
     reader.readAsDataURL(file)
   }
@@ -64,84 +63,86 @@ function addImage(event: Event){
   target.value = ''
 }
 
-function updateDescription(){
+function updateDescription() {
   emit('update:images', images.value)
 }
 
-watch(forSale, (newValue)=>{
+watch(forSale, (newValue) => {
   emit('update:forSale', newValue)
 })
-
 </script>
 
 <template>
   <label>{{ $t('label-type') }}</label>
   <div class="type-buttons">
-    <button class="type-button"
-            :class="{active: forSale}"
-            id="left-type-button"
-            @click="forSale = true">{{ $t('button-type-sell') }}</button>
-    <button class="type-button"
-            :class="{active: !forSale}"
-            id="right-type-button"
-            @click="forSale = false">{{ $t('button-type-free') }}</button>
+    <button
+      class="type-button"
+      :class="{ active: forSale }"
+      id="left-type-button"
+      @click="forSale = true"
+    >
+      {{ $t('button-type-sell') }}
+    </button>
+    <button
+      class="type-button"
+      :class="{ active: !forSale }"
+      id="right-type-button"
+      @click="forSale = false"
+    >
+      {{ $t('button-type-free') }}
+    </button>
   </div>
 
   <div class="images">
-
     <label>{{ $t('label-images') }}</label>
 
     <div class="image-box" v-for="(image, index) in images" :key="index">
       <div class="image-adjustment-box">
         <div class="adjustments">
           <button class="adjustment-button" @click="moveImageUp(index)">
-            <img src="@/assets/icons/up.svg" alt="Move up" class="adjustment-icon" id="up">
+            <img src="@/assets/icons/up.svg" alt="Move up" class="adjustment-icon" id="up" />
           </button>
           <button class="adjustment-button" @click="moveImageDown(index)">
-            <img src="@/assets/icons/up.svg" alt="Move down" class="adjustment-icon" id="down">
+            <img src="@/assets/icons/up.svg" alt="Move down" class="adjustment-icon" id="down" />
           </button>
         </div>
-        <img class="image" :src="image.url" alt="Uploaded Image">
-
+        <img class="image" :src="image.url" alt="Uploaded Image" />
       </div>
       <div class="description-box">
         <button class="delete-image" @click="deleteImage(index)">
-          <img src="@/assets/icons/delete.svg" class="delete-icon" alt="Delete image">
-          <label>{{$t('label-delete')}}</label>
+          <img src="@/assets/icons/delete.svg" class="delete-icon" alt="Delete image" />
+          <label>{{ $t('label-delete') }}</label>
         </button>
         <textarea
           class="image-description"
           v-model="image.caption"
           @input="updateDescription"
-          placeholder="Enter description"></textarea>
+          placeholder="Enter description"
+        ></textarea>
       </div>
     </div>
 
+    <input type="file" accept="image/*" ref="fileInput" @change="addImage" style="display: none" />
 
-    <input type="file"
-           accept="image/*"
-           ref="fileInput"
-           @change="addImage"
-           style="display: none;" />
-
-    <button class="add-image-button"
-            :class="{'error':imagesError}"
-            @click="activateInput"
-            :disabled="images.length > 4">{{ $t('button-images') }}</button>
-    <small v-if="imagesError" class="error-message">{{$t('images-error')}}</small>
+    <button
+      class="add-image-button"
+      :class="{ error: imagesError }"
+      @click="activateInput"
+      :disabled="images.length > 4"
+    >
+      {{ $t('button-images') }}
+    </button>
+    <small v-if="imagesError" class="error-message">{{ $t('images-error') }}</small>
   </div>
-
-
-
 </template>
 
 <style scoped>
-
-H3, label{
+H3,
+label {
   color: var(--color-black-text);
 }
 
-.type-buttons{
+.type-buttons {
   display: flex;
   flex-direction: row;
 
@@ -150,34 +151,34 @@ H3, label{
   min-height: var(--global-button-min-height);
 }
 
-.type-button{
+.type-button {
   width: 50%;
   background-color: white;
   box-shadow: var(--global-box-shaddow);
 }
 
-.type-button.active{
+.type-button.active {
   background-color: var(--color-black-button);
   color: var(--color-white-text);
 }
 
-#left-type-button{
-  border-top-left-radius: calc(var(--global-border-radius)/2);
-  border-bottom-left-radius:calc(var(--global-border-radius)/2);
+#left-type-button {
+  border-top-left-radius: calc(var(--global-border-radius) / 2);
+  border-bottom-left-radius: calc(var(--global-border-radius) / 2);
 }
 
-#right-type-button{
-  border-top-right-radius: calc(var(--global-border-radius)/2);
-  border-bottom-right-radius: calc(var(--global-border-radius)/2);
+#right-type-button {
+  border-top-right-radius: calc(var(--global-border-radius) / 2);
+  border-bottom-right-radius: calc(var(--global-border-radius) / 2);
 }
 
-.images{
+.images {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.image-box{
+.image-box {
   display: flex;
   flex-direction: row;
   place-content: space-between;
@@ -187,51 +188,51 @@ H3, label{
   gap: 5px;
 }
 
-.image-adjustment-box{
+.image-adjustment-box {
   display: flex;
   flex-direction: row;
   width: 30%;
 }
 
-.adjustments{
+.adjustments {
   display: flex;
   flex-direction: column;
   max-height: 100%;
   width: 10%;
 }
 
-.adjustment-button{
+.adjustment-button {
   height: 50%;
   max-width: 100%;
   background-color: transparent;
   border: none;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
 }
 
-.adjustment-button:hover{
+.adjustment-button:hover {
   background-color: var(--color-gray-button);
 }
 
-.adjustment-button:active{
+.adjustment-button:active {
   background-color: var(--color-lavendel-button);
 }
-.adjustment-icon{
+.adjustment-icon {
   max-height: 50%;
   max-width: 100%;
 }
 
-#down{
+#down {
   transform: rotate(180deg);
 }
 
-.image{
+.image {
   width: 90%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
 }
 
-.description-box{
+.description-box {
   display: flex;
   flex-direction: column;
   width: 70%;
@@ -240,7 +241,7 @@ H3, label{
   place-content: center;
 }
 
-.delete-image{
+.delete-image {
   display: flex;
   flex-direction: row;
 
@@ -251,24 +252,24 @@ H3, label{
   border: none;
 }
 
-.delete-icon{
+.delete-icon {
   max-width: 15px;
   max-height: 15px;
 }
 
-.delete-image:hover{
+.delete-image:hover {
   transform: scale(1.05);
 }
 
-.image-description{
+.image-description {
   width: 100%;
   height: 50%;
 
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
 }
 
-.add-image-button{
-  border-radius: calc(var(--global-border-radius)/2);
+.add-image-button {
+  border-radius: calc(var(--global-border-radius) / 2);
   width: 30%;
   height: var(--global-button-height);
   min-height: var(--global-button-min-height);
@@ -283,19 +284,17 @@ H3, label{
   opacity: 0.6; /* Optional: to give a more "disabled" look */
 }
 
-
 @media (max-width: 800px) {
   .type-buttons {
     width: 100%;
   }
 
-  .image-adjustment-box{
+  .image-adjustment-box {
     width: 40%;
   }
 
-  .description-box{
+  .description-box {
     width: 60%;
   }
 }
-
 </style>

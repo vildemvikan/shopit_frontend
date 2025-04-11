@@ -40,13 +40,11 @@ vi.mock('vee-validate', () => {
   }
 })
 
-
 vi.mock('../../../utils/Authentication.ts', () => {
   return {
-    sendResetEmail: vi.fn()
+    sendResetEmail: vi.fn(),
   }
 })
-
 
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect, beforeEach } from 'vitest'
@@ -59,14 +57,14 @@ import { createRouter, createMemoryHistory } from 'vue-router'
 
 const fakeRouter = createRouter({
   history: createMemoryHistory(),
-  routes: []
+  routes: [],
 })
 fakeRouter.push = vi.fn()
 
 const i18n = createI18n({
   legacy: false,
   locale: 'en',
-  messages: { en }
+  messages: { en },
 })
 
 describe('ForgotPasswordForm.vue', () => {
@@ -87,11 +85,11 @@ describe('ForgotPasswordForm.vue', () => {
       global: {
         plugins: [i18n, pinia, fakeRouter],
         stubs: { RouterLink: true },
-      }
+      },
     })
-    const mockedSendResetEmail = vi.mocked(sendResetEmail, true);
+    const mockedSendResetEmail = vi.mocked(sendResetEmail, true)
 
-    mockedSendResetEmail.mockRejectedValue({ response: { status: 500 } });
+    mockedSendResetEmail.mockRejectedValue({ response: { status: 500 } })
 
     // Fill in a valid email.
     const emailInput = wrapper.find('input[type="email"]')
@@ -104,8 +102,6 @@ describe('ForgotPasswordForm.vue', () => {
 
     // Assert that sendResetEmail was called with the valid email.
     expect(sendResetEmail).toHaveBeenCalledWith('test@example.com')
-
-
   })
 
   it('displays error when reset email fails', async () => {
@@ -118,12 +114,12 @@ describe('ForgotPasswordForm.vue', () => {
       global: {
         plugins: [i18n, pinia, fakeRouter],
         stubs: { RouterLink: true },
-      }
+      },
     })
 
-    const mockedSendResetEmail = vi.mocked(sendResetEmail, true);
+    const mockedSendResetEmail = vi.mocked(sendResetEmail, true)
 
-    mockedSendResetEmail.mockRejectedValue({ response: { status: 500 } });
+    mockedSendResetEmail.mockRejectedValue({ response: { status: 500 } })
 
     // Fill in an email.
     const emailInput = wrapper.find('input[type="email"]')
@@ -151,12 +147,12 @@ describe('ForgotPasswordForm.vue', () => {
       global: {
         plugins: [i18n, pinia, fakeRouter],
         stubs: { RouterLink: true },
-      }
+      },
     })
 
-    const mockedSendResetEmail = vi.mocked(sendResetEmail, true);
+    const mockedSendResetEmail = vi.mocked(sendResetEmail, true)
 
-    mockedSendResetEmail.mockRejectedValue({ response: { status: 500 } });
+    mockedSendResetEmail.mockRejectedValue({ response: { status: 500 } })
 
     await wrapper.find('form').trigger('submit.prevent')
     await flushPromises()
@@ -164,7 +160,7 @@ describe('ForgotPasswordForm.vue', () => {
     expect(sendResetEmail).not.toHaveBeenCalled()
 
     const emailInput = wrapper.find('input[type="email"]')
-    await emailInput.setValue('invalid-email')  // no '@'
+    await emailInput.setValue('invalid-email') // no '@'
     await emailInput.trigger('blur')
     await wrapper.find('form').trigger('submit.prevent')
     await flushPromises()
@@ -175,6 +171,6 @@ describe('ForgotPasswordForm.vue', () => {
     // And a validation error should be visible
     const errorMessages = wrapper.findAll('.input-error.visible')
     // We expect at least one error message that includes "Invalid email".
-    expect(errorMessages.some(node => node.text().includes('Invalid email'))).toBe(true)
+    expect(errorMessages.some((node) => node.text().includes('Invalid email'))).toBe(true)
   })
 })

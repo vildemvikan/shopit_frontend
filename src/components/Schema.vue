@@ -5,10 +5,7 @@ import SectionB from '@/components/Schema/SectionB.vue'
 import SectionD from '@/components/Schema/SectionD.vue'
 import SectionC from '@/components/Schema/SectionC.vue'
 import { useAdvertisementStore } from '@/stores/advertisementStore.ts'
-import {
-  createAdvertisement,
-  updateAdvertisement
-} from '../../utils/Advertisement.ts'
+import { createAdvertisement, updateAdvertisement } from '../../utils/Advertisement.ts'
 import router from '@/router'
 import { Condition, PaymentMethod, Status } from '@/enums/enums.ts'
 import type { Advertisement, Image } from '@/interfaces/interfaces.ts'
@@ -16,64 +13,60 @@ import type { Advertisement, Image } from '@/interfaces/interfaces.ts'
 const advertisementStore = useAdvertisementStore()
 
 const props = defineProps<{
-  new: boolean;
-  preview: boolean;
-  id: string|null;
-  advertisement: Advertisement|null;
+  new: boolean
+  preview: boolean
+  id: string | null
+  advertisement: Advertisement | null
 }>()
 
 const isLoading = ref<boolean>(false)
 
-const title = ref<string>(
-  props.new ? advertisementStore.title : props.advertisement.name || ''
-);
+const title = ref<string>(props.new ? advertisementStore.title : props.advertisement.name || '')
 const description = ref<string>(
-  props.new ? advertisementStore.description : props.advertisement.description || ''
-);
+  props.new ? advertisementStore.description : props.advertisement.description || '',
+)
 const condition = ref<Condition | string>(
-  props.new ? advertisementStore.condition : props.advertisement.condition || ''
-);
+  props.new ? advertisementStore.condition : props.advertisement.condition || '',
+)
 const category = ref<string | number>(
-  props.new ? advertisementStore.category : props.advertisement.categoryId || ''
-);
+  props.new ? advertisementStore.category : props.advertisement.categoryId || '',
+)
 const subCategory = ref<string | number>(
-  props.new ? advertisementStore.subCategory : props.advertisement.subCategoryId || ''
-);
+  props.new ? advertisementStore.subCategory : props.advertisement.subCategoryId || '',
+)
 const tags = ref<string[] | null>(
-  props.new ? advertisementStore.tags : props.advertisement.tags || null
-);
+  props.new ? advertisementStore.tags : props.advertisement.tags || null,
+)
 const images = ref<Image[]>(
-  props.new ? advertisementStore.images : props.advertisement.images || []
-);
+  props.new ? advertisementStore.images : props.advertisement.images || [],
+)
 const forSale = ref<boolean>(
-  props.new ? advertisementStore.forSale : props.advertisement.forSale ?? true
-);
+  props.new ? advertisementStore.forSale : (props.advertisement.forSale ?? true),
+)
 const payment = ref<PaymentMethod>(
-  props.new ? advertisementStore.payment : props.advertisement.listingType|| PaymentMethod.None
-);
-const price = ref<number>(
-  props.new ? advertisementStore.price : props.advertisement.price || 0
-);
+  props.new ? advertisementStore.payment : props.advertisement.listingType || PaymentMethod.None,
+)
+const price = ref<number>(props.new ? advertisementStore.price : props.advertisement.price || 0)
 const postalNumber = ref<string>(
-  props.new ? advertisementStore.postalNumber : props.advertisement.location.postalCode|| ''
-);
+  props.new ? advertisementStore.postalNumber : props.advertisement.location.postalCode || '',
+)
 
 const titleError = ref<boolean>(false)
 const descriptionError = ref<boolean>(false)
 const conditionError = ref<boolean>(false)
-const categoryError= ref<boolean>(false)
+const categoryError = ref<boolean>(false)
 const subCategoryError = ref<boolean>(false)
-const imagesError= ref<boolean>(false)
+const imagesError = ref<boolean>(false)
 const priceError = ref<boolean>(false)
 const postalNumberError = ref<boolean>(false)
 
-function titleCheck(){
+function titleCheck() {
   titleError.value = title.value == ''
 }
-function descriptionCheck(){
+function descriptionCheck() {
   descriptionError.value = description.value == ''
 }
-function conditionCheck(){
+function conditionCheck() {
   conditionError.value = condition.value == ''
 }
 function categoryCheck() {
@@ -87,23 +80,22 @@ function imagesCheck() {
 }
 
 function priceCheck() {
-  priceError.value = forSale.value && price.value === 0;
+  priceError.value = forSale.value && price.value === 0
 }
 
 function postalNumberCheck() {
-  postalNumberError.value = !postalNumber.value;
+  postalNumberError.value = !postalNumber.value
 }
 
-
 function validateInput() {
-  titleCheck();
-  descriptionCheck();
-  conditionCheck();
-  categoryCheck();
-  subCategoryCheck();
-  imagesCheck();
-  priceCheck();
-  postalNumberCheck();
+  titleCheck()
+  descriptionCheck()
+  conditionCheck()
+  categoryCheck()
+  subCategoryCheck()
+  imagesCheck()
+  priceCheck()
+  postalNumberCheck()
 
   return (
     titleError.value ||
@@ -114,83 +106,105 @@ function validateInput() {
     imagesError.value ||
     priceError.value ||
     postalNumberError.value
-  );
+  )
 }
 
 function updateImages(newImageList: Image[]) {
   images.value = newImageList
-  if(props.new){advertisementStore.updateImages(newImageList)}
+  if (props.new) {
+    advertisementStore.updateImages(newImageList)
+  }
   imagesCheck()
 }
 
 function updateTitle(newTitle: string) {
   title.value = newTitle
-  if(props.new){advertisementStore.updateTitle(newTitle)}
+  if (props.new) {
+    advertisementStore.updateTitle(newTitle)
+  }
   titleCheck()
 }
 
 function updateDescription(newDescription: string) {
   description.value = newDescription
-  if(props.new){advertisementStore.updateDescription(newDescription)}
+  if (props.new) {
+    advertisementStore.updateDescription(newDescription)
+  }
   descriptionCheck()
 }
 
 function updateCondition(newCondition: Condition) {
-  condition.value = newCondition;
-  if(props.new){advertisementStore.updateCondition(newCondition)}
+  condition.value = newCondition
+  if (props.new) {
+    advertisementStore.updateCondition(newCondition)
+  }
   conditionCheck()
 }
 
 function updateCategory(newCategory: number | string) {
-  category.value = newCategory;
-  if(props.new){advertisementStore.updateCategory(newCategory)}
+  category.value = newCategory
+  if (props.new) {
+    advertisementStore.updateCategory(newCategory)
+  }
   categoryCheck()
 }
 
 function updateSubCategory(newSubCategory: number | string) {
-  subCategory.value = newSubCategory;
-  if(props.new){advertisementStore.updateSubCategory(newSubCategory)}
+  subCategory.value = newSubCategory
+  if (props.new) {
+    advertisementStore.updateSubCategory(newSubCategory)
+  }
   subCategoryCheck()
 }
 
 function updateTags(newTagList: string[]) {
-  tags.value = newTagList;
-  if(props.new){advertisementStore.updateTags(newTagList)}
+  tags.value = newTagList
+  if (props.new) {
+    advertisementStore.updateTags(newTagList)
+  }
 }
 
 function updateForSale(newStatus: boolean) {
   forSale.value = newStatus
-  if(!newStatus){
+  if (!newStatus) {
     price.value = 0
     payment.value = PaymentMethod.None
   }
-  if(props.new){advertisementStore.updateForSale(newStatus)}
+  if (props.new) {
+    advertisementStore.updateForSale(newStatus)
+  }
 }
 
 function updatePrice(newPrice: number) {
   price.value = newPrice
-  if(props.new){advertisementStore.updatePrice(newPrice)}
+  if (props.new) {
+    advertisementStore.updatePrice(newPrice)
+  }
   priceCheck()
 }
 
 function updatePayment(newPaymentMethod: PaymentMethod) {
   payment.value = newPaymentMethod
-  if(props.new){advertisementStore.updatePayment(newPaymentMethod)}
+  if (props.new) {
+    advertisementStore.updatePayment(newPaymentMethod)
+  }
 }
 
 function updatePostalNumber(newPostalNumber: string) {
   postalNumber.value = newPostalNumber
-  if(props.new){advertisementStore.updatePostalNumber(newPostalNumber)}
+  if (props.new) {
+    advertisementStore.updatePostalNumber(newPostalNumber)
+  }
   postalNumberCheck()
 }
 
-function discardChanges(){
-  window.location.reload();
+function discardChanges() {
+  window.location.reload()
 }
 
 async function saveDraft() {
-  if(isLoading.value) return
-  isLoading.value = true;
+  if (isLoading.value) return
+  isLoading.value = true
 
   const valid = validateInput()
   if (!valid) {
@@ -199,51 +213,49 @@ async function saveDraft() {
       await createAdvertisement(body)
       await router.push('profile')
     } catch (error) {
-    }finally {
-      isLoading.value = false;
+    } finally {
+      isLoading.value = false
     }
   } else {
-    isLoading.value = false;
+    isLoading.value = false
   }
 }
 
 async function publish() {
-  if (isLoading.value) return;
-  isLoading.value = true;
-  const invalid = validateInput();
+  if (isLoading.value) return
+  isLoading.value = true
+  const invalid = validateInput()
   if (!invalid) {
     const body = buildJSONBody(Status.Active)
     try {
       await createAdvertisement(body)
       await router.push('profile')
     } catch (error) {
-    }
-    finally {
-      isLoading.value = false;
+    } finally {
+      isLoading.value = false
     }
   } else {
-    isLoading.value = false;
+    isLoading.value = false
   }
 }
 
-async function commitChanges(){
-  if (isLoading.value) return;
-  isLoading.value = true;
-  const invalid = validateInput();
-  if(!invalid){
+async function commitChanges() {
+  if (isLoading.value) return
+  isLoading.value = true
+  const invalid = validateInput()
+  if (!invalid) {
     const body = buildJSONBody(Status.Active)
-    try{
-      await updateAdvertisement(body, props.id);
+    try {
+      await updateAdvertisement(body, props.id)
       await router.push(`/advertisement/${props.id}`)
-    } catch (error){
-    }finally {
-      isLoading.value = false;
+    } catch (error) {
+    } finally {
+      isLoading.value = false
     }
-  }else {
-    isLoading.value = false;
+  } else {
+    isLoading.value = false
   }
 }
-
 
 function buildJSONBody(status: Status) {
   const body = {
@@ -257,12 +269,11 @@ function buildJSONBody(status: Status) {
     condition: condition.value,
     status: status,
     forSale: forSale.value,
-    images: images.value
-  };
+    images: images.value,
+  }
 
-  return JSON.stringify(body);
+  return JSON.stringify(body)
 }
-
 </script>
 
 <template>
@@ -277,7 +288,8 @@ function buildJSONBody(status: Status) {
         @update:images="updateImages"
         :for-sale="forSale"
         :images="images"
-        :images-error="imagesError"/>
+        :images-error="imagesError"
+      />
     </div>
     <div class="section">
       <SectionB
@@ -313,7 +325,8 @@ function buildJSONBody(status: Status) {
       <SectionD
         @update:postalNumber="updatePostalNumber"
         :postal-number="postalNumber"
-        :postal-number-error="postalNumberError"/>
+        :postal-number-error="postalNumberError"
+      />
     </div>
     <div class="button-box">
       <div class="top-button-box">
@@ -321,20 +334,29 @@ function buildJSONBody(status: Status) {
           class="top-button"
           id="preview-button"
           :disabled="!props.preview"
-          @click="preview()">{{$t('button-preview')}}</button>
-        <button  v-if="props.new" class="top-button" id="draft-button" @click="saveDraft()">{{$t('button-draft')}}</button>
-        <button  v-else class="top-button" id="discard-button" @click="discardChanges()">{{$t('button-discard')}}</button>
+          @click="preview()"
+        >
+          {{ $t('button-preview') }}
+        </button>
+        <button v-if="props.new" class="top-button" id="draft-button" @click="saveDraft()">
+          {{ $t('button-draft') }}
+        </button>
+        <button v-else class="top-button" id="discard-button" @click="discardChanges()">
+          {{ $t('button-discard') }}
+        </button>
       </div>
-      <button v-if="props.new" class="bottom-button" id="publish-button" @click="publish()">{{$t('button-publish')}}</button>
-      <button v-else class="bottom-button" id="edit-button" @click="commitChanges()">{{$t('button-edit')}}</button>
+      <button v-if="props.new" class="bottom-button" id="publish-button" @click="publish()">
+        {{ $t('button-publish') }}
+      </button>
+      <button v-else class="bottom-button" id="edit-button" @click="commitChanges()">
+        {{ $t('button-edit') }}
+      </button>
     </div>
   </div>
-
 </template>
 
 <style scoped>
-
-.sections{
+.sections {
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -342,11 +364,11 @@ function buildJSONBody(status: Status) {
   gap: 2vh;
   background-color: var(--color-lavendel-background);
   place-items: center;
-  padding: 2vh 20vh 2ch  20vh;
+  padding: 2vh 20vh 2ch 20vh;
   border-radius: var(--global-border-radius);
 }
 
-.section{
+.section {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -356,40 +378,39 @@ function buildJSONBody(status: Status) {
   border-radius: var(--global-border-radius);
 }
 
-
-button{
+button {
   height: 5vh;
   min-height: 35px;
 }
 
-.button-box{
+.button-box {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 10px;
 }
 
-.top-button-box{
+.top-button-box {
   display: flex;
   flex-direction: row;
   width: 100%;
   gap: 5px;
 }
 
-.top-button{
+.top-button {
   width: 50%;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
 }
 
-#discard-button{
+#discard-button {
   background-color: var(--color-gray-button);
 }
 
-.bottom-button{
+.bottom-button {
   width: 100%;
   background-color: var(--color-black-button);
   color: var(--color-white-text);
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
 }
 
 .loading-cover {
@@ -415,16 +436,17 @@ button{
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-
-@media (max-width: 1000px){
-  .sections{
-    padding: 2vh;
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
-
+@media (max-width: 1000px) {
+  .sections {
+    padding: 2vh;
+  }
+}
 </style>

@@ -7,11 +7,11 @@
   --vt-c-grey: #dedddd;
   --vt-c-dark-gray: rgba(199, 198, 198, 0.64);
   --vt-c-light-lavendel: #dedee8;
-  --vt-c-lavendel: #C6C7D2;
-  --vt-c-dark-lavendel: #888DA7;
+  --vt-c-lavendel: #c6c7d2;
+  --vt-c-dark-lavendel: #888da7;
   --vt-c-dark-dark-lavendel: #373744;
 
-  --vt-c-light-blue: #AED2FF;
+  --vt-c-light-blue: #aed2ff;
   --vt-c-blue: #a2beee;
 
   --vt-c-black: #181818;
@@ -22,11 +22,11 @@
 
   --vt-c-red: #b70000;
   --vt-c-light-light-red: #ffbbbb;
-  --ct-c-light-red: #FF8383;
+  --ct-c-light-red: #ff8383;
   --ct-c-light-dark-red: #f36e6e;
-  --vt-c-orange: #FF8F06;
+  --vt-c-orange: #ff8f06;
   --vt-c-dark-orange: #ff7300;
-  --vt-c-yellow: #FFEDAE;
+  --vt-c-yellow: #ffedae;
   --vt-c-dark-yellow: #ffe096;
   --vt-c-green: #a9d3aa;
 
@@ -43,10 +43,8 @@
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(255, 254, 254, 0.64);
 
-
-  --vt-hokieStone-6t:  #C8C9CA;
+  --vt-hokieStone-6t: #c8c9ca;
   --vt-c-black-hover: #141414;
-
 }
 
 /* semantic color variables for this project */
@@ -64,7 +62,7 @@
   --section-gap: 160px;
 }
 
-:root{
+:root {
   --color-white-background: var(--vt-c-white);
   --color-lavendel-background: var(--vt-c-lavendel);
   --color-light-lavendel-background: var(--vt-c-light-lavendel);
@@ -101,7 +99,7 @@
 
   --color-black-button-hover: var(--vt-c-black-hover);
 
-  --color-active-chat:var(--vt-c-light-lavendel);
+  --color-active-chat: var(--vt-c-light-lavendel);
 
   --color-bid-accepted: var(--vt-c-green);
   --color-bid-rejected: var(--vt-c-light-light-red);
@@ -112,7 +110,7 @@
   --spacing-lg: 1rem;
 
   /* Font Sizes */
-  --font-size-xs: 0.750rem;
+  --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
   --font-size-lg: 1.5rem;
@@ -131,10 +129,9 @@
   --font-size-h3: 1.25rem;
   --heading-weight: 600;
   --heading-line-height: 1.3;
-
 }
 
-:root{
+:root {
   --global-border-size: 1px;
   --global-thicc-border-size: 2px;
   --global-thicccc-border-size: 3.5px;
@@ -153,7 +150,7 @@
     --color-border-hover: var(--vt-c-divider-dark-1);
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-1);
-    --color-active-chat:var(--vt-c-dark-dark-lavendel);
+    --color-active-chat: var(--vt-c-dark-dark-lavendel);
   }
 }
 
@@ -167,13 +164,16 @@ html.manual-dark {
 
   --color-heading: var(--vt-c-text-dark-1);
   --color-text: var(--vt-c-text-dark-1);
-  --color-active-chat:var(--vt-c-dark-dark-lavendel);
+  --color-active-chat: var(--vt-c-dark-dark-lavendel);
 
-  .invertible-icon, .inv-icon, #inv-icon, .inv-image {
+  .invertible-icon,
+  .inv-icon,
+  #inv-icon,
+  .inv-image {
     filter: invert(100%);
   }
 
-  h1{
+  h1 {
     color: var(--vt-c-white);
   }
 }
@@ -213,30 +213,30 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1{
-  font-size: var(--font-size-h1)
+h1 {
+  font-size: var(--font-size-h1);
 }
 
-.error-message{
+.error-message {
   color: var(--color-error-text);
 }
 
-.error{
+.error {
   border: 2px solid var(--color-error-border);
 }
 
-button{
+button {
   cursor: pointer;
 }
 
-select{
+select {
   cursor: pointer;
 }
 
-option{
+option {
   cursor: pointer;
 }
 
-button:disabled{
+button:disabled {
   cursor: auto;
 }

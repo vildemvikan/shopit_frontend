@@ -1,8 +1,7 @@
 <script setup lang="ts">
-
 import { fetchCategories } from '../../../utils/Categories.ts'
 import { onMounted, ref } from 'vue'
-import type {Category} from '@/interfaces/interfaces.ts'
+import type { Category } from '@/interfaces/interfaces.ts'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -21,37 +20,33 @@ async function loadCategories() {
   }
 }
 
-async function searchCategory(categoryId: number){
-  await router.push({name: 'search', query: {category: categoryId}})
-
+async function searchCategory(categoryId: number) {
+  await router.push({ name: 'search', query: { category: categoryId } })
 }
-
 </script>
 
 <template>
   <div class="content">
-    <h2 class="title">{{$t('title-popular-categories')}}</h2>
+    <h2 class="title">{{ $t('title-popular-categories') }}</h2>
     <div class="categories">
       <div class="category" v-for="category in categories">
         <div class="image-background" @click="searchCategory(category.id)">
-          <img :src="category.image.url" class="category-image" alt="category image">
+          <img :src="category.image.url" class="category-image" alt="category image" />
         </div>
-        <label class="category-name">{{category.name}}</label>
+        <label class="category-name">{{ category.name }}</label>
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
-
-.content{
+.content {
   display: flex;
   flex-direction: column;
   place-content: space-between;
 }
 
-.categories{
+.categories {
   display: flex;
   flex-direction: row;
   place-content: center;
@@ -62,7 +57,7 @@ async function searchCategory(categoryId: number){
   gap: 20px;
 }
 
-.category{
+.category {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -72,13 +67,13 @@ async function searchCategory(categoryId: number){
   place-content: center;
 }
 
-.category-name{
+.category-name {
   height: 10%;
   width: 100%;
   text-align: center;
 }
 
-.image-background{
+.image-background {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,14 +83,13 @@ async function searchCategory(categoryId: number){
   border-radius: var(--global-border-radius);
 }
 
-.image-background:hover{
+.image-background:hover {
   transform: scale(1.02);
   cursor: pointer;
 }
 
-.category-image{
+.category-image {
   height: 50%;
   aspect-ratio: 1/1;
 }
-
 </style>

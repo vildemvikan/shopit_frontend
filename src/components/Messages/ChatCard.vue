@@ -8,7 +8,7 @@ import type { ExtendedChatCardInfo } from '@/components/Messages/ChatList.vue'
 
 const props = defineProps<{
   chatCardData: ExtendedChatCardInfo
-}>();
+}>()
 
 dayjs.extend(relativeTime)
 
@@ -16,69 +16,80 @@ const timeAgo = computed(() => {
   return dayjs(props.chatCardData.lastMessageTimestamp).fromNow()
 })
 
-const displayMessage = computed(()=> {
-  let message = props.chatCardData.lastMessageContent;
+const displayMessage = computed(() => {
+  let message = props.chatCardData.lastMessageContent
   if (props.chatCardData.lastSenderId === props.chatCardData.senderId) {
-    const { t } = useI18n();
-    message = t('chat-message-prefix') + message;
+    const { t } = useI18n()
+    message = t('chat-message-prefix') + message
   }
   if (message.length > 44) {
-    message = message.substring(0, 45);
-    return message + "..."
+    message = message.substring(0, 45)
+    return message + '...'
   }
-  return message;
+  return message
 })
-
 </script>
 
 <template>
   <div class="card">
     <div class="image-box">
-      <img :src="props.chatCardData.image|| 'src/assets/icons/no_image.svg'" class="display-image" alt="display image">
-      <img :src="props.chatCardData.recipientProfilePic || 'src/assets/icons/profile.svg'" class="avatar" alt="avatar">
+      <img
+        :src="props.chatCardData.image || 'src/assets/icons/no_image.svg'"
+        class="display-image"
+        alt="display image"
+      />
+      <img
+        :src="props.chatCardData.recipientProfilePic || 'src/assets/icons/profile.svg'"
+        class="avatar"
+        alt="avatar"
+      />
     </div>
 
     <div class="text-info">
       <div class="date-info">
-        <label id="date">{{timeAgo}}</label>
+        <label id="date">{{ timeAgo }}</label>
       </div>
       <div class="title-and-notification">
-        <h3>{{props.chatCardData.itemTitle}}</h3>
+        <h3>{{ props.chatCardData.itemTitle }}</h3>
         <div v-if="props.chatCardData.hasUnreadMessage" class="notification-dot"></div>
       </div>
-      <div class="last-message" >
-        <label id="message"
-               v-if="props.chatCardData.lastMessageType == MessageType.NORMAL">
-          {{displayMessage}}
+      <div class="last-message">
+        <label id="message" v-if="props.chatCardData.lastMessageType == MessageType.NORMAL">
+          {{ displayMessage }}
         </label>
-        <label id="message"
-               v-if="props.chatCardData.lastMessageType == MessageType.CHANGED">
-          {{$t('message-changed')}}
+        <label id="message" v-if="props.chatCardData.lastMessageType == MessageType.CHANGED">
+          {{ $t('message-changed') }}
         </label>
-        <label id="message"
-               v-if="props.chatCardData.lastMessageType == MessageType.BID">
-          {{$t('message-bid')}}
+        <label id="message" v-if="props.chatCardData.lastMessageType == MessageType.BID">
+          {{ $t('message-bid') }}
         </label>
-        <label id="message"
-               v-if="props.chatCardData.lastMessageType == MessageType.PURCHASE">
-          {{$t('message-purchase')}}
+        <label id="message" v-if="props.chatCardData.lastMessageType == MessageType.PURCHASE">
+          {{ $t('message-purchase') }}
         </label>
       </div>
       <div class="info">
-        <label class="status" id="status-active"
-               v-if="props.chatCardData.status == Status.Active">{{$t('label-active')}}</label>
-        <label class="status"
-               id="status-inactive" v-if="props.chatCardData.status == Status.Inactive">{{$t('label-inactive')}}</label>
-        <label class="status"
-               id="status-sold" v-if="props.chatCardData.status == Status.Sold">{{$t('label-sold')}}</label>
+        <label
+          class="status"
+          id="status-active"
+          v-if="props.chatCardData.status == Status.Active"
+          >{{ $t('label-active') }}</label
+        >
+        <label
+          class="status"
+          id="status-inactive"
+          v-if="props.chatCardData.status == Status.Inactive"
+          >{{ $t('label-inactive') }}</label
+        >
+        <label class="status" id="status-sold" v-if="props.chatCardData.status == Status.Sold">{{
+          $t('label-sold')
+        }}</label>
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
-.card{
+.card {
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -116,7 +127,7 @@ const displayMessage = computed(()=> {
   object-fit: cover;
 }
 
-.image-box{
+.image-box {
   position: relative;
   height: 100%;
   aspect-ratio: 1/1;
@@ -124,11 +135,11 @@ const displayMessage = computed(()=> {
   place-content: center;
 }
 
-.display-image{
+.display-image {
   width: 90%;
   aspect-ratio: 1/1;
   object-fit: cover;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   grid-area: 1/1;
 }
 
@@ -143,14 +154,14 @@ h3 {
   padding-bottom: 0.4rem;
 }
 
-.text-info{
+.text-info {
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
 }
 
-.date-info{
+.date-info {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -158,31 +169,30 @@ h3 {
 }
 
 #date {
-  font-weight:bold;
+  font-weight: bold;
 }
 
-.info{
+.info {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
 
-.status{
-  border-radius: calc(var(--global-border-radius)/2);
+.status {
+  border-radius: calc(var(--global-border-radius) / 2);
   padding-left: 5%;
   padding-right: 5%;
 }
 
-#status-active{
+#status-active {
   background-color: var(--color-light-blue-button);
 }
 
-#status-inactive{
+#status-inactive {
   background-color: var(--color-gray-button);
 }
 
-#status-sold{
+#status-sold {
   background-color: var(--color-yellow-button);
 }
-
 </style>

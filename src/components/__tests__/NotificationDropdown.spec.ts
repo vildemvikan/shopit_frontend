@@ -51,11 +51,11 @@ describe('NotificationDropdown.vue', () => {
               tokenStore: {
                 jwtToken: 'dummyToken',
                 accessTokenExpiresAt: Date.now() + 30 * 60 * 1000,
-                email: 'dummy@example.com'
+                email: 'dummy@example.com',
               },
             },
             createSpy: vi.fn,
-          })
+          }),
         ],
         stubs: {
           RouterLink: true,
@@ -74,10 +74,8 @@ describe('NotificationDropdown.vue', () => {
     await flushPromises()
     const renderedText = wrapper.find('.msg').text()
     // Since the expected text is directly from the transcription, we have to include {item}
-    const text: string = '{item} '+renderedText
-    const expectedText = en.notification
-      ? en.notification.BID_PLACED
-      : 'notification.BID_PLACED'
+    const text: string = '{item} ' + renderedText
+    const expectedText = en.notification ? en.notification.BID_PLACED : 'notification.BID_PLACED'
     expect(text).toContain(expectedText)
     // Verify that at least one notification item is rendered.
     expect(wrapper.find('.item').exists()).toBe(true)
@@ -94,9 +92,7 @@ describe('NotificationDropdown.vue', () => {
     })
     // For the next page.
     getNotification.mockResolvedValueOnce({
-      content: [
-        { id: 4, type: 'BID_PLACED', args: {}, createdAt: new Date().toISOString() },
-      ],
+      content: [{ id: 4, type: 'BID_PLACED', args: {}, createdAt: new Date().toISOString() }],
       totalPages: 2,
     })
 
@@ -152,9 +148,7 @@ describe('NotificationDropdown.vue', () => {
     const wrapper = mountComponent()
     await flushPromises()
     expect(wrapper.find('.item').exists()).toBe(false)
-
   })
-
 
   it('handles error when fetching notifications', async () => {
     const errorMessage = 'Network Error'

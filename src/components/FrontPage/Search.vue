@@ -1,8 +1,7 @@
 <script setup lang="ts">
-
 import type { Category } from '@/interfaces/interfaces.ts'
 import { onMounted, ref } from 'vue'
-import {fetchCategoriesWithSubCategories } from '../../../utils/Categories.ts'
+import { fetchCategoriesWithSubCategories } from '../../../utils/Categories.ts'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
@@ -15,7 +14,7 @@ onMounted(async () => {
 
 const categories = ref<Category[]>([])
 const showDropDown = ref<boolean>(false)
-const category = ref<number|null>(null)
+const category = ref<number | null>(null)
 const searchString = ref<string>('')
 
 async function loadAdvertisements() {
@@ -26,31 +25,39 @@ async function loadAdvertisements() {
   }
 }
 
-function toggleCategories(){
+function toggleCategories() {
   showDropDown.value = !showDropDown.value
 }
 
-async function searchCategory(categoryId:string, subCategoryId:string){
-  if(categoryId && subCategoryId){
-    await router.push({name: 'search', query: {category: categoryId, subCategory: subCategoryId}})
+async function searchCategory(categoryId: string, subCategoryId: string) {
+  if (categoryId && subCategoryId) {
+    await router.push({
+      name: 'search',
+      query: { category: categoryId, subCategory: subCategoryId },
+    })
   } else {
-    await router.push({name: 'search', query: {category: categoryId}})
+    await router.push({ name: 'search', query: { category: categoryId } })
   }
 }
 
-async function search(){
-
+async function search() {
   const validSearch = searchString.value.trim() !== ''
   const validCategory = category.value !== null
 
-  if(validSearch && validCategory){
-    await router.push({name: 'search', query: {search: searchString.value, category: category.value}} )
-  }if(validSearch && !validCategory){
-    await router.push({name: 'search', query: {search: searchString.value}})
-  }if(!validSearch && validCategory){
-    await router.push({name: 'search', query: {category: category.value}})
-  } if(!validSearch && !validCategory) {
-    await router.push({name: 'search'})
+  if (validSearch && validCategory) {
+    await router.push({
+      name: 'search',
+      query: { search: searchString.value, category: category.value },
+    })
+  }
+  if (validSearch && !validCategory) {
+    await router.push({ name: 'search', query: { search: searchString.value } })
+  }
+  if (!validSearch && validCategory) {
+    await router.push({ name: 'search', query: { category: category.value } })
+  }
+  if (!validSearch && !validCategory) {
+    await router.push({ name: 'search' })
   }
 }
 </script>
@@ -58,29 +65,39 @@ async function search(){
 <template>
   <div class="search-content">
     <div class="categories" @click="toggleCategories">
-      <small class="categories-label">{{$t('label-shop-by-category')}}</small>
-      <img src="@/assets/icons/up.svg" alt="icon" class="invertible-icon" :class="{open: showDropDown}">
+      <small class="categories-label">{{ $t('label-shop-by-category') }}</small>
+      <img
+        src="@/assets/icons/up.svg"
+        alt="icon"
+        class="invertible-icon"
+        :class="{ open: showDropDown }"
+      />
     </div>
 
     <div class="search-bar">
-      <img src="@/assets/icons/search.svg" class="inv-icon" alt="search">
+      <img src="@/assets/icons/search.svg" class="inv-icon" alt="search" />
       <input
         class="search-input"
         :placeholder="t('label-search')"
         type="text"
-        v-model="searchString">
+        v-model="searchString"
+      />
       <select class="category-option" v-model="category">
-        <option :value="null"> {{$t('option-category-all')}}</option>
-        <option :value="category.id" v-for="category in categories">{{category.name}}</option>
+        <option :value="null">{{ $t('option-category-all') }}</option>
+        <option :value="category.id" v-for="category in categories">{{ category.name }}</option>
       </select>
 
       <div class="mega-menu-dropdown" v-if="showDropDown">
         <div class="mega-menu-column" v-for="category in categories" :key="category.id">
-          <h3 class="mega-menu-heading"
-              @click="searchCategory(category.id, null)">{{ category.name }}</h3>
+          <h3 class="mega-menu-heading" @click="searchCategory(category.id, null)">
+            {{ category.name }}
+          </h3>
           <ul v-if="category.subcategories && category.subcategories.length">
-            <li v-for="subCategory in category.subcategories"
-                :key="subCategory.id" @click="searchCategory(category.id, subCategory.id)">
+            <li
+              v-for="subCategory in category.subcategories"
+              :key="subCategory.id"
+              @click="searchCategory(category.id, subCategory.id)"
+            >
               {{ subCategory.name }}
             </li>
           </ul>
@@ -89,15 +106,12 @@ async function search(){
     </div>
 
     <button class="search-button" @click="search">
-      {{$t('button-search')}}
+      {{ $t('button-search') }}
     </button>
-
   </div>
-
 </template>
 
 <style scoped>
-
 .search-content {
   position: relative; /* New: establish positioning context */
   display: flex;
@@ -111,9 +125,9 @@ async function search(){
   gap: 10px;
 }
 
-.categories{
+.categories {
   display: flex;
-  width:  6%;
+  width: 6%;
   height: 30%;
   background: transparent;
   border: none;
@@ -122,23 +136,22 @@ async function search(){
   place-items: center;
 }
 
-.categories-label{
+.categories-label {
   cursor: pointer;
   width: 85%;
 }
 
-.invertible-icon{
+.invertible-icon {
   height: 1em;
   transform: rotate(180deg);
   cursor: pointer;
 }
 
-.open{
+.open {
   transform: rotate(0deg);
 }
 
-
-.search-bar{
+.search-bar {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -146,15 +159,15 @@ async function search(){
   height: 30%;
   align-items: center;
   border: var(--global-border-size) solid;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
 }
 
-.inv-icon{
+.inv-icon {
   height: 60%;
   margin: 10px;
 }
 
-.search-input{
+.search-input {
   width: 80%;
   height: 100%;
   border: none;
@@ -162,7 +175,7 @@ async function search(){
   color: var(--color-text);
 }
 
-.search-input:focus{
+.search-input:focus {
   outline: none;
 }
 
@@ -170,7 +183,7 @@ async function search(){
   color: transparent;
 }
 
-.category-option{
+.category-option {
   min-width: 20%;
   height: 100%;
   border: none;
@@ -180,19 +193,17 @@ async function search(){
   padding: 10px;
 }
 
-.search-button{
+.search-button {
   height: 30%;
   aspect-ratio: 2/1;
   background-color: var(--color-gray-button);
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   border: var(--global-border-size) solid;
 }
 
-.search-button:hover{
+.search-button:hover {
   background-color: var(--color-dark-gray-button);
 }
-
-
 
 .mega-menu-dropdown {
   position: absolute;
@@ -201,7 +212,7 @@ async function search(){
   width: 100%;
   background-color: var(--color-background);
   border: var(--global-border-size) solid var(--color-gray-divider);
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
   box-shadow: var(--global-box-shaddow);
   display: flex;
   flex-wrap: wrap;
@@ -210,7 +221,7 @@ async function search(){
 }
 
 .mega-menu-column {
-  width: calc(100% /3);
+  width: calc(100% / 3);
 }
 
 .mega-menu-heading {
@@ -219,7 +230,7 @@ async function search(){
   cursor: pointer;
 }
 
-.mega-menu-heading:hover{
+.mega-menu-heading:hover {
   text-decoration: underline;
 }
 
@@ -238,26 +249,26 @@ async function search(){
   text-decoration: underline;
 }
 
-@media (max-width: 1000px){
-  .search-bar{
+@media (max-width: 1000px) {
+  .search-bar {
     width: 80%;
   }
 
-  .categories{
+  .categories {
     width: 8.5%;
   }
 }
 
-@media (max-width: 700px){
-  .search-bar{
+@media (max-width: 700px) {
+  .search-bar {
     width: 80%;
   }
 
-  .categories{
+  .categories {
     display: none;
   }
 
-  .category-option{
+  .category-option {
     display: none;
   }
 }

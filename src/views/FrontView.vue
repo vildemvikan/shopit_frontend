@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import NewAdvertisements from '@/components/FrontPage/NewAdvertisements.vue'
 import PopularCategories from '@/components/FrontPage/PopularCategories.vue'
 import Search from '@/components/FrontPage/Search.vue'
@@ -8,42 +7,34 @@ import Search from '@/components/FrontPage/Search.vue'
 <template>
   <div class="content">
     <div class="search-bar">
-      <Search/>
+      <Search />
     </div>
     <div class="categories">
-      <PopularCategories/>
-
+      <PopularCategories />
     </div>
     <div class="new-advertisements">
-      <NewAdvertisements/>
-
+      <NewAdvertisements />
     </div>
   </div>
-
-
 </template>
 
 <style scoped>
-
-.content{
+.content {
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
 }
 
-.search-bar{
+.search-bar {
   height: 20%;
-
 }
 
-.categories{
+.categories {
   height: 30%;
-
 }
-.new-advertisements{
+.new-advertisements {
   height: 50%;
   width: 100%;
 }
-
 </style>

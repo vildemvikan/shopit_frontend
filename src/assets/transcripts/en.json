@@ -59,7 +59,6 @@
   "filter-for-free": "For free",
   "filter-new-today": "New today",
 
-
   "option-oldest": "Date: Oldest to Newest",
   "option-newest": "Date: Newest to Oldest",
   "option-status-all": "Status: All",
@@ -69,7 +68,6 @@
   "option-category-all": "All categories",
   "option-cheapest": "Price: Low to High",
   "option-most-expensive": "Price: High to Low",
-
 
   "button-type-sell": "For Sale",
   "button-type-free": "Give Away",
@@ -96,7 +94,6 @@
   "button-send-message": "Send",
   "button-cancel-message": "Cancel",
 
-
   "drop-down-category": "Select category",
   "drop-down-sub-category": "Select sub category",
   "drop-down-condition": "Select condition",
@@ -115,11 +112,11 @@
   "condition-acceptable": "Acceptable - Visibly used",
   "condition-for-parts": "For parts - Broken or missing parts",
 
-  "title-error" : "Title is missing!",
+  "title-error": "Title is missing!",
   "description-error": "Description is missing!",
   "condition-error": "Condition is missing!",
   "category-error": "Category is missing!",
-  "sub-category-error":"Sub-category is missing!",
+  "sub-category-error": "Sub-category is missing!",
   "images-error": "Upload minimum one image!",
   "price-error": "The price must be above zero (or else change the advertisement type)!",
   "postal-number-error": "Invalid postal code!",

@@ -3,24 +3,24 @@ export enum Condition {
   LikeNew = 'LIKE_NEW',
   Good = 'GOOD',
   Acceptable = 'ACCEPTABLE',
-  ForParts = 'FOR_PARTS'
+  ForParts = 'FOR_PARTS',
 }
 
 export enum PaymentMethod {
   Direct = 'DIRECT',
   Auction = 'BID',
-  None = 'CONTACT'
+  None = 'CONTACT',
 }
-export enum Status{
+export enum Status {
   Active = 'ACTIVE',
   Inactive = 'INACTIVE',
-  Sold = 'SOLD'
+  Sold = 'SOLD',
 }
 
-export enum County{
+export enum County {
   Agder = 'Agder',
   Akershus = 'Akershus',
-  Buskerud ='Buskerud',
+  Buskerud = 'Buskerud',
   Finnmark = 'Finnmark',
   Innlandet = 'Innladet',
   MøreOgRomsdal = 'Møre og Romsdal',
@@ -33,21 +33,18 @@ export enum County{
   Trøndelag = 'Trøndelag',
   Vestland = 'Vestland',
   Vestfold = 'Vestfold',
-  Østland = 'Østland'
+  Østland = 'Østland',
 }
 
 export enum MessageType {
-  NORMAL="NORMAL",
-  BID="BID",
-  PURCHASE="PURCHASE",
-  CHANGED = 'STATUS_CHANGED'
+  NORMAL = 'NORMAL',
+  BID = 'BID',
+  PURCHASE = 'PURCHASE',
+  CHANGED = 'STATUS_CHANGED',
 }
 
-export enum BidStatus{
+export enum BidStatus {
   Accepted = 'ACCEPTED',
   Rejected = 'REJECTED',
   Pending = 'PENDING',
 }
-
-
-

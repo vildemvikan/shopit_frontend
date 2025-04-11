@@ -1,4 +1,3 @@
-
 import { ref } from 'vue'
 import { vi } from 'vitest'
 
@@ -14,46 +13,51 @@ vi.mock('vee-validate', () => {
           const lastNameVal = fieldValues.lastName ? fieldValues.lastName.value : ''
           const emailVal = fieldValues.email ? fieldValues.email.value : ''
           const passwordVal = fieldValues.password ? fieldValues.password.value : ''
-          const confirmPasswordVal = fieldValues.confirmPassword ? fieldValues.confirmPassword.value : ''
-          let valid = true;
+          const confirmPasswordVal = fieldValues.confirmPassword
+            ? fieldValues.confirmPassword.value
+            : ''
+          let valid = true
           if (!firstNameVal) {
             if (fieldErrors.firstName) fieldErrors.firstName.value = 'First name is required'
-            valid = false;
+            valid = false
           } else {
             if (fieldErrors.firstName) fieldErrors.firstName.value = ''
           }
           if (!lastNameVal) {
             if (fieldErrors.lastName) fieldErrors.lastName.value = 'Last name is required'
-            valid = false;
+            valid = false
           } else {
             if (fieldErrors.lastName) fieldErrors.lastName.value = ''
           }
           if (!emailVal) {
             if (fieldErrors.email) fieldErrors.email.value = 'Email is required'
-            valid = false;
+            valid = false
           } else if (!emailVal.includes('@')) {
             if (fieldErrors.email) fieldErrors.email.value = 'Invalid email'
-            valid = false;
+            valid = false
           } else {
             if (fieldErrors.email) fieldErrors.email.value = ''
           }
           if (!passwordVal || passwordVal.length < 6) {
-            if (fieldErrors.password) fieldErrors.password.value = 'Password is required or too short'
-            valid = false;
+            if (fieldErrors.password)
+              fieldErrors.password.value = 'Password is required or too short'
+            valid = false
           } else {
             if (fieldErrors.password) fieldErrors.password.value = ''
           }
           if (!confirmPasswordVal) {
-            if (fieldErrors.confirmPassword) fieldErrors.confirmPassword.value = 'Password confirmation is required'
-            valid = false;
+            if (fieldErrors.confirmPassword)
+              fieldErrors.confirmPassword.value = 'Password confirmation is required'
+            valid = false
           } else if (confirmPasswordVal !== passwordVal) {
-            if (fieldErrors.confirmPassword) fieldErrors.confirmPassword.value = 'Passwords do not match'
-            valid = false;
+            if (fieldErrors.confirmPassword)
+              fieldErrors.confirmPassword.value = 'Passwords do not match'
+            valid = false
           } else {
             if (fieldErrors.confirmPassword) fieldErrors.confirmPassword.value = ''
           }
           if (!valid) {
-            return;
+            return
           }
           return fn({
             firstName: firstNameVal,
@@ -80,7 +84,6 @@ vi.mock('vee-validate', () => {
   }
 })
 
-
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { createTestingPinia } from '@pinia/testing'
@@ -92,13 +95,13 @@ import { createRouter, createMemoryHistory } from 'vue-router'
 
 const router = createRouter({
   history: createMemoryHistory(),
-  routes: []
+  routes: [],
 })
 
 const i18n = createI18n({
   legacy: false,
   locale: 'en',
-  messages: { en }
+  messages: { en },
 })
 
 describe('SignUpForm.vue', () => {
@@ -128,8 +131,8 @@ describe('SignUpForm.vue', () => {
     const wrapper = mount(SignUpForm, {
       global: {
         plugins: [i18n, pinia, router],
-        stubs: { RouterLink: true }
-      }
+        stubs: { RouterLink: true },
+      },
     })
 
     await wrapper.find('input[placeholder="First name"]').setValue('John')
@@ -151,7 +154,7 @@ describe('SignUpForm.vue', () => {
       'test@example.com',
       'John',
       'Doe',
-      'password123'
+      'password123',
     )
 
     vi.useFakeTimers()
@@ -161,8 +164,8 @@ describe('SignUpForm.vue', () => {
       'test@example.com',
       'John',
       'Doe',
-      'password123'
-    );
+      'password123',
+    )
     vi.useRealTimers()
   })
 
@@ -173,14 +176,14 @@ describe('SignUpForm.vue', () => {
     })
     const tokenStore = useTokenStore(pinia)
     tokenStore.registerAndSaveToken = vi.fn().mockRejectedValue({
-      response: { status: 400 }
+      response: { status: 400 },
     })
 
     const wrapper = mount(SignUpForm, {
       global: {
         plugins: [i18n, pinia, router],
-        stubs: { RouterLink: true }
-      }
+        stubs: { RouterLink: true },
+      },
     })
 
     await wrapper.find('input[placeholder="First name"]').setValue('Jane')
@@ -212,8 +215,8 @@ describe('SignUpForm.vue', () => {
     const wrapper = mount(SignUpForm, {
       global: {
         plugins: [i18n, pinia, router],
-        stubs: { RouterLink: true }
-      }
+        stubs: { RouterLink: true },
+      },
     })
 
     // Submit form without filling any fields.
@@ -245,9 +248,9 @@ describe('SignUpForm.vue', () => {
 
     // The registration action should still not be called.
     expect(tokenStore.registerAndSaveToken).not.toHaveBeenCalled()
-    const confirmPwdErrors = wrapper.findAll('.input-error').filter(node =>
-      node.text().includes('Passwords do not match')
-    )
+    const confirmPwdErrors = wrapper
+      .findAll('.input-error')
+      .filter((node) => node.text().includes('Passwords do not match'))
     expect(confirmPwdErrors.length).toBeGreaterThan(0)
   })
 })

@@ -23,7 +23,7 @@ const messages = { no, en }
 const i18n = createI18n({
   locale: 'en', // default language
   fallbackLocale: 'en',
-  messages
+  messages,
 })
 
 const pinia = createPinia()
@@ -33,7 +33,7 @@ app.use(Toast, {
   position: 'bottom-right',
   timeout: 5000,
   closeOnClick: true,
-  pauseOnHover: true
+  pauseOnHover: true,
 })
 
 app.use(pinia)
@@ -44,5 +44,3 @@ const tokenStore = useTokenStore()
 tokenStore.initializeTimer()
 
 app.mount('#app')
-
-

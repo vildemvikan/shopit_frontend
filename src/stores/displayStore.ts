@@ -3,8 +3,8 @@ import { Condition } from '@/stores/advertisementStore.ts'
 
 export const displayStore = defineStore('display', {
   state: () => ({
-    language: null as string|null,
-    mode: null as string | null
+    language: null as string | null,
+    mode: null as string | null,
   }),
 
   actions: {
@@ -15,5 +15,5 @@ export const displayStore = defineStore('display', {
       this.mode = newMode
     },
   },
-  persist: true
+  persist: true,
 })

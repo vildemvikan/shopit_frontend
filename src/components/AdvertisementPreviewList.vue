@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { Status } from '@/enums/enums.ts'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -8,17 +7,17 @@ import { useRouter } from 'vue-router'
 import { createBookmark, deleteBookmark } from '../../utils/Bookmark.ts'
 
 dayjs.extend(relativeTime)
-const router = useRouter();
+const router = useRouter()
 
 const emit = defineEmits<{
-  (e: 'remove-bookmark'): void;
+  (e: 'remove-bookmark'): void
 }>()
 
 const props = defineProps<{
   id: number
   title: string
   price: number
-  status: Status;
+  status: Status
   date: string
   image: string
   location: string
@@ -34,78 +33,92 @@ const timeAgo = computed(() => {
   return dayjs(props.date).fromNow()
 })
 
-async function bookmarkItem(){
-  try{
+async function bookmarkItem() {
+  try {
     const result = await createBookmark(props.id.toString())
-    if(result == 401){
+    if (result == 401) {
       await router.push('/auth')
     }
     bookmarked.value = result === 200
-
-  } catch (error){
+  } catch (error) {
     bookmarked.value = false
   }
 }
 
-async function removeBookmark(){
-  try{
+async function removeBookmark() {
+  try {
     const result = await deleteBookmark(props.id.toString())
-    if(result == 401){
+    if (result == 401) {
       await router.push('/auth')
     }
     bookmarked.value = !(result == 204)
     await emit('remove-bookmark')
-  } catch (error){
+  } catch (error) {
     bookmarked.value = true
   }
 }
 
-async function goToAdvertisement(){
+async function goToAdvertisement() {
   await router.push('/advertisement/' + props.id)
 }
-
 </script>
 
 <template>
   <div class="my-advertisement-preview" @click="goToAdvertisement">
     <div class="image-box">
-      <img :src="props.image" class="display-image" alt="display image">
+      <img :src="props.image" class="display-image" alt="display image" />
     </div>
     <div class="text-info">
       <div class="date-info">
         <div class="corner-text">
-          <label id="date">{{timeAgo}}</label>
-          <small v-if="displayLocation">{{location}}</small>
+          <label id="date">{{ timeAgo }}</label>
+          <small v-if="displayLocation">{{ location }}</small>
         </div>
 
-        <img src="../assets/icons/bookmarkNotMarked.svg"
-             alt="bookmark" class="bookmark" v-if="!bookmarked && displayBookmark" @click.stop="bookmarkItem"/>
-        <img src="../assets/icons/bookmarkMarked.svg"
-             alt="bookmark" class="bookmark" v-if="bookmarked && displayBookmark" @click.stop="removeBookmark"/>
+        <img
+          src="../assets/icons/bookmarkNotMarked.svg"
+          alt="bookmark"
+          class="bookmark"
+          v-if="!bookmarked && displayBookmark"
+          @click.stop="bookmarkItem"
+        />
+        <img
+          src="../assets/icons/bookmarkMarked.svg"
+          alt="bookmark"
+          class="bookmark"
+          v-if="bookmarked && displayBookmark"
+          @click.stop="removeBookmark"
+        />
       </div>
 
-      <h3>{{props.title}}</h3>
+      <h3>{{ props.title }}</h3>
       <div class="info">
-        <label id="price" v-if="props.price > 0">{{props.price}},- NOK</label>
-        <label id="price" v-else>{{$t('label-free')}}</label>
-        <label class="status" id="status-active"
-               v-if="props.status == Status.Active && displayStatus">
-          {{$t('label-active')}}</label>
-        <label class="status"
-               id="status-inactive" v-if="props.status == Status.Inactive && displayStatus">
-          {{$t('label-inactive')}}</label>
-        <label class="status"
-               id="status-sold" v-if="props.status == Status.Sold">
-          {{$t('label-sold')}}</label>
+        <label id="price" v-if="props.price > 0">{{ props.price }},- NOK</label>
+        <label id="price" v-else>{{ $t('label-free') }}</label>
+        <label
+          class="status"
+          id="status-active"
+          v-if="props.status == Status.Active && displayStatus"
+        >
+          {{ $t('label-active') }}</label
+        >
+        <label
+          class="status"
+          id="status-inactive"
+          v-if="props.status == Status.Inactive && displayStatus"
+        >
+          {{ $t('label-inactive') }}</label
+        >
+        <label class="status" id="status-sold" v-if="props.status == Status.Sold">
+          {{ $t('label-sold') }}</label
+        >
       </div>
-
     </div>
   </div>
-
 </template>
 
 <style scoped>
-.my-advertisement-preview{
+.my-advertisement-preview {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -120,30 +133,30 @@ async function goToAdvertisement(){
   border: var(--global-border-size) solid var(--color-gray-divider);
 }
 
-.my-advertisement-preview:hover{
+.my-advertisement-preview:hover {
   transform: scale(1.01);
   cursor: pointer;
 }
 
-.image-box{
+.image-box {
   height: 100%;
 }
 
-.display-image{
+.display-image {
   height: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
-  border-radius: calc(var(--global-border-radius)/2);
+  border-radius: calc(var(--global-border-radius) / 2);
 }
 
-.text-info{
+.text-info {
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
 }
 
-.date-info{
+.date-info {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -153,43 +166,43 @@ async function goToAdvertisement(){
   gap: 20px;
 }
 
-.corner-text{
+.corner-text {
   display: flex;
   flex-direction: column;
 }
 
-#date, #price {
-  font-weight:bold;
+#date,
+#price {
+  font-weight: bold;
 }
 
-.bookmark{
+.bookmark {
   height: 100%;
 }
 
-.info{
+.info {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
 
-.status{
-  border-radius: calc(var(--global-border-radius)/2);
+.status {
+  border-radius: calc(var(--global-border-radius) / 2);
   padding-left: 5%;
   padding-right: 5%;
   font-weight: bold;
   color: var(--color-black-text);
 }
 
-#status-active{
+#status-active {
   background-color: var(--color-light-blue-button);
 }
 
-#status-inactive{
+#status-inactive {
   background-color: var(--color-gray-button);
 }
 
-#status-sold{
+#status-sold {
   background-color: var(--color-yellow-button);
 }
-
 </style>

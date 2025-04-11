@@ -5,14 +5,17 @@ import * as yup from 'yup'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 const { t } = useI18n()
-import {useTokenStore} from '../../stores/tokenStore.ts'
+import { useTokenStore } from '../../stores/tokenStore.ts'
 // Example schema with confirmPassword & TOS
 const schema = yup.object({
   firstName: yup.string().required(t('firstNameRequired')),
   lastName: yup.string().required(t('lastNameRequired')),
   email: yup.string().email(t('invalidEmail')).required(t('emailRequired')),
   password: yup.string().min(6, t('tooShortPassword')).required(t('passwordRequired')),
-  confirmPassword: yup.string().required(t('passwordConfirmRequired')).oneOf([yup.ref('password')], t('matchPassword'))
+  confirmPassword: yup
+    .string()
+    .required(t('passwordConfirmRequired'))
+    .oneOf([yup.ref('password')], t('matchPassword')),
 })
 const tokenStore = useTokenStore()
 const { handleSubmit } = useForm({ validationSchema: schema })
@@ -20,38 +23,47 @@ const { handleSubmit } = useForm({ validationSchema: schema })
 // Fields
 const { value: firstName, errorMessage: firstNameError } = useField('firstName', undefined, {
   validateOnValueUpdate: false,
-});
+})
 const { value: lastName, errorMessage: lastNameError } = useField('lastName', undefined, {
   validateOnValueUpdate: false,
-});
+})
 const { value: email, errorMessage: emailError } = useField('email', undefined, {
   validateOnValueUpdate: false,
-});
+})
 const { value: password, errorMessage: passwordError } = useField('password', undefined, {
   validateOnValueUpdate: false,
-});
-const { value: confirmPassword, errorMessage: confirmPasswordError } = useField('confirmPassword', undefined, {
-  validateOnValueUpdate: false,
-});
+})
+const { value: confirmPassword, errorMessage: confirmPasswordError } = useField(
+  'confirmPassword',
+  undefined,
+  {
+    validateOnValueUpdate: false,
+  },
+)
 
-const router = useRouter();
-const serverError = ref('');
-const serverSuccess = ref('');
+const router = useRouter()
+const serverError = ref('')
+const serverSuccess = ref('')
 // Server error or success message
 const onSubmit = handleSubmit(async (values) => {
-  serverError.value = '';
-  serverSuccess.value = '';
+  serverError.value = ''
+  serverSuccess.value = ''
   try {
-    await tokenStore.registerAndSaveToken(values.email, values.firstName, values.lastName, values.password);
-    serverSuccess.value = t('registrationSuccess');
+    await tokenStore.registerAndSaveToken(
+      values.email,
+      values.firstName,
+      values.lastName,
+      values.password,
+    )
+    serverSuccess.value = t('registrationSuccess')
     setTimeout(() => {
-      router.push('/auth/login');
-    }, 1);
+      router.push('/auth/login')
+    }, 1)
   } catch (error: any) {
-    if (error.status===409) {
-      serverError.value = t('emailTaken'); // Vi burde kanskje oversette errors fra serverside...
+    if (error.status === 409) {
+      serverError.value = t('emailTaken') // Vi burde kanskje oversette errors fra serverside...
     } else {
-      serverError.value = t('unexpectedError');
+      serverError.value = t('unexpectedError')
     }
   }
 })
@@ -70,11 +82,7 @@ const onSubmit = handleSubmit(async (values) => {
     <div class="form-row">
       <div class="form-group half">
         <label for="firstName">{{ t('firstName') }}</label>
-        <input
-          type="text"
-          v-model="firstName"
-          :placeholder="t('firstName')"
-        />
+        <input type="text" v-model="firstName" :placeholder="t('firstName')" />
         <p class="input-error" :class="{ visible: firstNameError }">
           {{ firstNameError || '\u00A0' }}
         </p>
@@ -83,11 +91,7 @@ const onSubmit = handleSubmit(async (values) => {
       <div class="form-group half">
         <label for="lastName">{{ t('lastName') }}</label>
 
-        <input
-          type="text"
-          v-model="lastName"
-          :placeholder="t('lastName')"
-        />
+        <input type="text" v-model="lastName" :placeholder="t('lastName')" />
         <p class="input-error" :class="{ visible: lastNameError }">
           {{ lastNameError || '\u00A0' }}
         </p>
@@ -97,7 +101,7 @@ const onSubmit = handleSubmit(async (values) => {
     <!-- Email -->
     <div class="form-group">
       <label for="email">{{ t('email') }}</label>
-      <input type="email" v-model="email" :placeholder="t('email')"/>
+      <input type="email" v-model="email" :placeholder="t('email')" />
       <p class="input-error" :class="{ visible: emailError }">
         {{ emailError || '\u00A0' }}
       </p>
@@ -127,11 +131,11 @@ const onSubmit = handleSubmit(async (values) => {
     <!-- Submit Button -->
     <button type="submit">
       {{ t('registerBtn') }}
-    </button>  </form>
+    </button>
+  </form>
 </template>
 
 <style scoped>
-
 .form-title {
   font-size: var(--font-size-h2);
   font-weight: var(--heading-weight);
@@ -190,7 +194,6 @@ const onSubmit = handleSubmit(async (values) => {
   color: var(--color-text);
   box-sizing: border-box;
   min-height: 2.5rem; /* optional, to ensure a taller box */
-
 }
 
 .form-group input::placeholder {
@@ -202,7 +205,6 @@ const onSubmit = handleSubmit(async (values) => {
   outline: none;
   box-shadow: 0 0 0 2px rgba(136, 141, 167, 0.2); /* light lavender glow */
 }
-
 
 .accept-tos label {
   font-size: var(--font-size-sm);
@@ -239,7 +241,9 @@ button {
   font-weight: 600;
   padding: var(--btn-padding-y) var(--btn-padding-x);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease-in-out;
 }
 
 button:hover {
