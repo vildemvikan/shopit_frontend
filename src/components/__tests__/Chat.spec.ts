@@ -6,14 +6,12 @@ import useEventsBus from '../../../utils/EventBus'
 import websocketService from '../../../utils/WebSocket'
 import Chat from '@/components/Messages/Chat.vue'
 
-// Use vi.hoisted() for variables needed by mocks
 const mockEventBusData = vi.hoisted(() => ({
   selectChat: null,
   messageReceived: null,
   refreshList: null
 }))
 
-// Setup mocks at the top of the file
 vi.mock('../../../utils/Messages', () => ({
   fetchChatMessages: vi.fn().mockResolvedValue([]),
   fetchProfileInfo: vi.fn().mockResolvedValue({ fullName: 'Test User', url: 'test.jpg' })
@@ -25,7 +23,6 @@ vi.mock('../../../utils/WebSocket', () => ({
   }
 }))
 
-// Use inline function for EventBus mock
 vi.mock('../../../utils/EventBus', () => {
   return {
     default: vi.fn(() => {
@@ -42,20 +39,17 @@ vi.mock('../../../utils/EventBus', () => {
   }
 })
 
-// Mock DOM elements and methods
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn()
 }))
 
-// Setup document.querySelector mock
 document.querySelector = vi.fn().mockImplementation(() => ({
   scrollTop: 0,
   scrollHeight: 1000
 }))
 
-// Mock window.getSelection
 window.getSelection = vi.fn().mockImplementation(() => ({
   getRangeAt: vi.fn().mockReturnValue({
     startOffset: 0,
@@ -67,19 +61,16 @@ window.getSelection = vi.fn().mockImplementation(() => ({
   addRange: vi.fn()
 }))
 
-// Mock translation function
 const mockTranslation = vi.fn().mockImplementation(key => key)
 
 describe('Chat', () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-    // Reset event bus data
     Object.keys(mockEventBusData).forEach(key => {
       mockEventBusData[key] = null
     })
 
-    // Reset mock return values
     vi.mocked(fetchChatMessages).mockResolvedValue([])
     vi.mocked(fetchProfileInfo).mockResolvedValue({ fullName: 'Test User', url: 'test.jpg' })
   })

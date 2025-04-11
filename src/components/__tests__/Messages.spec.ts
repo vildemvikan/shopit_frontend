@@ -2,10 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import axios from 'axios'
 import { fetchChatMessages, fetchProfileInfo, fetchChatList } from '../../../utils/Messages'
 
-// Mock axios
 vi.mock('axios')
 
-// Mock token store
 vi.mock('@/stores/tokenStore', () => ({
   useTokenStore: vi.fn(() => ({
     getToken: 'mock-token'
