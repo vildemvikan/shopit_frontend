@@ -47,8 +47,15 @@ describe('NotificationDropdown.vue', () => {
           i18n,
           createTestingPinia({
             stubActions: false,
+            initialState: {
+              tokenStore: {
+                jwtToken: 'dummyToken',
+                accessTokenExpiresAt: Date.now() + 30 * 60 * 1000,
+                email: 'dummy@example.com'
+              },
+            },
             createSpy: vi.fn,
-          }),
+          })
         ],
         stubs: {
           RouterLink: true,

@@ -12,6 +12,7 @@ To run the client you need the following installed:
 
 - Vue
 - Docker
+- Node
 
 ### ⚙️Setup
 
@@ -32,8 +33,11 @@ cd shopit_frontend
 ```
 
 ### 🚗Running the client
-
-1. To run the client (NOTE: make sure Docker is running)
+1. Download dependencies:
+```
+npm i
+```
+2: Run the client (NOTE: make sure Docker is running)
 ```
 npm run dev
 ```

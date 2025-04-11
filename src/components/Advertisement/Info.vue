@@ -7,6 +7,8 @@ import {changeStatus} from '../../../utils/Advertisement.ts'
 import DeletePopUp from '@/components/Popups/DeletePopUp.vue'
 import { placeOrder } from '../../../utils/Order.ts'
 import BidPopUp from '@/components/Popups/BidPopUp.vue'
+import MapComp from '@/components/Map/MapComp.vue'
+import { fetchChatList } from '../../../utils/Messages.ts'
 import MessagePopUp from '@/components/Popups/MessagePopUp.vue'
 import { Condition, PaymentMethod, Status } from '@/enums/enums.ts'
 import { useTokenStore } from '@/stores/tokenStore.ts'
@@ -18,7 +20,7 @@ const props = defineProps<{
   description: string
   forSale: boolean
   postalCode: string
-  city: string
+  location: Location
   price: string
   payment: PaymentMethod
   condition: Condition
@@ -122,7 +124,7 @@ async function sendBid(){
       <label v-if="props.status === Status.Sold" class="for-sale-info" id="sold">{{$t('label-sold')}}</label>
       <div class="location-info">
         <img src="@/assets/icons/location.svg" alt="Location" class="location-icon">
-        <label class="location">{{postalCode}}, {{city}}</label>
+        <label class="location">{{postalCode}}, {{location.city}}</label>
       </div>
     </div>
     <h2 class="price" v-if="price > 0">{{price}},- NOK</h2>
@@ -219,6 +221,12 @@ async function sendBid(){
     <div class="seller-info">
       <label class="seller-name">{{seller}}</label>
     </div>
+  </div>
+  <div class="map">
+    <MapComp
+      :lat="location.latitude"
+      :lng="location.longitude"
+    />
   </div>
 
 </template>
