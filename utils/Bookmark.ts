@@ -17,7 +17,6 @@ export async function fetchUserBookmarks(size: number, page:number,direction:str
         'Authorization': `Bearer ${token}`
       }
     })
-    console.log(response.data)
     return response.data
   }catch (error){
     throw error
@@ -38,10 +37,8 @@ export async function createBookmark(id: string){
         'Authorization': `Bearer ${token}`
       }
     });
-    console.log(response.status)
     return response.status
   } catch (error){
-    console.log(error)
     return new Error("Error! Could not bookmark advertisement!")
   }
 }
@@ -60,10 +57,8 @@ export async function deleteBookmark(id:string){
         'Authorization': `Bearer ${token}`
       }
     });
-    console.log(response.status)
     return response.status
   } catch (error){
-    console.log(error)
     return new Error ("Error! Could not delete bookmark!")
   }
 }

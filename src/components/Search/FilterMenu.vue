@@ -73,7 +73,6 @@ function selectCategory(category: Category) {
   if (count > 0) {
     selectedCategory.value = category.id
     selectedSubCategory.value = null
-    console.log('Selected category:', selectedCategory.value)
   }
 }
 
@@ -81,7 +80,6 @@ function selectSubCategory(subCategory: SubCategory) {
   const count = props.subcategoryFacet?.[subCategory.id] || 0
   if (count > 0) {
     selectedSubCategory.value = subCategory.id
-    console.log('Selected subcategory:', selectedSubCategory.value)
   }
 }
 

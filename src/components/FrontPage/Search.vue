@@ -20,7 +20,6 @@ const searchString = ref<string>('')
 async function loadAdvertisements() {
   try {
     categories.value = await fetchCategoriesWithSubCategories()
-    console.log(categories.value)
   } catch (error) {
     console.error(error)
   }

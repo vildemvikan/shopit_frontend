@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 // Replace this with your actual message sending function
-import { sendMessageToUser } from '../../../utils/'
 import { contactSeller } from '../../../utils/Messages.ts'
 
 const { t } = useI18n()

@@ -44,8 +44,6 @@ export async function fetchChatList(size: number, page:number) {
   const url = `${baseUrl}/chats`;
   const tokenStore = useTokenStore();
   const token = tokenStore.getToken;
-
-  console.log('SIZE:' + size)
   try {
     const response = await axios.get(url, {
       params:{
@@ -57,7 +55,6 @@ export async function fetchChatList(size: number, page:number) {
         'Authorization': `Bearer ${token}`
       }
     });
-    console.log(response)
     return await response.data;
   } catch(error) {
     console.error("Error fetching chat list: ", error)

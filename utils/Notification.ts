@@ -8,7 +8,6 @@ export async function getNotification(page: number = 0, size: number = 3) {
   const url = `${baseURL}/me`
   const tokenStore = useTokenStore();
   const token: string | null  = tokenStore.getToken;
-  console.log(token)
   try {
     const response = await axios.get(url, {
       headers: {
@@ -20,7 +19,6 @@ export async function getNotification(page: number = 0, size: number = 3) {
         size
       }
     })
-    console.log(response.data)
     return response.data
   } catch (error) {
     console.error(error)

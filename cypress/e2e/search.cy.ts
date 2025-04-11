@@ -1,6 +1,7 @@
 describe('Search View', () => {
   beforeEach(() => {
     cy.visit('/search');
+    cy.wait(3000)
   });
 
   it('should load search results with no filters', () => {

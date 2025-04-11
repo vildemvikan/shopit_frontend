@@ -12,7 +12,7 @@ export async function getToken(email: string, password: string) {
         },
         withCredentials: true
       }
-    ); console.log(result)
+    );
     return result.data
   } catch (error: any) {
     if (error.response) {
@@ -34,7 +34,7 @@ export async function registerUser(email: string, firstName: string,
           "Content-Type": "application/json"
         }, withCredentials: true
       }
-    ); console.log(result)
+    );
     return result
   }  catch (error: any) {
     if (error.response) {
@@ -55,7 +55,7 @@ export async function logout(accessToken: string){
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       }, withCredentials: true
-    }); console.log(result)
+    });
     return result.status
   }  catch (error: any) {
     if (error.response) {
@@ -74,7 +74,6 @@ export const sendResetEmail = async (email: string) => {
     const result =  await axios.post( url, { email }, {
       headers: { "Content-Type": "application/json" }
     })
-    console.log(result)
     return(result)
   } catch (error: any) {
     console.error("Failed to send reset email:", error.response?.data || error.message);
@@ -89,7 +88,6 @@ export async function validateResetToken(token: string, email: string):
     const result = await axios.get(url, {
       params: { token, email },
     });
-    console.log(result)
     return result.data;
   } catch (error: any) {
     if (error.response && error.response.data) {
@@ -112,7 +110,7 @@ export async function resetPasswordWithToken(token: string,
       {token, email, newPassword},  {
         headers: { "Content-Type": "application/json" },
       }
-    ); console.log(response)
+    );
     return response;
   } catch (error: any) {
     console.error("Password reset failed:", error.response?.data || error.message);
@@ -128,7 +126,6 @@ export async function refreshToken() {
         withCredentials: true,
       }
     );
-    console.log(response);
     return response.data;
   } catch (error: any) {
     console.error(error);

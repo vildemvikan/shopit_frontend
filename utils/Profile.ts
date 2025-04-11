@@ -15,7 +15,6 @@ export async function fetchUserInformation(){
         'Authorization': `Bearer ${token}`
       }
     })
-    console.log(response.data)
     return await response.data
   } catch (error){
     console.error(error)
@@ -43,7 +42,6 @@ export async function fetchUserAdvertisements(size: number, page: number,
         'Authorization': `Bearer ${token}`
       }
     })
-    console.log(response.data)
     return await response.data
   } catch (error){
     console.error(error)
@@ -55,7 +53,6 @@ export async function updateProfilePicture(base64Url: string){
   const tokenStore = useTokenStore();
   const token = tokenStore.getToken;
   const url = baseURL + '/profilePicture'
-  console.log("BASE" + base64Url)
   try{
     const response = await axios.post(url, {url: base64Url},{
       headers: {
@@ -63,7 +60,6 @@ export async function updateProfilePicture(base64Url: string){
         'Authorization': `Bearer ${token}`
       }
     })
-    console.log(response.status)
   } catch (error){
     console.error(error)
     return new Error("Error! Could not fetch user information.")

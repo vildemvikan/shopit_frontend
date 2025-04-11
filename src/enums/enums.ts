@@ -8,7 +8,7 @@ export enum Condition {
 
 export enum PaymentMethod {
   Direct = 'DIRECT',
-  Auction = 'AUCTION',
+  Auction = 'BID',
   None = 'CONTACT',
 }
 export enum Status {

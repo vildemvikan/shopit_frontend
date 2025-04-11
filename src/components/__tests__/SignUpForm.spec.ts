@@ -160,7 +160,6 @@ describe('SignUpForm.vue', () => {
     vi.useFakeTimers()
     vi.advanceTimersByTime(1500)
     await flushPromises()
-    console.log(wrapper.html())
     expect(tokenStore.registerAndSaveToken).toHaveBeenCalledWith(
       'test@example.com',
       'John',

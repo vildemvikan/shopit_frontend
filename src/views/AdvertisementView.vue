@@ -15,7 +15,6 @@ const advertisement = ref<Advertisement | null>(null)
 onMounted(async () => {
   try {
     advertisement.value = await fetchAdvertisement(id)
-    console.log('Fetched advertisement:', advertisement.value)
   } catch (error) {
     console.error('Error fetching advertisement:', error)
   }
@@ -76,6 +75,7 @@ async function goToSubCategory() {
           :seller="advertisement.sellerFullName"
           :advertisement-id="advertisement.id"
           :status="advertisement.status"
+          :seller-picture="advertisement.sellerPicture"
         />
       </div>
     </div>

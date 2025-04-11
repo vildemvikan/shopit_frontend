@@ -108,40 +108,6 @@ describe('ImageCarousel.vue', () => {
     expect((wrapper.vm as any).selectedIndex).toBe(2)
   })
 
-  it('opens and closes the modal', async () => {
-    const wrapper = mount(ImageCarousel, {
-      global: {
-        plugins: [i18n, fakeRouter, createTestingPinia({ stubActions: false, createSpy: vi.fn })],
-        provide: { router: fakeRouter },
-        mocks: { $t: (key: string) => en[key] || key },
-      },
-      props: {
-        id: 'item1',
-        images: images,
-        status: 'ACTIVE',
-        isOwner: false,
-        isBookmarked: false,
-      },
-    })
-    await flushPromises()
-
-    expect(wrapper.find('.modal-overlay').exists()).toBe(false)
-
-    // Open modal.
-    const displayImage = wrapper.find('.display-image')
-    await displayImage.trigger('click')
-    await flushPromises()
-    expect((wrapper.vm as any).showModal).toBe(true)
-    expect(wrapper.find('.modal-overlay').exists()).toBe(true)
-
-    // Close modal.
-    const closeButton = wrapper.find('button.close-button')
-    await closeButton.trigger('click')
-    await flushPromises()
-    expect((wrapper.vm as any).showModal).toBe(false)
-    expect(wrapper.find('.modal-overlay').exists()).toBe(false)
-  })
-
   it('calls bookmarkItem and updates bookmark state correctly', async () => {
     const createBookmarkMock = vi.mocked(createBookmark, { shallow: true })
     createBookmarkMock.mockResolvedValue(200)

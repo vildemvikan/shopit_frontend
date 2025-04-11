@@ -7,12 +7,14 @@ import { fetchChatList } from '../../../utils/Messages.ts'
 import { useTokenStore } from '@/stores/tokenStore.ts'
 import webSocket from '../../../utils/WebSocket.ts'
 import Pagination from '@/components/Pagination.vue'
+import { useRoute } from 'vue-router'
 
 const selectedChatId = ref<string | null>(null)
 const chatList: Ref<ExtendedChatCardInfo[]> = ref([])
 
 const { emit } = useEventsBus()
 const { bus } = useEventsBus()
+const route = useRoute()
 
 export interface ExtendedChatCardInfo extends ChatCardInfo {
   hasUnreadMessage?: boolean
@@ -21,7 +23,6 @@ export interface ExtendedChatCardInfo extends ChatCardInfo {
 watch(
   () => bus.value.get('messageReceived'),
   async (val) => {
-    console.log('FETCH')
     await fetchChatRooms()
     const payload = JSON.parse(val[0].body)
     if (selectedChatId.value && selectedChatId.value !== payload.senderId + payload.itemId) {
@@ -47,7 +48,17 @@ onMounted(async () => {
 
   setTimeout(() => {
     if (chatList.value.length > 0) {
-      sendSelectedChat(chatList.value[0])
+      if (route.query.itemId && route.query.recipientId) {
+        const recipientId = route.query.recipientId
+        const itemId = route.query.itemId
+        sendSelectedChat({
+          recipientId: recipientId,
+          itemId: itemId,
+          senderId: useTokenStore().getEmail,
+        })
+      } else {
+        sendSelectedChat(chatList.value[0])
+      }
     }
   }, 100)
 })

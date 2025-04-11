@@ -213,7 +213,6 @@ async function saveDraft() {
       await createAdvertisement(body)
       await router.push('profile')
     } catch (error) {
-      console.log(error)
     } finally {
       isLoading.value = false
     }
@@ -228,12 +227,10 @@ async function publish() {
   const invalid = validateInput()
   if (!invalid) {
     const body = buildJSONBody(Status.Active)
-    await console.log(body)
     try {
       await createAdvertisement(body)
       await router.push('profile')
     } catch (error) {
-      console.log(error)
     } finally {
       isLoading.value = false
     }
@@ -246,14 +243,12 @@ async function commitChanges() {
   if (isLoading.value) return
   isLoading.value = true
   const invalid = validateInput()
-  console.log(invalid)
   if (!invalid) {
     const body = buildJSONBody(Status.Active)
     try {
       await updateAdvertisement(body, props.id)
       await router.push(`/advertisement/${props.id}`)
     } catch (error) {
-      console.log(error)
     } finally {
       isLoading.value = false
     }

@@ -19,7 +19,7 @@ describe('Front Page', () => {
   it('should show popular categories and click one', () => {
     cy.get('.categories .category')
       .should('have.length.greaterThan', 0)
-      .first()
+      .eq(2)
       .click();
 
     cy.url().should('include', '/search');

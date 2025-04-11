@@ -76,7 +76,6 @@ async function navigateTo(path: string) {
 
 function toggleMenu() {
   status.value = !status.value
-  console.log(status.value)
 }
 
 const iconPath = (icon: string) => new URL(`../assets/icons/${icon}`, import.meta.url).href

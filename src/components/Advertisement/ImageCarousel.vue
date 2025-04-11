@@ -26,11 +26,12 @@ function previousImage() {
   if (selectedIndex.value > 0) {
     selectedIndex.value -= 1
   } else {
-    selectedIndex.value = images.length - 1
+    selectedIndex.value = props.images.length - 1
   }
 }
+
 function nextImage() {
-  if (selectedIndex.value < images.length - 1) {
+  if (selectedIndex.value < props.images.length - 1) {
     selectedIndex.value += 1
   } else {
     selectedIndex.value = 0
@@ -101,30 +102,6 @@ async function removeBookmark() {
       <label>{{ images[selectedIndex].caption }}</label>
     </div>
 
-    <transition name="fade">
-      <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
-        <div class="modal-content">
-          <img :src="images[selectedIndex].url" alt="Large Image" />
-
-          <div class="rotate-buttons" v-if="images.length > 1">
-            <button @click="previousImage" class="rotate-button" id="rotate-button-modular">
-              <img
-                src="@/assets/icons/up.svg"
-                class="rotate-icon"
-                id="previous"
-                alt="Previous image"
-              />
-            </button>
-            <button @click="nextImage" class="rotate-button" id="rotate-button-modular">
-              <img src="@/assets/icons/up.svg" class="rotate-icon" id="next" alt="Next Image" />
-            </button>
-          </div>
-
-          <button class="close-button" @click="closeModal">Close</button>
-        </div>
-      </div>
-    </transition>
-
     <div class="rotate-buttons" v-if="images.length > 1">
       <button @click="previousImage" class="rotate-button">
         <img src="@/assets/icons/up.svg" class="rotate-icon" id="previous" alt="Previous image" />
@@ -185,7 +162,6 @@ async function removeBookmark() {
   height: 100%;
   object-fit: cover;
   border-radius: calc(var(--global-border-radius) / 2);
-  cursor: pointer;
 }
 
 .status-mark {
@@ -215,32 +191,6 @@ async function removeBookmark() {
   text-transform: uppercase;
 }
 
-/* Modal overlay styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  position: relative;
-  max-width: 90%;
-  max-height: 90%;
-}
-
-.modal-content img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 /* Position the rotate buttons over the modal image */
 .rotate-buttons {
   position: absolute;
@@ -252,7 +202,6 @@ async function removeBookmark() {
   transform: translateY(-50%);
   z-index: 10;
   padding: 0 20px;
-  cursor: pointer;
 }
 
 .rotate-buttons button:hover {
@@ -268,11 +217,6 @@ async function removeBookmark() {
   aspect-ratio: 1/1;
   border-radius: 100%;
 }
-
-#rotate-button-modular {
-  max-width: 5%;
-}
-
 .bookmark {
   position: absolute;
   top: 5px;
@@ -296,18 +240,6 @@ async function removeBookmark() {
 
 #previous {
   rotate: -90deg;
-}
-
-/* Close button styles */
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(255, 255, 255, 0.8);
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 4px;
 }
 
 .image-caption {

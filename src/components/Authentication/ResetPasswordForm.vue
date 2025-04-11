@@ -23,7 +23,6 @@ const isSubmitting = ref(false)
 onMounted(async () => {
   try {
     const response = await validateResetToken(token, email)
-    console.log(response)
     isTokenValid.value = response.valid
   } catch (err: any) {
     isTokenValid.value = false
@@ -56,7 +55,6 @@ const onSubmit = handleSubmit(async (values) => {
   serverSuccess.value = ''
   isSubmitting.value = true
   try {
-    console.log(values.password)
     await resetPasswordWithToken(token, email, values.password)
     serverSuccess.value = t('resetSuccess')
     setTimeout(() => router.push('/login'), 2500)

@@ -38,7 +38,6 @@ export async function fetchAdvertisement(id: string) {
   }
   try {
     const response = await axios.get(url, { headers });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -65,7 +64,6 @@ export async function fetchNewestAdvertisements(size: number){
       },
       headers
     });
-    console.log(response.data)
     return response.data
   } catch (error){
     console.error(error)
@@ -117,7 +115,6 @@ export async function searchAdvertisements(
         sortDir: direction
       },headers
     });
-    console.log(response.data)
     return response.data
   } catch (error){
     console.error(error)
@@ -138,7 +135,6 @@ export async function createAdvertisement(data: string){
     });
     return response.status
   } catch (error){
-    console.log(error)
     return new Error("Error! Could not create advertisement!")
   }
 }
@@ -154,10 +150,8 @@ export async function updateAdvertisement(data: string, id:string){
         'Authorization': `Bearer ${token}`
       }
     });
-    console.log(response.status)
     return response.status
   } catch (error){
-    console.log(error)
     return new Error("Error! Could not update advertisement!")
   }
 }
@@ -173,10 +167,8 @@ export async function changeStatus(status: Status, id: string){
         'Authorization': `Bearer ${token}`
       }
     })
-    console.log(response.status)
     return response.status
   } catch (error){
-    console.log(error)
     return new Error("Error! Could not update status for advertisement!")
   }
 }
@@ -192,10 +184,8 @@ export async function deleteAdvertisement(id:string){
         'Authorization': `Bearer ${token}`
       }
     });
-    console.log(response.status)
     return response.status
   } catch (error){
-    console.log(error)
     return new Error ("Error! Could not delete advertisement!")
   }
 }

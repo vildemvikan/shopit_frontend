@@ -55,6 +55,10 @@ const router = createRouter({
       path: '/messages',
       name: 'messages',
       component: MessagesView,
+      props: (route) => ({
+        itemId: route.query.itemId || null,
+        recipientId: route.query.recipientId || null,
+      }),
     },
     {
       path: '/profile',
