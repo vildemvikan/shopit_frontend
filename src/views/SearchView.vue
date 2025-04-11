@@ -2,7 +2,7 @@
 
 import FilterMenu from '@/components/Search/FilterMenu.vue'
 import SimpleSearch from '@/components/Search/SimpleSearch.vue'
-import { onMounted, ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import type{MenuFilter, Search, Advertisement
 } from '@/interfaces/interfaces.ts'
 import { Condition, County } from '@/enums/enums.ts'
@@ -17,7 +17,7 @@ const page = ref<number>(0)
 const totalPages = ref<number>(0)
 
 const displayList = ref<boolean>(false)
-const orderBy= ref<number>(1)
+const orderBy= ref<number|null>(null)
 
 const route = useRoute()
 const router = useRouter()
@@ -44,7 +44,9 @@ const subCategoryFacet = ref<any>(null)
 const publishedTodayFacet = ref<any>(null)
 
 onMounted(async () => {
-  if (route.query.category) {
+  if(route.query.search){
+    keyWord.value = route.query.search as string;
+  }if (route.query.category) {
     categoryId.value = Number(route.query.category) as unknown as number;
   } if (route.query.subCategory) {
     subCategoryId.value = Number(route.query.subCategory) as unknown as number;
@@ -127,7 +129,7 @@ async function fetchAdvertisements(){
   try{
     let field = 'publishedAt'
     let direction = 'asc'
-    if (orderBy.value == 1 || orderBy.value == 4) {
+    if (orderBy.value == null || orderBy.value == 4) {
       direction = 'desc'
     }
     if (orderBy.value == 3 || orderBy.value == 4) {
@@ -212,6 +214,7 @@ function toggleDisplay(){
 
       <div class="search-box">
         <simple-search
+          :search="keyWord"
           @update-keyword="newKeyword"
         />
       </div>
@@ -227,7 +230,7 @@ function toggleDisplay(){
                  src="@/assets/icons/list.svg" alt="display list" class="button-icon">
           </button>
           <select class="display-button" id="filter-dropdown" v-model="orderBy">
-            <option :value="1">{{$t('option-newest')}}</option>
+            <option :value="null">{{$t('option-newest')}}</option>
             <option :value="2">{{ $t('option-oldest') }}</option>
             <option :value="3">{{ $t('option-cheapest') }}</option>
             <option :value="4">{{ $t('option-most-expensive') }}</option>

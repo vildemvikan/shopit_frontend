@@ -1,10 +1,24 @@
 <script setup lang="ts">
 
-import { ref } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n();
+onMounted( async () => {
+  console.log(props.keyWord);
+  searchString.value = props.search
+})
+
+const props = defineProps<{
+  search:String
+}>()
+
 const searchString = ref<string>('')
+
+watch(() => props.search, (newSearch) => {
+  searchString.value = newSearch
+}, { immediate: true }); // Ensure it runs on mount as well
+
 
 const emit = defineEmits(['updateKeyword'])
 
