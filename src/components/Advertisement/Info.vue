@@ -10,17 +10,9 @@ import BidPopUp from '@/components/Popups/BidPopUp.vue'
 import MapComp from '@/components/Map/MapComp.vue'
 import { fetchChatList } from '../../../utils/Messages.ts'
 import MessagePopUp from '@/components/Popups/MessagePopUp.vue'
+import { Condition, PaymentMethod, Status } from '@/enums/enums.ts'
+import { useTokenStore } from '@/stores/tokenStore.ts'
 const { t } = useI18n();
-enum PaymentMethod {
-  Direct = 'DIRECT',
-  Auction = 'BID',
-  None = 'CONTACT'
-}
-enum Status{
-  Active = 'ACTIVE',
-  Inactive = 'INACTIVE',
-  Sold = 'SOLD'
-}
 
 const props = defineProps<{
   owner: boolean
@@ -38,13 +30,6 @@ const props = defineProps<{
   status: Status
 }>()
 
-enum Condition {
-  New = 'NEW',
-  LikeNew = 'LIKE_NEW',
-  Good = 'GOOD',
-  Acceptable = 'ACCEPTABLE',
-  ForParts = 'FOR_PARTS'
-}
 
 const conditions = ref([
   {text: t('condition-new'), value: Condition.New},
@@ -76,15 +61,34 @@ async function handleStatusChange(status: Status){
   }
 }
 
+async function checkAuthorization(){
+  const tokenStore = useTokenStore()
+  if(!tokenStore.isAuthenticated){
+    await router.push('/auth/login')
+  }
+}
+
 async function purchaseItem(){
-  try{
+  await checkAuthorization()
+
+  try {
     const result = await placeOrder(props.advertisementId)
-    if(result == 200){
+    if (result == 200) {
       await router.push('/messages')
     } else return
-  }catch (error){
+  } catch (error) {
     console.log(error)
   }
+}
+
+async function sendMessage(){
+  await checkAuthorization()
+  displayMessagePopUp.value = true
+}
+
+async function sendBid(){
+  await checkAuthorization()
+  displayBidPopUp.value = true
 }
 
 
@@ -131,7 +135,7 @@ async function purchaseItem(){
   <div class="button-box" v-if="!owner && props.status !== Status.Sold">
     <button
       v-if="props.payment == PaymentMethod.Auction"
-      class="button" id="blue-button" @click="displayBidPopUp = true" >
+      class="button" id="blue-button" @click="sendBid" >
       <label class="button-label">{{$t('button-auction')}}</label>
     </button>
     <button
@@ -142,7 +146,7 @@ async function purchaseItem(){
     >
       <label class="button-label" id="orange-button-label">{{$t('button-vipps')}}</label>
     </button>
-    <button class="button" id="gray-button" @click="displayMessagePopUp = true">
+    <button class="button" id="gray-button" @click="sendMessage()">
       <label class="button-label" id="gray-button-label">{{$t('button-contact-seller')}}</label>
     </button>
   </div>
