@@ -4,8 +4,14 @@ import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { getNotification, deleteNotification } from '../../../utils/Notification'
+import { useTokenStore } from '@/stores/tokenStore.ts'
+import router from '@/router'
 const deleteIcon = new URL('@/assets/icons/x.svg', import.meta.url).href
 const refreshIcon = new URL('@/assets/icons/refresh2.svg', import.meta.url).href
+
+const emit = defineEmits<{
+  (e: 'close-dropdown'): void;
+}>()
 
 // Configuration for pagination (set as you prefer)
 const perPage = 3
@@ -25,15 +31,19 @@ dayjs.locale('nb')
 // Fetch notifications from backend for a given page.
 // reset flag will clear the notifications array (e.g. for a refresh)
 async function fetchNotifications(page: number, reset = false) {
-  const result = await getNotification(page, perPage)
-  if (Array.isArray(result)) {
-    if (reset) {
-      notifications.value = result
-      currentPage.value = page
-    } else {
-      // Append new notifications to the existing array
-      notifications.value = [...notifications.value, ...result]
+  try{
+    const result = await getNotification(page, perPage)
+    if (Array.isArray(result)) {
+      if (reset) {
+        notifications.value = result
+        currentPage.value = page
+      } else {
+        // Append new notifications to the existing array
+        notifications.value = [...notifications.value, ...result]
+      }
     }
+  } catch(error){
+    console.error()
   }
 }
 
@@ -62,7 +72,13 @@ const removeNotification = async (id: number) => {
   }
 }
 
-onMounted(() => {
+onMounted(async() => {
+  const tokenStore = useTokenStore()
+  if (!tokenStore.isAuthenticated) {
+    await router.push('/auth/login')
+    emit('close-dropdown')
+    return
+  }
   const dropdown = document.querySelector('.dropdown')
   dropdown?.addEventListener('touchstart', onTouchStart)
   dropdown?.addEventListener('touchmove', onTouchMove)
@@ -132,7 +148,8 @@ function timeAgo(date: string): string {
       </button>
     </div>
     <div class="notification-list">
-      <div v-for="notification in notifications" :key="notification.id" class="item">
+      <div v-for="notification in notifications" v-if="notifications.length > 0"
+           :key="notification.id" class="item">
         <div class="msg">
           {{ $t(`notification.${notification.type}`, notification.args) }}
         </div>
@@ -144,6 +161,7 @@ function timeAgo(date: string): string {
           <img :src="deleteIcon" alt="Delete" class="icon" />
         </button>
       </div>
+      <label v-else>{{$t('placeholder-no-notifications')}}</label>
     </div>
     <div v-if="notifications.length > (currentPage.value + 1) * perPage" class="load-more-wrapper">
       <button class="load-more-btn" @click="loadMore">{{ $t(`notification.showMore`) }}</button>

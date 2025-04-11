@@ -10,7 +10,7 @@
   "title-popular-categories": "Populære kategorier",
   "title-new-advertisements": "Nye annonser",
   "title-bookmarks": "Bokmerker",
-  "title-notifications": "Notefikasjoner",
+  "title-notifications": "Varslinger",
   "title-enter-bid": "Hvor mye vil du by?",
   "title-enter-message": "Skriv en melding:",
 
@@ -181,6 +181,7 @@
   "placeholder-no-advertisement-match": "Ops! Ingen annonser matcher søket.",
   "placeholder-no-chatrooms": "Ops! Du har ingen tilgjengelige samtaler.",
   "placeholder-no-created-advertisements": "Ops! Du har ingen tilgjengelige annonser.",
+  "placeholder-no-notifications": "Du har ingen varslinger.",
 
   "message-changed": "Et bud har endret status!",
   "message-bid": "Nytt bud!",

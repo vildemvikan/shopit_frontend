@@ -208,6 +208,7 @@
   "placeholder-no-advertisement-match": "Ops! No advertisements matches your search.",
   "placeholder-no-chatrooms": "Ops! You have no available chats.",
   "placeholder-no-created-advertisements": "Ops! You have no available advertisements to display.",
+  "placeholder-no-notifications": "You have not received any notifications.",
 
   "message-changed": "Bid status has changed!",
   "message-bid": "New bid!",
