@@ -81,3 +81,9 @@ To run end-to-end tests:
 ```
 npm run test:e2e:dev
 ```
+### Group members
+ShopIT was developed by a team of three students: 
+
+- Tini Tran
+- Vilde Min Vikan
+- Harry Xu
