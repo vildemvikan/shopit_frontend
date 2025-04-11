@@ -26,7 +26,6 @@ const onSubmit = handleSubmit(async (values) => {
 
   try {
     await sendResetEmail(values.email);
-    console.log(values.email)
     serverSuccess.value = t('resetLinkSent');
   } catch (error: any) {
     serverError.value = t('resetRequestFailed');

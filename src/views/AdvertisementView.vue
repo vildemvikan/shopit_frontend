@@ -15,7 +15,6 @@ const advertisement = ref<Advertisement|null>(null)
 onMounted(async () => {
   try {
     advertisement.value = await fetchAdvertisement(id)
-    console.log('Fetched advertisement:', advertisement.value)
   } catch (error) {
     console.error('Error fetching advertisement:', error)
   }

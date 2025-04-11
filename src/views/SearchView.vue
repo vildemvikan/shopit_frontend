@@ -76,7 +76,6 @@ async function newKeyword(newKeyword:string){
 }
 
 async function newPrice(newPrices: {min: number, max:number}){
-  console.log(newPrices)
   minPrice.value = newPrices.min
   maxPrice.value = newPrices.max
   await updateRoute()
@@ -90,8 +89,6 @@ async function newFilters(newFilters: MenuFilter){
   forSale.value = newFilters.forSale
   forFree.value = newFilters.forFree
   published.value = newFilters.published
-
-  console.log(forFree.value)
 
   if(published.value == false){
     published.value = null
@@ -160,9 +157,6 @@ async function fetchAdvertisements(){
     subCategoryFacet.value = result.subCategoryFacet
     countyFacet.value = result.countyFacet
     publishedTodayFacet.value = result.publishedTodayFacet
-
-    console.log('SEARCH')
-    console.log(advertisements.value)
 
   }catch (error){
     console.error(error)

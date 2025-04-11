@@ -78,7 +78,7 @@ async function purchaseItem(){
       await router.push('/messages')
     } else return
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 

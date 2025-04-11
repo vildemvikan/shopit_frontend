@@ -44,7 +44,6 @@ function handleFileUpload(event: Event) {
 
 async function changeProfilePicture(){
   try{
-    console.log(profilePicture.value)
     if(profilePicture.value){
       await updateProfilePicture(profilePicture.value)
       toast.success(t('toast-profile-picture-changed'))

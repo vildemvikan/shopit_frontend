@@ -42,8 +42,6 @@ const isExceeded = computed(() => charCount.value > MAX_CHARS);
 
 
 watch(() => bus.value.get('selectChat'), (val) => {
-  console.log('VALUE')
-  console.log(val)
   currentChatRoomInfo.recipientMail = val[0].recipientMail;
   currentChatRoomInfo.senderMail = val[0].senderMail;
   currentChatRoomInfo.itemId = val[0].itemId
@@ -75,8 +73,6 @@ const displayMessages = async (chatRoomInfo: ChatRoomInfo) => {
   });
 
   chatMessageInfo.value = processMessages(messagesWithTime);
-  console.log('MESSAGES')
-  console.log(chatMessageInfo.value)
 
   const messageList = document.querySelector("#message-list");
   if (messageList) {
@@ -104,7 +100,6 @@ const displayProfile = async (profileMail: string) => {
 
 const displayAdvertisement = async (itemId: string) => {
   advertisementInfo.value = await fetchAdvertisement(itemId);
-  console.log(advertisementInfo.value)
 }
 
 const sendMessage = (e: Event) => {

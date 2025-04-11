@@ -26,10 +26,8 @@ export const useTokenStore = defineStore('tokenStore', {
         this.accessTokenExpiresAt = Date.now() + 30 * 60 * 1000 // 30 minutes
         this.startRefreshTimer()
 
-        console.log("Expiration:" + this.accessTokenExpiresAt)
         await router.push('/')
       } catch (error: any) {
-        console.log(error)
         throw { message: error.message, status: error.status };
 
       }
@@ -46,7 +44,6 @@ export const useTokenStore = defineStore('tokenStore', {
         this.jwtToken = response.data.token;
         this.email = email;
         this.accessTokenExpiresAt = Date.now() + 30 * 60 * 1000
-        console.log(response.data.token);
       } catch (error: any) {
         if (error) {
           throw { message: error.message, status: error.status };
@@ -70,7 +67,6 @@ export const useTokenStore = defineStore('tokenStore', {
     },
 
     async refreshAccessToken() {
-      console.log('refreshing token')
       try {
         const response = await refreshToken()
         this.jwtToken = response.token
@@ -87,7 +83,6 @@ export const useTokenStore = defineStore('tokenStore', {
       if (this.tokenTimer) clearTimeout(this.tokenTimer)
 
       const remainingTime = this.accessTokenExpiresAt - Date.now();
-      console.log('Remaining time:' + (remainingTime / (1000 * 60)))
 
       const refreshMargin = 10 * 60 * 1000; // 5 minutes
       const refreshDelay = Math.max(remainingTime - refreshMargin, 0);
@@ -106,8 +101,6 @@ export const useTokenStore = defineStore('tokenStore', {
     },
 
     isAccessTokenExpired(): boolean {
-      console.log(Date.now())
-      console.log(this.accessTokenExpiresAt)
       return Date.now() > this.accessTokenExpiresAt;
     },
 

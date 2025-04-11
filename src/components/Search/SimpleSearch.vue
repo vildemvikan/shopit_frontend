@@ -5,7 +5,6 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n();
 onMounted( async () => {
-  console.log(props.keyWord);
   searchString.value = props.search
 })
 

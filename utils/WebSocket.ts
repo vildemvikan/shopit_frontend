@@ -15,7 +15,6 @@ let stompClient: Client | null = null;
 const websocketService = {
   connect(userId: string) {
     if (stompClient) {
-      console.log('Already connected to WebSocket');
       return;
     }
 
@@ -38,7 +37,6 @@ const websocketService = {
         if (!username) return;
 
         state.connected = true;
-        console.log('Connected to WebSocket as user:', username);
         client.subscribe(`/user/${username}/queue/messages`, (message) => {
           try {
 
@@ -71,7 +69,6 @@ const websocketService = {
       stompClient.deactivate();
       stompClient = null;
       state.connected = false;
-      console.log('Disconnected from WebSocket');
     }
   },
 

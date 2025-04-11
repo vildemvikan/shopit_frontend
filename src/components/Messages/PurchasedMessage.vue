@@ -16,7 +16,6 @@ const props = defineProps<{
 
 onMounted(async () => {
   if(props.id !== ''){
-    console.log(props.id)
     const result:OrderInformation = await getOrderById(props.id)
     name.value = result.buyerName
     price.value = result.price

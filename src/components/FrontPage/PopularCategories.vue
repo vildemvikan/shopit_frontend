@@ -16,7 +16,6 @@ const categories = ref<Category[]>([])
 async function loadCategories() {
   try {
     categories.value = await fetchCategories()
-    console.log(categories.value)
   } catch (error) {
     console.error(error)
   }

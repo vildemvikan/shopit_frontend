@@ -120,8 +120,6 @@ describe('SectionB.vue', () => {
     // Change category.
     await categorySelect.setValue(3); // new category id; note: element value becomes "3" (a string)
     await flushPromises();
-    console.log(categorySelect.element.value);
-    console.log(subCategorySelect)
     expect(wrapper.emitted()['update:category']).toBeTruthy();
     expect(categorySelect.element.value).toBe('3');
 
