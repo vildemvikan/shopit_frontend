@@ -12,6 +12,7 @@
     }
   ],
   "compilerOptions": {
+    "types": ["vite/client"],
     "module": "NodeNext"
   }
 }
