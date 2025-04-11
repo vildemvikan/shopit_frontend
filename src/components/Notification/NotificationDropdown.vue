@@ -13,7 +13,7 @@ const emit = defineEmits<{
   (e: 'close-dropdown'): void;
 }>()
 
-// Configuration for pagination (set as you prefer)
+
 const perPage = 3
 const currentPage = ref(0)    // current page index to fetch from backend
 
