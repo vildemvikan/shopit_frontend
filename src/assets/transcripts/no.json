@@ -169,6 +169,9 @@
 
   "confirm-deletion-title": "Bekreft Sletting",
   "confirm-deletion-label": "Er du sikker på at du vil slette annonsen?",
+
+  "placeholder-no-bookmarks": "Ops! Du har ingen bokmerker enda.",
+
   "notification": {
     "BID_PLACED": "{item} har fått et nytt bud",
     "ITEM_BOUGHT": "{user} har kjøpt {item}",

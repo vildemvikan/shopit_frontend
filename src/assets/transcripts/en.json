@@ -200,6 +200,8 @@
   "you-purchased-text": "You purchased the advertisement for ",
   "purchased-text": "Purchased your advertisement for ",
 
+  "placeholder-no-bookmarks": "Ops! You have no bookmarks.",
+
   "notification": {
     "BID_PLACED": "{item} received a new bid",
     "ITEM_BOUGHT": "{user} bought '{item}'",

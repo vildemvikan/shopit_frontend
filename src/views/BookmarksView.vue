@@ -83,7 +83,7 @@ watch(orderBy, async () => {
         </select>
       </div>
 
-      <div class="display">
+      <div class="display" v-if="bookmarks.length > 0">
 
         <div class="bookmark" id="box" v-for="bookmark in bookmarks">
           <AdvertisementPreviewBox
@@ -114,6 +114,9 @@ watch(orderBy, async () => {
             :display-status="false"
             :status="bookmark.status"/>
         </div>
+      </div>
+      <div v-else>
+        <label>{{$t('placeholder-no-bookmarks')}}</label>
       </div>
 
       <Pagination
