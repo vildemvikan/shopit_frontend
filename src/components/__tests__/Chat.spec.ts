@@ -98,6 +98,8 @@ describe('Chat', () => {
         }
       }
     })
+
+    const { bus } = useEventsBus()
     bus.value.set('selectChat', [{
       senderMail: 'sender@example.com',
       recipientMail: 'recipient@example.com',
