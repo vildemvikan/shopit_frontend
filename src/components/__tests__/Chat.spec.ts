@@ -91,7 +91,6 @@ describe('Chat', () => {
   })
 
   it('should handle received messages from the event bus', async () => {
-    // Mount component
     const wrapper = mount(Chat, {
       global: {
         mocks: {
@@ -99,9 +98,6 @@ describe('Chat', () => {
         }
       }
     })
-
-    // Set current chat room info
-    const { bus } = useEventsBus()
     bus.value.set('selectChat', [{
       senderMail: 'sender@example.com',
       recipientMail: 'recipient@example.com',
