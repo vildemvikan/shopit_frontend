@@ -12,6 +12,7 @@
   "title-bookmarks": "Bookmarks",
   "title-notifications": "Notifications",
   "title-enter-bid": "How much would you like to offer?",
+  "title-enter-message": "Write a message:",
 
   "label-type": "Advertisement type",
   "label-images": "Images",
@@ -52,6 +53,7 @@
   "label-filter-search": "Filter search",
   "label-results": "Results",
   "label-enter-amount": "Enter amount",
+  "label-enter-message": "Message ...",
 
   "filter-for-sale": "For sale",
   "filter-for-free": "For free",
@@ -91,6 +93,8 @@
   "button-delete-user": "Delete user",
   "button-send-bid": "Send",
   "button-cancel-bid": "Cancel",
+  "button-send-message": "Send",
+  "button-cancel-message": "Cancel",
 
 
   "drop-down-category": "Select category",
@@ -201,6 +205,13 @@
   "purchased-text": "Purchased your advertisement for ",
 
   "placeholder-no-bookmarks": "Ops! You have no bookmarks.",
+  "placeholder-no-advertisement-match": "Ops! No advertisements matches your search.",
+  "placeholder-no-chatrooms": "Ops! You have no available chats.",
+  "placeholder-no-created-advertisements": "Ops! You have no available advertisements to display.",
+
+  "message-changed": "Bid status has changed!",
+  "message-bid": "New bid!",
+  "message-purchase": "Advertisement is purchased!",
 
   "notification": {
     "BID_PLACED": "{item} received a new bid",
@@ -208,7 +219,8 @@
     "BID_ACCEPTED": "{user} accepted your bid on {item}",
     "NEW_BID": "{user} placed a new bid on {item}",
     "OUTBID": "You were outbid on {item}",
-    "MESSAGE_RECEIVED": "You received a new message about {item}",
+    "ITEM_SOLD": "Your advertisement has been sold",
+    "MESSAGE_RECEIVED": "You received a new message",
     "showMore": "Load more",
     "readMore": "Go to message"
   }

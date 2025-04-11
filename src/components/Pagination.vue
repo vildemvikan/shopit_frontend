@@ -102,7 +102,7 @@ function nextPage() {
 }
 
 .pagination-button:hover:not(:disabled) {
-  background-color: #f0f0f0;
+  background-color: var(--color-lavendel-background);
 }
 
 .pagination-button:disabled {
@@ -111,9 +111,8 @@ function nextPage() {
 }
 
 .pagination-button.active {
-  background-color: #007bff;
-  color: #fff;
-  border-color: #007bff;
+  background-color: var(--color-purple-button);
+  color: var(--color-white-text);
 }
 
 .ellipsis {

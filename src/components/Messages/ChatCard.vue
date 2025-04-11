@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Status } from '@/enums/enums.ts'
+import { MessageType, Status } from '@/enums/enums.ts'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { computed } from 'vue'
@@ -46,8 +46,23 @@ const displayMessage = computed(()=> {
         <h3>{{props.chatCardData.itemTitle}}</h3>
         <div v-if="props.chatCardData.hasUnreadMessage" class="notification-dot"></div>
       </div>
-      <div class="last-message">
-        <label id="message">{{displayMessage}}</label>
+      <div class="last-message" >
+        <label id="message"
+               v-if="props.chatCardData.lastMessageType == MessageType.NORMAL">
+          {{displayMessage}}
+        </label>
+        <label id="message"
+               v-if="props.chatCardData.lastMessageType == MessageType.CHANGED">
+          {{$t('message-changed')}}
+        </label>
+        <label id="message"
+               v-if="props.chatCardData.lastMessageType == MessageType.BID">
+          {{$t('message-bid')}}
+        </label>
+        <label id="message"
+               v-if="props.chatCardData.lastMessageType == MessageType.PURCHASE">
+          {{$t('message-purchase')}}
+        </label>
       </div>
       <div class="info">
         <label class="status" id="status-active"
