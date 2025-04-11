@@ -12,7 +12,7 @@ import Pagination from '@/components/Pagination.vue'
 import AdvertisementPreview from '@/components/AdvertisementPreviewBox.vue'
 import MyAdvertisementPreview from '@/components/AdvertisementPreviewList.vue'
 
-const SIZE = 9
+const SIZE = 8
 const page = ref<number>(0)
 const totalPages = ref<number>(0)
 
@@ -263,7 +263,7 @@ function toggleDisplay(){
             />
           </div>
 
-          <div class="results" id="no-results" v-if="advertisements.length < 0">
+          <div class="results" id="no-results" v-if="advertisements.length <= 0">
             <label>Ops! No advertisements matches your search.</label>
           </div>
 
