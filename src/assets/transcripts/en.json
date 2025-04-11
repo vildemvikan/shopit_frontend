@@ -198,6 +198,7 @@
     "OUTBID": "You were outbid on {item}",
     "MESSAGE_RECEIVED": "You received a new message about {item}",
     "showMore": "Load more",
-    "readMore": "Go to message"
+    "readMore": "Go to message",
+    "empty": "No notifications"
   }
 }
