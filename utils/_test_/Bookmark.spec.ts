@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import axios from 'axios';
-import * as bookmarkAPI from '../bookmark';
+import * as bookmarkAPI from '../Bookmark';
 import { useTokenStore } from '../../src/stores/tokenStore';
 
 vi.mock('axios');
