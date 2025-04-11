@@ -4,9 +4,16 @@ import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { getNotification, deleteNotification } from '../../../utils/Notification'
+import { useTokenStore } from '@/stores/tokenStore.ts'
+import router from '@/router'
 const deleteIcon = new URL('@/assets/icons/x.svg', import.meta.url).href
 const refreshIcon = new URL('@/assets/icons/refresh2.svg', import.meta.url).href
 
+const emit = defineEmits<{
+  (e: 'close-dropdown'): void;
+}>()
+
+// Configuration for pagination (set as you prefer)
 const perPage = 3
 const currentPage = ref(0)    // current page index to fetch from backend
 
@@ -63,7 +70,13 @@ const removeNotification = async (id: number) => {
   }
 }
 
-onMounted(() => {
+onMounted(async() => {
+  const tokenStore = useTokenStore()
+  if (!tokenStore.isAuthenticated) {
+    await router.push('/auth/login')
+    emit('close-dropdown')
+    return
+  }
   const dropdown = document.querySelector('.dropdown')
   dropdown?.addEventListener('touchstart', onTouchStart)
   dropdown?.addEventListener('touchmove', onTouchMove)

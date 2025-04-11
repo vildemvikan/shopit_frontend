@@ -17,7 +17,7 @@ const currentPage = ref<number>(0)
 const totalPages = ref<number>(0)
 
 const dateFilter = ref<number>(1)
-const statusFilter = ref<Status|number>(null)
+const statusFilter = ref<Status|null>(null)
 
 onMounted(async () => {
   await loadAdvertisements()
@@ -39,7 +39,7 @@ async function loadAdvertisements(){
       SIZE,
       currentPage.value,
       dateFilter.value,
-      statusFilter.value)
+      statusFilter?.value)
 
     totalPages.value = result.totalPages
     advertisements.value = result.content
@@ -81,7 +81,8 @@ watch(statusFilter, async (newVal, oldVal) => {
     </div>
 
     <div class="advertisements">
-      <div v-for="advertisement in advertisements" class="advertisement">
+      <div v-for="advertisement in advertisements" class="advertisement"
+           v-if="advertisements.length > 0">
         <MyAdvertisementPreview
           :id="advertisement.id"
           :title="advertisement.name"
@@ -97,6 +98,10 @@ watch(statusFilter, async (newVal, oldVal) => {
         @click="goToAdvertisement(advertisement.id)"
         />
       </div>
+      <div class="advertisement" v-else id="no-created-advertisements">
+        <label>{{$t('placeholder-no-created-advertisements')}}</label>
+      </div>
+
     </div>
 
     <div class="pagination">
@@ -157,6 +162,13 @@ watch(statusFilter, async (newVal, oldVal) => {
   display: flex;
   flex-direction: row;
   place-content: center;
+}
+
+#no-created-advertisements{
+  height: 90%;
+  place-content: center;
+  align-items: center;
+
 }
 
 </style>

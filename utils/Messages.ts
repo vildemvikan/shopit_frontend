@@ -64,3 +64,20 @@ export async function fetchChatList(size: number, page:number) {
     return null;
   }
 }
+
+export async function contactSeller(id:string, message:string){
+  const url = baseUrl + '/chat/' + id
+  const tokenStore = useTokenStore();
+  const token = tokenStore.getToken;
+  try {
+    const response = await axios.post(url, {message: message},{
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.status;
+  } catch(error) {
+    throw error
+  }
+}

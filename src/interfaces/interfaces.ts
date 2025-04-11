@@ -118,6 +118,7 @@ export interface Pageable{
 }
 
 export interface ChatCardInfo {
+  lastMessageType: MessageType,
   lastMessageContent: string,
   lastMessageTimestamp: string,
   lastSenderId: string,

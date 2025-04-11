@@ -55,6 +55,7 @@ async function searchCategory(categoryId: number){
 .categories{
   display: flex;
   flex-direction: row;
+  place-content: center;
   height: 80%;
   width: 100%;
   overflow-y: scroll;

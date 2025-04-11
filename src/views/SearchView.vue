@@ -12,7 +12,7 @@ import Pagination from '@/components/Pagination.vue'
 import AdvertisementPreview from '@/components/AdvertisementPreviewBox.vue'
 import MyAdvertisementPreview from '@/components/AdvertisementPreviewList.vue'
 
-const SIZE = 6
+const SIZE = 8
 const page = ref<number>(0)
 const totalPages = ref<number>(0)
 
@@ -234,7 +234,8 @@ function toggleDisplay(){
           </select>
         </div>
         <div class="display-box" id="normal">
-          <div class="result" id="class-display" v-if="!displayList" v-for="advertisement in advertisements" >
+          <div class="result" id="class-display" v-if="!displayList && advertisements.length >0"
+               v-for="advertisement in advertisements" >
             <AdvertisementPreview
               :id="advertisement.id"
               :title="advertisement.name"
@@ -245,7 +246,8 @@ function toggleDisplay(){
               :price="advertisement.price"
               :status="advertisement.status" />
           </div>
-          <div class="result" id="list-display" v-if="displayList" v-for="advertisement in advertisements" >
+          <div class="result" id="list-display" v-if="displayList && advertisements.length >0"
+               v-for="advertisement in advertisements" >
             <MyAdvertisementPreview
               :id="advertisement.id"
               :title="advertisement.name"
@@ -260,6 +262,11 @@ function toggleDisplay(){
               :display-status="false"
             />
           </div>
+
+          <div class="results" id="no-results" v-if="advertisements.length <= 0">
+            <label>{{$t('placeholder-no-advertisement-match')}}</label>
+          </div>
+
         </div>
         <div class="display-box" id="small">
           <div class="result" id="list-display" v-for="advertisement in advertisements" >
@@ -340,8 +347,8 @@ function toggleDisplay(){
   flex-direction: column;
   width: 100%;
   height: 90%;
-  place-content: space-between;
-  justify-content: space-between;
+  place-content: start;
+  justify-content: start;
 }
 
 .display-options{
@@ -368,9 +375,9 @@ function toggleDisplay(){
   flex-wrap: wrap;
   align-content: start;
 
-  height: 80%;
+  height: 90%;
   width: 100%;
-  gap: 25px;
+  gap: 15px;
 }
 
 #small{
@@ -380,12 +387,12 @@ function toggleDisplay(){
 .result{
   width: calc(calc(100% - 25px*2)/ 3);
   min-width: 250px;
-  height: calc(calc(100% - 25px*2) /2);
+  height: calc(calc(100% - 25px*2) /3);
 }
 
 #list-display{
   width: 100%;
-  height: calc(calc(100% - 30px*5)/6);
+  height: calc(calc(100% - 30px*1)/9);
 }
 
 .pagination-box{
@@ -394,12 +401,18 @@ function toggleDisplay(){
   width: 100%;
 }
 
+#no-results{
+  display: flex;
+  width: 100%;
+  place-content: center;
+}
+
 
 @media (max-width: 1150px) {
   .result{
     width: calc(calc(100% - 25px*1)/ 2);
     min-width: 250px;
-    height: calc(calc(100% - 25px*3) /3);
+    height: calc(calc(100% - 25px*3) /4);
   }
 
   .filter-menu{

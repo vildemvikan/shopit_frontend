@@ -8,6 +8,8 @@ import DeletePopUp from '@/components/Popups/DeletePopUp.vue'
 import { placeOrder } from '../../../utils/Order.ts'
 import BidPopUp from '@/components/Popups/BidPopUp.vue'
 import MapComp from '@/components/Map/MapComp.vue'
+import { fetchChatList } from '../../../utils/Messages.ts'
+import MessagePopUp from '@/components/Popups/MessagePopUp.vue'
 const { t } = useI18n();
 enum PaymentMethod {
   Direct = 'DIRECT',
@@ -59,10 +61,7 @@ const conditionLabel = computed(() =>{
 
 const displayDeletePopUp = ref<boolean>(false)
 const displayBidPopUp = ref<boolean>(false)
-
-function contactSeller(){
-  router.push('/messages')
-}
+const displayMessagePopUp = ref<boolean>(false)
 
 function editAdvertisement(){
   router.push(`/edit-advertisement/${props.advertisementId}`)
@@ -106,6 +105,11 @@ async function purchaseItem(){
     @cancel-bid ="displayBidPopUp = false"
     :id="advertisementId"
   />
+  <MessagePopUp
+    v-if="displayMessagePopUp"
+    @cancel-message="displayMessagePopUp = false"
+    :id="advertisementId"
+  />
 
   <H1 class="title" v-if="props.title">{{props.title}}</H1>
   <div>
@@ -138,7 +142,7 @@ async function purchaseItem(){
     >
       <label class="button-label" id="orange-button-label">{{$t('button-vipps')}}</label>
     </button>
-    <button class="button" id="gray-button" @click="contactSeller">
+    <button class="button" id="gray-button" @click="displayMessagePopUp = true">
       <label class="button-label" id="gray-button-label">{{$t('button-contact-seller')}}</label>
     </button>
   </div>

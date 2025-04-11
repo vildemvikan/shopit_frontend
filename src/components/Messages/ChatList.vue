@@ -19,7 +19,8 @@ export interface ExtendedChatCardInfo extends ChatCardInfo {
 }
 
 watch(()=> bus.value.get('messageReceived'), async (val) => {
-  chatList.value = await fetchChatList()
+  console.log('FETCH')
+  await fetchChatRooms()
   const payload = JSON.parse(val[0].body)
   if (selectedChatId.value && selectedChatId.value !== payload.senderId + payload.itemId) {
     toggleNewMessage(payload.recipientId, payload.itemId, true)

@@ -349,7 +349,7 @@ async function removeBookmark(){
 
   .display-image-box{
     width: 100%;
-    height: 80%;
+    aspect-ratio: 1/1;
     object-fit: cover;
   }
 }

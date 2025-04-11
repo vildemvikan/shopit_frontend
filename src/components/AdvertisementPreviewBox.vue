@@ -80,7 +80,8 @@ async function goToAdvertisement(){
   <div class="advertisement" @click="goToAdvertisement">
     <div class="image-container">
       <img :src="props.image" alt="image" class="display-image" />
-      <label class="price-label">{{ props.price }},- NOK</label>
+      <label class="price-label" v-if="props.price > 0">{{ props.price }},- NOK</label>
+      <label class="price-label" v-else>{{$t('label-free') }}</label>
       <img src="../assets/icons/bookmarkNotMarked.svg"
            alt="bookmark" class="bookmark" v-if="!bookmarked" @click.stop="bookmarkItem"/>
       <img src="../assets/icons/bookmarkMarked.svg"
@@ -154,7 +155,7 @@ async function goToAdvertisement(){
   top: 5px;
   right: 0;
   height: 20%;
-  z-index: 10;
+  z-index: 0;
 }
 
 .info{
