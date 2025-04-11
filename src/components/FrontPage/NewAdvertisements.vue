@@ -67,7 +67,7 @@ onMounted(async () => {
 
 .new-advertisement{
   height: 90%;
-  aspect-ratio: 4/5;
+  aspect-ratio: 8/9;
 }
 
 </style>
