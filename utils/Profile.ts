@@ -18,7 +18,7 @@ export async function fetchUserInformation(){
     return await response.data
   } catch (error){
     console.error(error)
-    throw new Error("Error! Could not fetch user information.")
+    return new Error("Error! Could not fetch user information.")
   }
 }
 
@@ -45,7 +45,7 @@ export async function fetchUserAdvertisements(size: number, page: number,
     return await response.data
   } catch (error){
     console.error(error)
-    throw new Error("Error! Could not fetch user information.")
+    return new Error("Error! Could not fetch user information.")
   }
 }
 

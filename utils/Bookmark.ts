@@ -39,7 +39,7 @@ export async function createBookmark(id: string){
     });
     return response.status
   } catch (error){
-    throw new Error("Error! Could not bookmark advertisement!")
+    return new Error("Error! Could not bookmark advertisement!")
   }
 }
 
