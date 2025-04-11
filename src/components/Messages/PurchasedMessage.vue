@@ -57,7 +57,7 @@ label{
   place-content: space-between;
   place-items: start;
   justify-content: center;
-  background-color: var(--color-background);
+  background-color: var(--color-purchased-message);
 }
 
 .text-content{
