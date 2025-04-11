@@ -21,7 +21,7 @@ export async function getNotification(page: number = 0, size: number = 3) {
       }
     })
     console.log(response.data)
-    return response.data.content
+    return response.data
   } catch (error) {
     console.error(error)
     return new Error("Error! Could not fetch user notification.")

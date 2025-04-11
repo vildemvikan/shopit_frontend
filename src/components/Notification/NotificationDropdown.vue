@@ -7,50 +7,51 @@ import { getNotification, deleteNotification } from '../../../utils/Notification
 const deleteIcon = new URL('@/assets/icons/x.svg', import.meta.url).href
 const refreshIcon = new URL('@/assets/icons/refresh2.svg', import.meta.url).href
 
-// Configuration for pagination (set as you prefer)
 const perPage = 3
 const currentPage = ref(0)    // current page index to fetch from backend
 
-// notifications will accumulate all pages from backend
 const notifications = ref([] as any[])
 
-// Drag state refs (if you use touch-drag)
 const startY = ref(0)
 const currentY = ref(0)
 const isDragging = ref(false)
+const hasMore = ref(true)
+const totalPages = ref(0)
 
 dayjs.extend(relativeTime)
 dayjs.locale('nb')
 
-// Fetch notifications from backend for a given page.
-// reset flag will clear the notifications array (e.g. for a refresh)
+
 async function fetchNotifications(page: number, reset = false) {
-  const result = await getNotification(page, perPage)
-  if (Array.isArray(result)) {
+  const res = await getNotification(page, perPage)
+  if (res && res.content) {
+    totalPages.value = res.totalPages
+
     if (reset) {
-      notifications.value = result
+      notifications.value = res.content
       currentPage.value = page
     } else {
-      // Append new notifications to the existing array
-      notifications.value = [...notifications.value, ...result]
+      notifications.value = [...notifications.value, ...res.content]
     }
+
+    hasMore.value = page < res.totalPages - 1
   }
 }
 
-// Refresh notifications: load the first page and reset data
 async function refreshNotifications() {
-  console.log("clicked")
-  await fetchNotifications(0, true)
+  try {
+    await fetchNotifications(0, true)
+  } catch (e) {
+    console.error('Failed to refresh notifications', e)
+  }
 }
 
-// Load more notifications (fetch next page)
 async function loadMore() {
   const nextPage = currentPage.value + 1
   await fetchNotifications(nextPage)
   currentPage.value = nextPage
 }
 
-// Remove a notification using the API and update local array
 const removeNotification = async (id: number) => {
   try {
     const res = await deleteNotification(id)
@@ -67,7 +68,6 @@ onMounted(() => {
   dropdown?.addEventListener('touchstart', onTouchStart)
   dropdown?.addEventListener('touchmove', onTouchMove)
   dropdown?.addEventListener('touchend', onTouchEnd)
-  // Fetch the first page of notifications when the dropdown mounts
   refreshNotifications()
 })
 
@@ -78,7 +78,6 @@ onBeforeUnmount(() => {
   dropdown?.removeEventListener('touchend', onTouchEnd)
 })
 
-// Touch event handlers for mobile drag (if needed)
 function onTouchStart(e: TouchEvent) {
   startY.value = e.touches[0].clientY
   isDragging.value = true
@@ -128,25 +127,32 @@ function timeAgo(date: string): string {
     <div class="dropdown-header">
       <h4>{{$t('title-notifications')}}</h4>
       <button @click="refreshNotifications" class="refresh-btn" aria-label="Refresh notifications">
-        <img :src="refreshIcon" alt="Refresh" class="invertible-icon"/>
+        <img :src="refreshIcon" alt="Refresh" class="invertible-icon" />
       </button>
     </div>
     <div class="notification-list">
-      <div v-for="notification in notifications" :key="notification.id" class="item">
-        <div class="msg">
-          {{ $t(`notification.${notification.type}`, notification.args) }}
+      <template v-if="notifications.length > 0">
+        <div v-for="notification in notifications" :key="notification.id" class="item">
+          <div class="msg">
+            {{ $t(`notification.${notification.type}`, notification.args) }}
+          </div>
+          <div class="time">{{ timeAgo(notification.createdAt) }}</div>
+          <router-link v-if="notification.link" :to="notification.link" class="link">
+            {{ $t('notification.readMore') }}
+          </router-link>
+          <button class="delete-btn" @click="removeNotification(notification.id)">
+            <img :src="deleteIcon" alt="Delete" class="icon" />
+          </button>
         </div>
-        <div class="time">{{ timeAgo(notification.createdAt) }}</div>
-        <router-link v-if="notification.link" :to="notification.link" class="link">
-          {{ $t('notification.readMore') }}
-        </router-link>
-        <button class="delete-btn" @click="removeNotification(notification.id)">
-          <img :src="deleteIcon" alt="Delete" class="icon" />
-        </button>
+      </template>
+      <div v-else class="empty-state">
+        {{ $t('notification.empty') || 'No notifications' }}
       </div>
     </div>
-    <div v-if="notifications.length > (currentPage.value + 1) * perPage" class="load-more-wrapper">
-      <button class="load-more-btn" @click="loadMore">{{ $t(`notification.showMore`) }}</button>
+    <div v-if="notifications.length >= (currentPage + 1) * perPage" class="load-more-wrapper">
+      <button class="load-more-btn" @click="loadMore">
+        {{ $t(`notification.showMore`) }}
+      </button>
     </div>
   </div>
 </template>
@@ -232,6 +238,13 @@ h4 {
 
 .link:hover {
   text-decoration: underline;
+}
+
+.empty-state {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--vt-c-text-light-2);
+  padding: var(--spacing-sm);
 }
 .load-more-wrapper {
   text-align: center;
