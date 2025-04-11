@@ -121,6 +121,10 @@ onMounted(async ()=> {
     height: 100%;
   }
 
+  .chat-list-wrapper{
+    height: 95%;
+  }
+
   .selected {
     width: 100%;
   }
